@@ -3,3 +3,4 @@ export * from './border';
 export * from './padding';
 export * from './font';
 export * from './colors';
+export * from './presets';

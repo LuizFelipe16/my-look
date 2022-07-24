@@ -5,7 +5,6 @@ type Developer = {
 
 export type AppSettings = {
   AppName: string;
-  CompanyName: string;
   Description: string;
   CreatedAt: string;
   Creator: string;
@@ -14,13 +13,14 @@ export type AppSettings = {
     IsWeb: boolean;
     IsMobile: boolean;
     IsMadeForLearning?: boolean;
+    GitRepository?: string;
   };
   Fetch: {
     ApiURL: string;
     ProductionURL?: string;
     DevelopmentURL?: string;
   };
-  Social: {
+  SocialINFO: {
     FacebookURL?: string;
     LinkedinURL?: string;
     InstagramURL?: string;

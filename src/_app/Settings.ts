@@ -2,7 +2,6 @@ import { AppSettings } from '../_lib/global';
 
 export const Settings: AppSettings = {
   AppName: 'MyTemplate Web',
-  CompanyName: 'MyTemplate Web',
   Description: 'MyTemplate Web',
   CreatedAt: '22 Julho, 2022',
   Creator: 'Luiz Felipe Siqueira Felizatti',
@@ -11,12 +10,13 @@ export const Settings: AppSettings = {
     IsWeb: true,
     IsMobile: false,
     IsMadeForLearning: true,
+    GitRepository: 'https://github.com/LuizFelipe16/my-web.git'
   },
   Fetch: {
     ApiURL: '',
     DevelopmentURL: '',
   },
-  Social: {},
+  SocialINFO: {}, 
   ContactINFO: {
     Website: 'luizfelipe.vercel.app',
     ContactEMAIL: 'felipefelizatti215@gmail.com',

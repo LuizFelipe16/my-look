@@ -1,4 +1,4 @@
-import { appVariables } from "../app";
+import { appVariables } from "../../../_app/app";
 import { styleSize } from "../tools";
 
 type FontWeight = `font-weight: ${number};`

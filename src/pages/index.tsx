@@ -5,11 +5,32 @@ import { onMount } from '../_lib/global';
 import { BsFillMoonFill } from 'react-icons/bs';
 import { MdWbSunny } from 'react-icons/md';
 import { Loading } from '../components';
+import { useTheme } from '../context';
 
 export default function App() {
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark')
+  const { theme, changeTheme } = useTheme();
+
   const [clock, setClock] = useState('');
+  const [greeting, setGreeting] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+
+  onMount(() => {
+    setTimeout(() => setIsLoading(false), 1000)
+    getClock();
+    getGreeting();
+  });
+
+  function getGreeting() {
+    const currentHour = new Date().getHours();
+
+    if (currentHour < 12) {
+      setGreeting('Good morning!');
+    } else if (currentHour >= 12 && currentHour < 18) {
+      setGreeting('Good afternoon!');
+    } else {
+      setGreeting('Good night!');
+    }
+  };
 
   function getClock() {
     const getTime = (time: number | string) => time < 10 ? `0${time}` : time;
@@ -18,25 +39,19 @@ export default function App() {
     const value = `${getTime(date.getHours())}:${getTime(date.getMinutes())}:${getTime(date.getSeconds())}`;
 
     setClock(value)
-  }
+  };
 
-  const handleTheme = () => setTheme(theme === 'dark' ? 'light' : 'dark')
+  setInterval(getClock, 1000);
 
-  setInterval(getClock, 1000)
-
-  onMount(() => {
-    setTimeout(() => setIsLoading(false), 1000)
-    getClock();
-  })
-
-  if (isLoading) return <Loading />
+  if (isLoading) return <Loading />;
 
   return (
     <Styles>
       <TitlePage t='Welcome!' />
-      <View style={`page page-${theme}`} w='100%' h='100%'>
-      <Text style={`clock clock-${theme}`} text={clock} />
-      <button className={`btn-theme btn-theme-${theme}`} onClick={handleTheme}>
+      <View style={`page ${theme}`} w='100%' h='100%'>
+      <Text style={`clock ${theme}`} text={clock} />
+      <Text style={`greeting ${theme}`} text={greeting} />
+      <button className={`btn-theme ${theme}`} onClick={changeTheme}>
         {theme === 'dark' ? <MdWbSunny /> : <BsFillMoonFill /> }
       </button>
       </View>
@@ -55,13 +70,12 @@ const Styles = stylesProvider.create((theme) => (`
       ${theme.font.size(5)}
       ${theme.font.weight.rg}
     }
-    
-    .clock-dark {
-      color: ${theme.colors.text};
-    }
-    
-    .clock-light {
-      color: ${theme.colors.primary};
+
+    .greeting {
+      margin-top: ${theme.spacing.size(2)};
+      ${theme.font.size(1.5)}
+      ${theme.font.weight.rg}
+      ${theme.font.typography.title}
     }
 
     .btn-theme {
@@ -70,21 +84,21 @@ const Styles = stylesProvider.create((theme) => (`
       top: ${theme.presets.size(3)};
       background-color: ${theme.colors.transparent};
     }
-
-    .btn-theme-dark {
+    
+    .dark {
       color: ${theme.colors.text};
     }
-
-    .btn-theme-light {
+    
+    .light {
       color: ${theme.colors.primary};
     }
   }
 
-  .page-dark {
+  .dark {
     background-color: ${theme.colors.primary};
   }
 
-  .page-light {
+  .light {
     background-color: ${theme.colors.text};
   }
 `), true);
