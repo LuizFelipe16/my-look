@@ -1,7 +1,5 @@
-import { useState } from 'react';
-import { stylesProvider } from '../_app';
-import { Text, View, TitlePage } from '../_lib/web';
-import { onMount } from '../_lib/global';
+import { Text, View, TitlePage, stylesProvider, Button } from '../_lib/web';
+import { onMount, useState } from '../_lib/global';
 import { BsFillMoonFill } from 'react-icons/bs';
 import { MdWbSunny } from 'react-icons/md';
 import { Loading } from '../components';
@@ -51,9 +49,9 @@ export default function App() {
       <View style={`page ${theme}`} w='100%' h='100%'>
       <Text style={`clock ${theme}`} text={clock} />
       <Text style={`greeting ${theme}`} text={greeting} />
-      <button className={`btn-theme ${theme}`} onClick={changeTheme}>
+      <Button style={`handleTheme ${theme}`} onPress={changeTheme}>
         {theme === 'dark' ? <MdWbSunny /> : <BsFillMoonFill /> }
-      </button>
+      </Button>
       </View>
     </Styles>
   );
@@ -61,44 +59,67 @@ export default function App() {
 
 const Styles = stylesProvider.create((theme) => (`
   .page {
-    width: 100%;
-    height: 100%;
+    ${theme.presets.fullView}
     ${theme.centerColumn}
-    ${theme.font.typography.text}
+    ${theme.font.weight.rg}
+
+    &.dark {
+      ${theme.bg.primary}
+    }
+    
+    &.light {
+      ${theme.bg.text}
+    }
     
     .clock {
       ${theme.font.size(5)}
-      ${theme.font.weight.rg}
+      ${theme.font.typography.text}
     }
 
     .greeting {
-      margin-top: ${theme.spacing.size(2)};
       ${theme.font.size(1.5)}
-      ${theme.font.weight.rg}
       ${theme.font.typography.title}
+      ${theme.margin.top.sm}
     }
 
-    .btn-theme {
-      position: absolute;
-      right: ${theme.presets.size(4)};
-      top: ${theme.presets.size(3)};
-      background-color: ${theme.colors.transparent};
+    .handleTheme {
+      ${theme.position.top.value(3)}
+      ${theme.position.right.value(4)}
+      ${theme.position.absolute}
+      ${theme.bg.transparent}
+      ${theme.border.rounded.circle}
+      ${theme.padding.full.md}
+      ${theme.transition.apply(0.2)}
+      
+      &.dark {
+        ${theme.border.fillByPixel(1, theme.colors.text)}
+        
+        &:hover {
+          ${theme.bg.text}
+          ${theme.textColor.primary}
+        }
+      }
+      
+      &.light {
+        ${theme.border.fillByPixel(1, theme.colors.primary)}
+
+        &:hover {
+          ${theme.bg.primary}
+          ${theme.textColor.text}
+        }
+      }
+
+      ${theme.responsiveness.phone(`
+        ${theme.position.right.percentage(43)}
+      `,)}
     }
     
     .dark {
-      color: ${theme.colors.text};
+      ${theme.textColor.text}
     }
     
     .light {
-      color: ${theme.colors.primary};
+      ${theme.textColor.primary}
     }
-  }
-
-  .dark {
-    background-color: ${theme.colors.primary};
-  }
-
-  .light {
-    background-color: ${theme.colors.text};
   }
 `), true);

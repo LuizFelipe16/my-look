@@ -1,8 +1,8 @@
 import { getStyleProperty, ThemePositions } from "./spacing";
 
-const PROPERTY_MODULE = 'padding';
+const PROPERTY_MODULE = 'margin';
 
-export const padding: ThemePositions = {
+export const margin: ThemePositions = {
   full: getStyleProperty(PROPERTY_MODULE),
   vertical: getStyleProperty(PROPERTY_MODULE, 'bottom', 'top'),
   horizontal: getStyleProperty(PROPERTY_MODULE, 'left', 'right'),

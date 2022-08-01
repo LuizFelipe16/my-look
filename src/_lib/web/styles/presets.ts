@@ -4,6 +4,7 @@ export type ThemePresets = {
   hide: string;
   size: (multiplier: number) => string;
   debugger: (color: 'blue' | 'red' | 'yellow' | 'green' | 'purple', weight?: number) => string;
+  fullView: string;
 }
 
 export const presets: ThemePresets = {
@@ -16,4 +17,9 @@ export const presets: ThemePresets = {
     const hex = c === 'blue' ? '#00D' : c === 'red' ? '#F00' : c === 'green' ? '#0F0' : c === 'purple' ? '#9400D3' : '#FF0'
     return `border: ${w}px solid ${hex};`
   },
+
+  fullView: `
+    width: 100%;
+    height: 100%;
+  `,
 }

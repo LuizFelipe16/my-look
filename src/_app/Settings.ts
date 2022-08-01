@@ -1,6 +1,11 @@
 import { AppSettings } from '../_lib/global';
 
-export const Settings: AppSettings = {
+type FetchEndpoints = {
+  ApiURL: string;
+  SwinsURL?: string;
+}
+
+export const Settings: AppSettings<FetchEndpoints> = {
   AppName: 'MyTemplate Web',
   Description: 'MyTemplate Web',
   CreatedAt: '22 Julho, 2022',
@@ -14,13 +19,11 @@ export const Settings: AppSettings = {
   },
   Fetch: {
     ApiURL: '',
-    DevelopmentURL: '',
+    SwinsURL: '',
   },
-  SocialINFO: {}, 
   ContactINFO: {
     Website: 'luizfelipe.vercel.app',
     ContactEMAIL: 'felipefelizatti215@gmail.com',
-    ContactPHONE: '5519989522121',
+    ContactPHONE: '+55 (19) 98952-2121',
   },
-  ApiCredentials: {},
 };

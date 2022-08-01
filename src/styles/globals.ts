@@ -46,7 +46,7 @@ export const GlobalStyle = createGlobalStyle`
 
   body {
     overflow-x: hidden;
-    background-color: var(--gray-900);
+    background-color: ${theme.colors.primary};
   }
 
   button {

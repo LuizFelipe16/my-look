@@ -7,8 +7,12 @@ type ThemeProviderData = {
   theme: Theme;
   getTheme: () => Theme;
   changeTheme: () => void;
-  setThemeDark: () => void;
-  setThemeLight: () => void;
+  
+  setTheme: {
+    dark: () => void;
+    light: () => void;
+    change: () => void;
+  };
 };
 
 const AppTheme = createContext({} as ThemeProviderData);
@@ -18,16 +22,21 @@ export let isTheme: Theme = 'dark';
 const handleTheme = (t: Theme) => isTheme = t;
 
 export function ThemeProvider({ children }: any) {
-  const [theme, setTheme] = useState<Theme>('dark');
+  const [theme, setAppTheme] = useState<Theme>('dark');
   
-  const changeTheme = () => setTheme(theme === 'dark' ? 'light' : 'dark');
+  const changeTheme = () => setAppTheme(theme === 'dark' ? 'light' : 'dark');
   const getTheme = () => theme;
-  const setThemeDark = () => setTheme('dark');
-  const setThemeLight = () => setTheme('light');
+  const setAppThemeDark = () => setAppTheme('dark');
+  const setAppThemeLight = () => setAppTheme('light');
+
+  const setTheme = {
+    dark: setAppThemeDark,
+    light: setAppThemeLight,
+    change: changeTheme,
+  }
 
   onUpdate(() => {
     handleTheme(theme);
-    console.log({ p: theme, isTheme })
   }, [theme]);
 
   return (
@@ -35,8 +44,7 @@ export function ThemeProvider({ children }: any) {
       theme,
       changeTheme,
       getTheme,
-      setThemeDark,
-      setThemeLight,
+      setTheme
     }}>
       {children}
     </AppTheme.Provider>

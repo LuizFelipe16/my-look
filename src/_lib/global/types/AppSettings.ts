@@ -3,7 +3,11 @@ type Developer = {
   office?: string;
 };
 
-export type AppSettings = {
+type Fetch = {
+  ApiURL: string;
+}
+
+export type AppSettings<APIs extends Fetch> = {
   AppName: string;
   Description: string;
   CreatedAt: string;
@@ -15,12 +19,8 @@ export type AppSettings = {
     IsMadeForLearning?: boolean;
     GitRepository?: string;
   };
-  Fetch: {
-    ApiURL: string;
-    ProductionURL?: string;
-    DevelopmentURL?: string;
-  };
-  SocialINFO: {
+  Fetch: APIs;
+  SocialINFO?: {
     FacebookURL?: string;
     LinkedinURL?: string;
     InstagramURL?: string;
@@ -28,9 +28,9 @@ export type AppSettings = {
   ContactINFO: {
     Website: string;
     ContactEMAIL: string;
-    ContactPHONE: string;
+    ContactPHONE: `+55 (19) ${number}-${number}`;
   };
-  ApiCredentials: {
+  ApiCredentials?: {
     FaunaKey?: string;
   };
 };

@@ -1,6 +1,8 @@
 import { AppVariables } from "../_lib/global";
 
-export const appVariables: AppVariables = {
+type AppTypography = 'Montserrat' | 'Nunito' | 'Roboto'
+
+export const appVariables: AppVariables<AppTypography> = {
   size: {
     MULTIPLIER: 1,
     UNITY: 'rem',

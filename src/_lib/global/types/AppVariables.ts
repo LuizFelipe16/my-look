@@ -1,12 +1,12 @@
-export type AppVariables = {
+export type AppVariables<AppTypography> = {
   size: {
     MULTIPLIER: number;
     UNITY: 'rem' | 'em' | 'px';
   };
   typography: {
-    title: string;
-    subtitle: string;
-    text: string;
+    title: AppTypography;
+    subtitle: AppTypography;
+    text: AppTypography;
   },
   projectDescription: string;
   nameProject: string;
