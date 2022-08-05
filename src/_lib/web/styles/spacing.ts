@@ -1,4 +1,5 @@
-import { styleSize } from "../tools";
+import { appVariables } from "../../../_app";
+import { styleSize, UNITY_PROPERTY } from "../tools";
 
 export type ThemePositions = {
   full: SpacingStyles;
@@ -15,10 +16,11 @@ type SpacingValue = {
   value: string;
 };
 
-type SpacingSize = 'sm' | 'md' | 'lg' | 'xl' | 'size';
+type SpacingSize = 'sm' | 'md' | 'lg' | 'xl' | 'size' | 'in';
 
 export type SpacingStyles = {
   size: (value: number) => string;
+  in: (top: number, left: number, bottom: number, right: number, unity?: UNITY_PROPERTY) => string;
   sm: string;
   md: string;
   lg: string;
@@ -33,6 +35,7 @@ export const spacing = {
 };
 
 const spacingValues: SpacingValue[] = [
+  { size: 'in', value: `` },
   { size: 'size', value: `` },
   { size: 'sm', value: `${styleSize(0.5)}` },
   { size: 'md', value: `${styleSize(1)}` },
@@ -40,11 +43,19 @@ const spacingValues: SpacingValue[] = [
   { size: 'xl', value: `${styleSize(2)}` }
 ];
 
-type Property = 'padding' | 'margin';
+type Property = 'padding' | 'margin' | 'gap';
 type PropertyPosition = 'right' | 'left' | 'top' | 'bottom';
 
 export function getStyleProperty(property: Property, positionOne?: PropertyPosition, positionTwo?: PropertyPosition) {
   const stylesArray: any = spacingValues.map(s => {
+    if (s.size === 'in') {
+      const propertyStyle = (t: number, l: number, b: number, r: number, u?: UNITY_PROPERTY) => {
+        const unity = !u ? appVariables.size.UNITY : u
+        return `${property}: ${t}${unity} ${l}${unity} ${b}${unity} ${r}${unity};`
+      }
+      return { [s.size]: propertyStyle }
+    }
+
     if (s.size === 'size') {
       const propertyStyle = !positionOne 
       ? (value: number) => `${property}: ${styleSize(value)};` 
@@ -65,11 +76,12 @@ export function getStyleProperty(property: Property, positionOne?: PropertyPosit
   });
 
   const styles = {
-    size: stylesArray[0].size,
-    sm: stylesArray[1].sm ,
-    md: stylesArray[2].md,
-    lg: stylesArray[3].lg,
-    xl: stylesArray[4].xl,
+    in: stylesArray[0].in,
+    size: stylesArray[1].size,
+    sm: stylesArray[2].sm ,
+    md: stylesArray[3].md,
+    lg: stylesArray[4].lg,
+    xl: stylesArray[5].xl,
   };
 
   return styles;

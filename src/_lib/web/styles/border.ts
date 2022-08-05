@@ -27,6 +27,7 @@ export type ThemeBorder = {
     xl: BorderRadius,
     inPositions: (value: number, poseOne: Position, poseTwo: Position) => string;
   },
+  hide: string;
 };
 
 const borderValues = {
@@ -62,4 +63,6 @@ export const border: ThemeBorder = {
 
     inPositions: (value: number, poseOne: Position, poseTwo: Position) => `border-${poseOne}-${poseTwo}-radius: ${styleSize(value)};`
   },
+
+  hide: `border: none;`,
 };

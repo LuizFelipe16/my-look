@@ -1,15 +1,20 @@
 import { styleSize } from "../tools";
 
 export type ThemePresets = {
-  hide: string;
+  hide: () => string;
   size: (multiplier: number) => string;
+  flex: () => `flex: 1;`;
   debugger: (color: 'blue' | 'red' | 'yellow' | 'green' | 'purple', weight?: number) => string;
   fullView: string;
-}
+  fillView: string;
+  shadow: {
+    box: string;
+  };
+};
 
 export const presets: ThemePresets = {
   size: styleSize,
-  hide: `display: none !important;`,
+  hide: () => `display: none !important;`,
 
   debugger: (color: 'blue' | 'red' | 'yellow' | 'green' | 'purple', weight?: number) => {
     const w = !weight ? 1 : weight
@@ -18,8 +23,18 @@ export const presets: ThemePresets = {
     return `border: ${w}px solid ${hex};`
   },
 
-  fullView: `
+  shadow: {
+    box: 'box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'
+  },
+
+  flex: () => `flex: 1;`,
+
+  fillView: `
     width: 100%;
     height: 100%;
   `,
-}
+  fullView: `
+    width: 100vw;
+    height: 100vh;
+  `,
+};

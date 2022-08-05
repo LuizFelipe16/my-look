@@ -1,4 +1,4 @@
-import { getStyleProperty, ThemePositions } from "./spacing";
+import { getStyleProperty, SpacingStyles, ThemePositions } from "./spacing";
 
 const PROPERTY_MODULE = 'margin';
 
@@ -10,4 +10,12 @@ export const margin: ThemePositions = {
   top: getStyleProperty(PROPERTY_MODULE, 'top'),
   left: getStyleProperty(PROPERTY_MODULE, 'left'),
   right: getStyleProperty(PROPERTY_MODULE, 'right'),
+};
+
+export type ThemeGap = {
+  full: SpacingStyles;
+};
+
+export const gapEls: ThemeGap = {
+  full: getStyleProperty('gap'),
 };

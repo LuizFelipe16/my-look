@@ -1,6 +1,6 @@
 import { AppVariables } from "../_lib/global";
 
-type AppTypography = 'Montserrat' | 'Nunito' | 'Roboto'
+export type AppTypography = 'Poppins'
 
 export const appVariables: AppVariables<AppTypography> = {
   size: {
@@ -8,10 +8,10 @@ export const appVariables: AppVariables<AppTypography> = {
     UNITY: 'rem',
   },
   typography: {
-    title: 'Montserrat',
-    subtitle: 'Nunito',
-    text: 'Roboto',
+    title: 'Poppins',
+    subtitle: 'Poppins',
+    text: 'Poppins',
   },
-  projectDescription: 'Digital watch web',
-  nameProject: 'MyClock',
+  projectDescription: 'E-commerce for stylish and high-end clothing.',
+  nameProject: 'MyLook',
 };

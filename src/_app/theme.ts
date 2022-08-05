@@ -1,8 +1,8 @@
-import { styledPresets, border, padding, font, size, presets } from '../_lib/web';
+import { myStylesPresets, border, padding, font, size, presets } from '../_lib/web';
 import { colors, bg, textColor } from './colors';
 
 export const theme = {
-  styled: styledPresets,
+  styled: myStylesPresets,
   presets,
   colors,
   textColor,

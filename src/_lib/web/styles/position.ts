@@ -1,8 +1,11 @@
-import { styleSize } from "../tools";
+import { styleSize, size } from "../tools";
 
+type POSITION_PROPERTY = 'bottom' | 'right' | 'left' | 'top';
+type UNITY_PROPERTY = 'px' | 'rem' | 'em' | '%';
 type PropertyPosition = 'static' | 'fixed' | 'relative' | 'absolute';
 
 type Position = `position: ${PropertyPosition};`;
+type PositionValue = `${POSITION_PROPERTY}: ${string};`;
 
 export type ThemePosition = {
   static: Position;
@@ -11,22 +14,28 @@ export type ThemePosition = {
   absolute: Position;
 
   top: {
-    value: (value: number) => `top: ${string};`;
+    value: (value: number, unity?: UNITY_PROPERTY) => PositionValue;
     percentage: (percentage: number) => `top: ${number}%;`
   };
   right: {
-    value: (value: number) => `right: ${string};`;
+    value: (value: number, unity?: UNITY_PROPERTY) => PositionValue;
     percentage: (percentage: number) => `right: ${number}%;`
   };
   left: {
-    value: (value: number) => `left: ${string};`;
+    value: (value: number, unity?: UNITY_PROPERTY) => PositionValue;
     percentage: (percentage: number) => `left: ${number}%;`
   };
   bottom: {
-    value: (value: number) => `bottom: ${string};`;
+    value: (value: number, unity?: UNITY_PROPERTY) => PositionValue;
     percentage: (percentage: number) => `bottom: ${number}%;`
   };
 };
+
+const getValuePosition = (pose: POSITION_PROPERTY, value: number, unity?: 'px' | 'rem' | 'em' | '%'): PositionValue => {
+  if (value === 0) return `${pose}: 0;`
+
+  return `${pose}: ${!unity ? styleSize(value) : `${size(value)}${unity}`};`
+}
 
 export const position: ThemePosition = {
   static: 'position: static;',
@@ -35,19 +44,19 @@ export const position: ThemePosition = {
   absolute: 'position: absolute;',
 
   top: {
-    value: (value: number) => `top: ${styleSize(value)};`,
+    value: (value: number, unity?: UNITY_PROPERTY) => getValuePosition('top', value, unity),
     percentage: (percentage: number) => `top: ${percentage}%;`,
   },
   bottom: {
-    value: (value: number) => `bottom: ${styleSize(value)};`,
+    value: (value: number, unity?: UNITY_PROPERTY) => getValuePosition('bottom', value, unity),
     percentage: (percentage: number) => `bottom: ${percentage}%;`,
   },
   left: {
-    value: (value: number) => `left: ${styleSize(value)};`,
+    value: (value: number, unity?: UNITY_PROPERTY) => getValuePosition('left', value, unity),
     percentage: (percentage: number) => `left: ${percentage}%;`,
   },
   right: {
-    value: (value: number) => `right: ${styleSize(value)};`,
+    value: (value: number, unity?: UNITY_PROPERTY) => getValuePosition('right', value, unity),
     percentage: (percentage: number) => `right: ${percentage}%;`,
   },
 };

@@ -7,3 +7,6 @@ export * from './Interactive3DElement';
 
 export * from './next/TitlePage';
 export * from './next/Link';
+
+export * from './HeaderNavigation';
+export * from './Img';

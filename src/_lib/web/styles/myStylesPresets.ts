@@ -8,13 +8,30 @@ import { ThemeTransition, transition } from "./transition";
 import { ThemeResponsiveness, responsiveness } from "./responsiveness";
 import { ThemeFlexColumn, ThemeFlexRow, flex } from "./flex";
 import { padding } from "./padding";
-import { margin } from "./margin";
+import { margin, gapEls, ThemeGap } from "./margin";
 import { ThemePositions } from "./spacing";
+import { ThemeHeight, h } from "./height";
+import { ThemeWidth, w } from "./width";
+import { ThemeOverlap, overlap } from "./overlap";
+import { ThemeEffects, effects } from "./effect";
+import { ThemeOverflow, over } from "./overflow";
+import { ThemeShadow, shadow } from "./shadow";
+import { ThemeAnimation, animation } from "./animation";
+import { MyStyles, myStyles } from "./myStyles";
 
 export type ThemeStyle = {
+  myStyles: MyStyles;
+  h: ThemeHeight;
+  w: ThemeWidth;
+  animation: ThemeAnimation;
+  shadow: ThemeShadow;
+  over: ThemeOverflow;
+  effect: ThemeEffects;
+  overlap: ThemeOverlap;
   presets: ThemePresets;
   padding: ThemePositions;
   margin: ThemePositions;
+  gapEls: ThemeGap;
   colors: ThemeColors;
   responsiveness: ThemeResponsiveness;
   bg: ThemeColors;
@@ -32,7 +49,16 @@ export type ThemeStyle = {
   };
 };
 
-export const styledPresets: ThemeStyle = {
+export const myStylesPresets: ThemeStyle = {
+  myStyles,
+  h,
+  w,
+  animation,
+  over,
+  shadow,
+  effect: effects,
+  gapEls,
+  overlap,
   colors,
   textColor,
   bg,

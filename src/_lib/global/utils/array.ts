@@ -17,4 +17,8 @@ function getThisInArray(
   return elementFound;
 }
 
-export { existsInArray, getThisInArray };
+function isArray(value: any) {
+  return Array?.isArray(value)
+}
+
+export { existsInArray, getThisInArray, isArray };

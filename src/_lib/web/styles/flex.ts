@@ -1,5 +1,6 @@
 
 export type ThemeFlexRow = {
+  centerBetween: string;
   centerStart: string;
   centerEnd: string;
   startStart: string;
@@ -9,6 +10,7 @@ export type ThemeFlexRow = {
 };
 
 export type ThemeFlexColumn = {
+  centerBetween: string;
   centerCenter: string;
   centerStart: string;
   centerEnd: string;
@@ -45,6 +47,13 @@ export const flex: ThemeFlex = {
   `,
 
   row: {
+    // NOTE alignJustify
+    centerBetween: `
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    `,
     centerStart: `
       display: flex;
       flex-direction: row;
@@ -85,6 +94,12 @@ export const flex: ThemeFlex = {
 
   column: {
     // NOTE alignJustify
+    centerBetween: `
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+    `,
     centerCenter: `
       display: flex;
       flex-direction: column;

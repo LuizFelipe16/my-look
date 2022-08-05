@@ -6,16 +6,16 @@ type FetchEndpoints = {
 }
 
 export const Settings: AppSettings<FetchEndpoints> = {
-  AppName: 'MyTemplate Web',
-  Description: 'MyTemplate Web',
-  CreatedAt: '22 Julho, 2022',
+  AppName: 'MyLook',
+  Description: 'E-commerce',
+  CreatedAt: '31 Julho, 2022',
   Creator: 'Luiz Felipe Siqueira Felizatti',
   Developers: [{ name: 'Luiz Felipe Siqueira Felizatti' }],
   Application: {
     IsWeb: true,
     IsMobile: false,
     IsMadeForLearning: true,
-    GitRepository: 'https://github.com/LuizFelipe16/my-web.git'
+    GitRepository: 'https://github.com/LuizFelipe16/my-look.git'
   },
   Fetch: {
     ApiURL: '',
