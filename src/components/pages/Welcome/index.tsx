@@ -62,7 +62,7 @@ const WelcomeContent = myStylesProvider.style(theme => ([
       theme.textColor.white,
       theme.transition.apply(0.2),
       theme.presets.shadow.box,
-      theme.effect.hover('&', [theme.effect.filter.glow(0.8)])
+      theme.effect.hover.inOwn([theme.effect.filter.glow(0.8)])
     ]),
 
     theme.myStyles.create('element', [

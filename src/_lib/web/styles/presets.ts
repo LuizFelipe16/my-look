@@ -9,6 +9,7 @@ export type ThemePresets = {
   fillView: string;
   shadow: {
     box: string;
+    hover: string;
   };
 };
 
@@ -24,7 +25,10 @@ export const presets: ThemePresets = {
   },
 
   shadow: {
-    box: 'box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'
+    box: 'box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;',
+    hover: `
+    box-shadow: #0005 0px 3px 8px;
+    `,
   },
 
   flex: () => `flex: 1;`,

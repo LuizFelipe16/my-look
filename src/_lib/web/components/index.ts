@@ -10,3 +10,4 @@ export * from './next/Link';
 
 export * from './HeaderNavigation';
 export * from './Img';
+export * from './ImgZoom';

@@ -11,6 +11,7 @@ type XComponents = 'li' | 'ul' | 'tr' | 'thead' | 'tbody' | 'table' | 'h2' | 'h3
 
 export const myStylesProvider = {
   create: (createStyles: (theme: ThemeStyle, appTheme: TypeAppTheme) => any, componentType: ComponentTypeStyle, isPage?: boolean) => {
+    // criação de uma folha de estilo que pode ser incrementada
     return styled[componentType]`
       ${isPage ? `
         .page {
@@ -23,6 +24,7 @@ export const myStylesProvider = {
     `
   },
   style: (createStyles: (theme: ThemeStyle, appTheme: TypeAppTheme) => any) => {
+    // criação de um estilo simples que deve ser inserido em um create
     return `
       ${myStylesPresets.myStyles.transformer(createStyles(myStylesPresets, appTheme))}
     `

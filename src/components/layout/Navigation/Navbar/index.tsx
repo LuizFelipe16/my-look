@@ -43,7 +43,7 @@ const HeaderNavigation = myStylesProvider.create((theme) => [
     theme.myStyles.child('a', [
       theme.transition.apply(0.2),
       theme.font.size(1.2),
-      theme.effect.hover('&', [theme.textColor.primary]),
+      theme.effect.hover.inOwn([theme.textColor.primary]),
     ])
   ]),
 
@@ -58,6 +58,6 @@ const HeaderNavigation = myStylesProvider.create((theme) => [
     theme.padding.horizontal.size(1.25),
       
     theme.transition.apply(0.2),
-    theme.effect.hover('&', [theme.bg.primary, theme.textColor.background, theme.presets.shadow.box])
+    theme.effect.hover.inOwn([theme.bg.primary, theme.textColor.background, theme.presets.shadow.box])
   ])
 ], 'header', false)
