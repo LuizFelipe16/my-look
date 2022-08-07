@@ -24,6 +24,7 @@ export type ThemeColors = {
   transparent: string;
   gray: string;
   grayLight: string;
+  blackTransparent: string;
 }
 
 type Property = 'color' | 'background-color' | 'border-color';
@@ -60,6 +61,8 @@ export const appColors: ThemeColors = {
   transparent: '#FFF0',
   gray: '#212121',
   grayLight: '#606163',
+
+  blackTransparent: '#0001',
 };
 
 const colorsArray: Color[] = [
@@ -81,6 +84,7 @@ const colorsArray: Color[] = [
   { name: 'inputPlaceholder', value: appColors.input.placeholder },
   { name: 'gray', value: appColors.gray },
   { name: 'grayLight', value: appColors.grayLight },
+  { name: 'blackTransparent', value: appColors.blackTransparent },
 ];
 
 export function getStyleColorProperty(property: Property) {
@@ -111,6 +115,7 @@ export function getStyleColorProperty(property: Property) {
     },
     gray: stylesArray[16].gray,
     grayLight: stylesArray[17].grayLight,
+    blackTransparent: stylesArray[18].blackTransparent,
   };
 
   return styles;

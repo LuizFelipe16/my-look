@@ -3,7 +3,7 @@ import { View, myStylesProvider, Button, Divider, Img, Text } from '../../../_li
 function Welcome() {
   return (
     <View style={'welcome'}>
-      <View style={`content`}>
+      <View data-aos="fade-right" data-aos-duration="700" style={`content`}>
         <Text type='h1' style={`subtitle`}>Welcome to <span>MyLook!</span> Mount <br /> your beautiful look.</Text>
         <Divider style={`line`} />
         <Text style={`text`} text={`
@@ -11,9 +11,7 @@ function Welcome() {
           reprehenderit ipsa. Ut nisi possimus quaerat dolor?
           Ex dolores dolor deserunt itaque officiis non minus? Nesciunt amet ex a facilis rem!
         `}/>
-        <Button style={`about`} onPress={() => null}>About more</Button>
-
-        <Img style={'element'} src="/element.png" description="Element" />
+        <Button style={`about`} onPress={() => null}>Start Shopping</Button>
       </View>
 
       <View style={`images`}>
@@ -34,7 +32,10 @@ const WelcomeContent = myStylesProvider.style(theme => ([
 
     theme.responsiveness.notWeb([theme.w.fill(), theme.h.auto(), theme.padding.full.size(2.5), theme.margin.top.size(3.5)])
   ], [
-    theme.myStyles.create('subtitle', [theme.font.size(2.5)], theme.myStyles.child('span', [theme.textColor.primary])),
+    theme.myStyles.create('subtitle', [
+      theme.font.size(2.7), 
+      theme.font.weight.sb
+    ], theme.myStyles.child('span', [theme.textColor.primary])),
 
     theme.myStyles.create('line', [
       theme.margin.top.size(1.5),
@@ -46,32 +47,23 @@ const WelcomeContent = myStylesProvider.style(theme => ([
     ]),
 
     theme.myStyles.create('text', [
-      theme.font.weight.rg,
-      theme.textColor.gray,
       theme.margin.top.size(1),
-      theme.font.line(1.7)
+      theme.font.line(1.7),
+      theme.font.apply('rg', 0.9, theme.font.typography.text, theme.colors.grayLight)
     ]),
     
     theme.myStyles.create('about', [
-      theme.w.size(10),
-      theme.padding.full.size(1),
+      theme.w.size(15),
+      theme.padding.horizontal.size(1.5),
+      theme.padding.vertical.size(0.8),
       theme.margin.top.size(2),
       theme.border.hide,
       theme.border.rounded.size(5),
       theme.bg.primary,
-      theme.textColor.white,
       theme.transition.apply(0.2),
       theme.presets.shadow.box,
+      theme.font.apply('md', 1, theme.font.typography.text, theme.colors.white),
       theme.effect.hover.inOwn([theme.effect.filter.glow(0.8)])
-    ]),
-
-    theme.myStyles.create('element', [
-      theme.w.size(18),
-      theme.position.absolute,
-      theme.position.left.value(-180, 'px'),
-      theme.position.bottom.value(-100, 'px'),
-
-      theme.responsiveness.notWeb([theme.presets.hide()])
     ]),
   ]),
 ]));

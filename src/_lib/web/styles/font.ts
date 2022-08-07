@@ -6,7 +6,7 @@ type FontStyle = `font-style: ${string};`
 
 type FontFamily = `font-family: ${string};`
 
-type WeightTypes = 'th' | 'rg' | 'md' | 'sb' | 'bl' | 'xb'
+type WeightTypes = 'th' | 'sr' | 'rg' | 'md' | 'sb' | 'bl' | 'xb'
 
 export type ThemeFont = {
   size: Function;
@@ -19,6 +19,7 @@ export type ThemeFont = {
 
   weight: {
     th: FontWeight; // NOTE thin
+    sr: FontWeight; // NOTE semi-regular
     rg: FontWeight; // NOTE regular
     md: FontWeight; // NOTE medium
     sb: FontWeight; // NOTE semi-bold
@@ -31,12 +32,14 @@ export type ThemeFont = {
   };
 
   line: (value: number) => string;
+  spacing: (value: number) => string;
 };
 
-type FontWeights = { th: number, rg: number, md: number, sb: number, bl: number, xb: number }
+type FontWeights = { th: number, sr: number, rg: number, md: number, sb: number, bl: number, xb: number }
 
 const fontWeights: FontWeights = {
   ['th']: 100,
+  ['sr']: 300,
   ['rg']: 400,
   ['md']: 500,
   ['sb']: 600,
@@ -52,12 +55,13 @@ export const font: ThemeFont = {
   }, 
 
   typography: {
-    title: `font-family: "${appVariables.typography.title}", sans-serif;`,
-    text: `font-family: "${appVariables.typography.text}", sans-serif;`,
+    title: `font-family: "${appVariables.typography.title}";`,
+    text: `font-family: "${appVariables.typography.text}";`,
   },
 
   weight: {
     th: `font-weight: ${fontWeights['th']};`,
+    sr: `font-weight: ${fontWeights['sr']};`,
     rg: `font-weight: ${fontWeights['rg']};`,
     md: `font-weight: ${fontWeights['md']};`,
     sb: `font-weight: ${fontWeights['sb']};`,
@@ -70,4 +74,5 @@ export const font: ThemeFont = {
   },
 
   line: (v: number) => `line-height: ${v};`,
+  spacing: (v: number) => `letter-spacing: ${v}px;`,
 };

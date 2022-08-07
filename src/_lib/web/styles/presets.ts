@@ -11,6 +11,9 @@ export type ThemePresets = {
     box: string;
     hover: string;
   };
+  cursor: {
+    pointer: string;
+  };
 };
 
 export const presets: ThemePresets = {
@@ -41,4 +44,8 @@ export const presets: ThemePresets = {
     width: 100vw;
     height: 100vh;
   `,
+
+  cursor: {
+    pointer: 'cursor: pointer;'
+  }
 };

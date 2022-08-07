@@ -42,7 +42,8 @@ const HeaderNavigation = myStylesProvider.create((theme) => [
   ], [
     theme.myStyles.child('a', [
       theme.transition.apply(0.2),
-      theme.font.size(1.2),
+      theme.font.size(1.1),
+      theme.font.weight.md,
       theme.effect.hover.inOwn([theme.textColor.primary]),
     ])
   ]),

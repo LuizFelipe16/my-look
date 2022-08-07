@@ -28,6 +28,12 @@ export type ThemeBorder = {
     inPositions: (value: number, poseOne: Position, poseTwo: Position) => string;
   },
   hide: string;
+  in: {
+    right: (value: number, color: string) => `border-right: ${string};`
+    left: (value: number, color: string) => `border-left: ${string};`
+    top: (value: number, color: string) => `border-top: ${string};`
+    bottom: (value: number, color: string) => `border-bottom: ${string};`
+  };
 };
 
 const borderValues = {
@@ -65,4 +71,11 @@ export const border: ThemeBorder = {
   },
 
   hide: `border: none;`,
+
+  in: {
+    right: (value: number, color: string) => `border-right: ${value}px solid ${color};`,
+    left: (value: number, color: string) => `border-left: ${value}px solid ${color};`,
+    bottom: (value: number, color: string) => `border-bottom: ${value}px solid ${color};`,
+    top: (value: number, color: string) => `border-top: ${value}px solid ${color};`,
+  },
 };
