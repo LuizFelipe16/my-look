@@ -1,4 +1,4 @@
-import { borderColor, ThemeColors } from "../../../_app";
+import { getStyleColorProperty, ThemeColors } from "../../../_app";
 import { styleSize } from "../tools";
 
 type Border = `border: ${string} solid ${string};`;
@@ -57,7 +57,7 @@ export const border: ThemeBorder = {
     inPosition: (value: number, pose: Position) => `border-${pose}-width: ${styleSize(value)};`
   },
 
-  color: borderColor,
+  color: getStyleColorProperty('border-color'),
 
   rounded: {
     size: (value: number) => `border-radius: ${styleSize(value)};`,
