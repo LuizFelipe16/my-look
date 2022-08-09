@@ -1,5 +1,6 @@
 import { View, myStylesProvider, Text, Divider, Button, Link } from '../../../_lib/web';
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
+import { ScrollTopButton } from '../../../_lib/web/components/ScrollTopButton';
 
 function Footer() {
   return (
@@ -40,8 +41,11 @@ function Footer() {
             <Link href='#'><FaInstagram /></Link>
             <Link href='#'><FaLinkedinIn /></Link>
           </View>
+
+          <ScrollTopButton isNotIcon />
         </View>
       </View>
+      
       <View style={`wrapper-copyright`}>
         <Text>© 2022 All rights reserved. By create <strong>LouizDeveloper</strong></Text>
       </View>
@@ -51,19 +55,26 @@ function Footer() {
 
 const Wrapper = myStylesProvider.create(theme => ([
   theme.w.fill(),
-  theme.h.min(65, 'vh'),
+  theme.h.auto(),
   theme.column.centerBetween,
   
   theme.myStyles.childClass('wrapper-content', [
     theme.w.fill(),
-    theme.h.min(85, '%'),
+    theme.h.auto(),,
     theme.bg.blackTransparent,
+
+    theme.responsiveness.platforms({}, { comommStyle: [theme.column.centerCenter], incluide: ['m', 't'] }),
   ], [
     theme.myStyles.childClass('session', [
       theme.w.size(20, '%'),
       theme.column.startStart,
       theme.padding.horizontal.xl,
       theme.padding.vertical.size(4),
+
+      theme.responsiveness.platforms({}, { 
+        comommStyle: [theme.w.size(100, '%'), theme.column.centerCenter, theme.padding.vertical.size(2.5)], 
+        incluide: ['m', 't'] 
+      }),
 
       theme.myStyles.child('h1', [
         theme.font.apply('sb', 1.2, theme.font.typography.text, theme.colors.black),
@@ -84,7 +95,11 @@ const Wrapper = myStylesProvider.create(theme => ([
       theme.h.size(75, '%'),
       theme.border.hide,
       theme.border.rounded.size(5),
-      theme.bg.blackTransparent
+      theme.bg.blackTransparent,
+
+      theme.responsiveness.platforms({}, { 
+        comommStyle: [theme.w.size(80, '%'), theme.h.size(2, 'px')], incluide: ['m', 't'] 
+      }),
     ]),
 
     theme.myStyles.childClass('session-subscribe', [
@@ -93,7 +108,13 @@ const Wrapper = myStylesProvider.create(theme => ([
       theme.padding.horizontal.xl,
       theme.padding.vertical.size(4),
 
+      theme.responsiveness.platforms({}, {
+        comommStyle: [theme.w.size(100, '%'), theme.column.centerCenter, theme.padding.vertical.size(2.5)],
+        incluide: ['m', 't']
+      }),
+    ], [
       theme.myStyles.child('h2', [theme.font.apply('sb', 1.2, theme.font.typography.text, theme.colors.black)]),
+      
       theme.myStyles.childClass('social-links', [
         theme.bg.transparent,
         theme.row.centerStart,
@@ -108,14 +129,31 @@ const Wrapper = myStylesProvider.create(theme => ([
           theme.border.fillByPixel(1, theme.colors.black),
           theme.transition.apply(0.2),
           theme.effect.hover.inOwn([theme.bg.black, theme.border.fillByPixel(1, theme.colors.white), theme.textColor.white])
+        ])
       ]),
-      ]),
+
+      theme.myStyles.childClass('my-scrollToTop', [
+        theme.textColor.grayLight,
+        theme.font.size(1),
+        theme.font.style.underline,
+        theme.margin.top.size(6),
+        theme.transition.apply(0.2),
+        theme.effect.hover.inOwn([theme.textColor.primary, theme.animation.apply('jump-text', 1, 'infinite')]),
+        theme.animation.define.full(
+          'jump-text', 
+          [theme.animation.transform.apply((t) => [t.translate.y(0)])], 
+          [theme.animation.transform.apply((t) => [t.translate.y(-10)])], 
+          [theme.animation.transform.apply((t) => [t.translate.y(0)])], 
+        ),
+
+        theme.responsiveness.platforms({}, { comommStyle: [theme.margin.top.size(3.5)], incluide: ['m', 't'] }),
+      ])
     ]),
   ]),
   
   theme.myStyles.childClass('wrapper-copyright', [
     theme.w.fill(),
-    theme.h.min(15, '%'),
+    theme.h.auto(),
     theme.bg.primary,
     theme.column.centerCenter,
     theme.font.apply('rg', 0.9, theme.font.typography.title, theme.colors.white),

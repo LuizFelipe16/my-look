@@ -1,25 +1,25 @@
-import { Button, Icon } from "@chakra-ui/react";
+import { Icon } from "@chakra-ui/react";
+import { HTMLAttributes, ReactNode } from "react";
 import { FaArrowUp } from 'react-icons/fa';
 import { animateScroll } from 'react-scroll';
+import { Button } from "./Button";
 
-export function ScrollTopButton() {
+interface ScrollTopButtonProps extends HTMLAttributes<HTMLButtonElement> {
+  style?: string | undefined | any;
+  children?: ReactNode;
+  isNotIcon?: boolean;
+};
+
+export function ScrollTopButton({ style, children, isNotIcon = false, ...rest }: ScrollTopButtonProps) {
   return (
     <Button
-      bgColor="#48CDD0"
-      color="#171923"
-      position="fixed"
-      bottom="10"
-      right="10"
-      boxShadow="dark-lg"
-      zIndex="1000"
-      borderRadius="full"
-      onClick={() => animateScroll.scrollToTop({ duration: 1000 })}
-
-      _hover={{
-        bgColor: '#43bcbe'
-      }}
+      style={`my-scrollToTop ${style}`}
+      onPress={() => animateScroll.scrollToTop({ duration: 1000 })}
+      {...rest}
     >
-      <Icon as={FaArrowUp} />
+      {!isNotIcon && <Icon as={FaArrowUp} />} 
+      {isNotIcon && 'Voltar ao topo'}
+      {children}
     </Button>
   );
 }

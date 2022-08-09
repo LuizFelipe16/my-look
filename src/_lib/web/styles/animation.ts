@@ -3,6 +3,10 @@ import { myStyles } from "./myStyles";
 type Transformers = {
   scale: (value: number) => `scale(${number})`,
   rotate: (degrees: number) => `rotate(${number}deg)`,
+  translate: {
+    x: (value: number) => `translateX(${number}px)`,
+    y: (value: number) => `translateY(${number}px)`,
+  },
 }
 
 export type ThemeAnimation = {
@@ -27,6 +31,10 @@ export type ThemeAnimation = {
 const transformers: Transformers = {
   scale: (n: number) => `scale(${n})`,
   rotate: (degrees: number) => `rotate(${degrees}deg)`,
+  translate: {
+    x: (v: number) => `translateX(${v}px)`,
+    y: (v: number) => `translateY(${v}px)`,
+  },
 }
 
 export const animation: ThemeAnimation = {

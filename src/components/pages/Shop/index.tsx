@@ -42,8 +42,14 @@ const ShopStyles = myStylesProvider.style(theme => ([
     theme.w.fill(),
     theme.h.min(100, 'vh'),
     theme.column.centerStart,
-    theme.responsiveness.media([theme.column.centerCenter, theme.gapEls.full.size(1)], 100, 750),
     theme.padding.full.lg,
+    theme.bg.background,
+
+    theme.responsiveness.media([], 100, 750),
+
+    theme.responsiveness.platforms({}, {
+      comommStyle: [theme.column.centerCenter, theme.gapEls.full.size(1), theme.padding.full.sm], incluide: ['m', 't']
+    })
   ], [
     theme.myStyles.child('title', [
       theme.font.apply('sb', 2, theme.font.typography.title, theme.colors.primary),
@@ -56,7 +62,11 @@ const ShopStyles = myStylesProvider.style(theme => ([
       theme.row.centerBetween,
       theme.margin.top.xl,
       theme.position.relative,
-      theme.responsiveness.notWeb([theme.column.centerStart, theme.gapEls.full.size(1)]),
+      
+      theme.responsiveness.platforms({
+        mobile: [theme.h.auto(), theme.column.centerCenter, theme.w.size(100, '%'), theme.gapEls.full.size(1)],
+        tablet: [theme.h.auto(), theme.column.centerCenter, theme.w.size(100, '%'), theme.gapEls.full.size(1)],
+      })
     ], [
       theme.myStyles.childClass('line', [
         theme.w.size(120, '%'),
@@ -67,7 +77,9 @@ const ShopStyles = myStylesProvider.style(theme => ([
         theme.position.left.value(-2.5),
         theme.border.rounded.size(5),
         theme.bg.primary,
-        theme.overlap.value(-10),
+        theme.overlap.value(1),
+
+        theme.responsiveness.platforms({}, { comommStyle: [theme.presets.hide()], incluide: ['m', 't'] })
       ]),
 
       theme.myStyles.childClass('card-look', [
@@ -77,9 +89,15 @@ const ShopStyles = myStylesProvider.style(theme => ([
         theme.presets.shadow.hover,
         theme.border.rounded.size(1),
         theme.over.hide,
+        theme.overlap.value(2),
         theme.transition.apply(0.3),
         `transform: rotate(-1deg);`,
-        theme.effect.hover.inOwn([`transform: rotate(0deg);`])
+        theme.effect.hover.inOwn([`transform: rotate(0deg);`]),
+
+        theme.responsiveness.platforms({
+          mobile: [theme.w.size(90, '%'), theme.h.min(30), theme.h.auto(), `transform: rotate(0deg);`],
+          tablet: [theme.w.size(70, '%'), theme.h.min(30), theme.h.auto(), `transform: rotate(0deg);`],
+        })
       ], [
         theme.myStyles.create('img-look', [theme.border.rounded.inPositions(6, 'bottom', 'left')]),
 

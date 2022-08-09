@@ -47,6 +47,10 @@ export type ThemeStyle = {
   spacing: {
     size: Function
   };
+  flex: {
+    breakLine: string;
+    display: string;
+  };
 };
 
 export const myStylesPresets: ThemeStyle = {
@@ -77,4 +81,8 @@ export const myStylesPresets: ThemeStyle = {
     size: styleSize,
   },
   transition,
+  flex: {
+    breakLine: flex.flex.breakLine,
+    display: flex.flex.display,
+  },
 };

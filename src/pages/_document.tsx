@@ -12,7 +12,7 @@ export default class MyDocument extends Document {
           />
           <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
-          <link rel="shortcut icon" href="/icon.png" type="image/png" />
+          <link rel="shortcut icon" href="/logo.png" type="image/png" />
         </Head>
         <body>
           <Main />
