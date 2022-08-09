@@ -1,5 +1,4 @@
 import { createGlobalStyle } from 'styled-components';
-import { theme } from '../_app';
 
 export const GlobalStyle = createGlobalStyle`
   :root {
@@ -55,11 +54,11 @@ export const GlobalStyle = createGlobalStyle`
 
   ::-webkit-scrollbar {
     width: 9px;
-    background: ${theme.colors.background};
+    background: var(--white-200);
   }
   
   ::-webkit-scrollbar-thumb {
-    background: ${theme.colors.primary};
+    background: var(--orange);
     border-radius: 2rem;
   }
 `;
