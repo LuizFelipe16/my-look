@@ -1,10 +1,10 @@
 import { myStylesPresets, border, padding, font, size, presets } from '../_lib/web';
-import { colors, bg, textColor } from './colors';
+import { myAppColors, bg, textColor } from './themeColors';
 
 export const theme = {
   styled: myStylesPresets,
   presets,
-  colors,
+  colors: myAppColors,
   textColor,
   bg,
   font,

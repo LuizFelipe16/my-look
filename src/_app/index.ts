@@ -1,3 +1,4 @@
 export * from './app';
 export * from './theme';
-export * from './colors';
+export * from './themeColors';
+export * from './styles/AppColors';

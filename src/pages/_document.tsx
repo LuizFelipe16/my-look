@@ -18,7 +18,7 @@ export default class MyDocument extends Document {
           <Main />
           <NextScript />
 
-          <script src="https://unpkg.com/aos@next/dist/aos.js" />
+          <script src="https://unpkg.com/aos@next/dist/aos.js" async />
           <script>
             AOS.init();
           </script>

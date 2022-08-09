@@ -1,5 +1,5 @@
 import { styleSize } from "../tools";
-import { ThemeColors, colors, bg, textColor } from "../../../_app/colors";
+import { ThemeColors, myAppColors, bg, textColor } from "../../../_app";
 import { ThemeFont, font } from "./font";
 import { ThemePresets, presets } from "./presets";
 import { ThemeBorder, border } from "./border";
@@ -63,7 +63,7 @@ export const myStylesPresets: ThemeStyle = {
   effect: effects,
   gapEls,
   overlap,
-  colors,
+  colors: myAppColors,
   textColor,
   bg,
   responsiveness,
