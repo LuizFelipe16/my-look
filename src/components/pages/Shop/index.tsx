@@ -110,6 +110,10 @@ const ShopStyles = myStylesProvider.style(theme => ([
           tablet: [theme.w.size(70, '%'), theme.h.min(30, 'rem'), theme.h.auto(), `transform: rotate(0deg);`],
         })
       ], [
+        theme.myStyles.childClass('img-look', [
+          theme.h.size(100, '%')
+        ]),
+
         theme.myStyles.childClass('description', [
           theme.margin.left.size(0.5),
           theme.margin.top.size(0.5),
