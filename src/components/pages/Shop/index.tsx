@@ -1,7 +1,7 @@
 import { View, myStylesProvider, Text, ImgZoom, Divider, Button } from '../../../_lib/web';
 
-const imgHeigth = 100
-const imgHeigtUnity = '%'
+const imgHeigth = 25
+const imgHeigtUnity = 'rem'
 
 function Shop() {
   return (
@@ -111,7 +111,7 @@ const ShopStyles = myStylesProvider.style(theme => ([
         })
       ], [
         theme.myStyles.childClass('img-look', [
-          theme.h.size(100, '%')
+          theme.h.size(25, 'rem')
         ]),
 
         theme.myStyles.childClass('description', [
