@@ -96,7 +96,7 @@ const WelcomeImageGirl = myStylesProvider.style(theme => ([
       theme.effect.filter.objectCover(),
       theme.overlap.value(2),
       theme.responsiveness.multiple({
-        phone: [theme.w.auto(), theme.w.max(16)],
+        phone: [theme.w.auto(), theme.w.max(20)],
         tablet: [theme.w.auto(), theme.w.max(25)],
         large: [theme.w.auto(), theme.w.max(30)],
       }),
