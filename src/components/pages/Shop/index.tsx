@@ -1,23 +1,24 @@
 import { View, myStylesProvider, Text, ImgZoom, Divider, Button } from '../../../_lib/web';
 
-const imgHeigth = 18
+const imgHeigth = 100
+const imgHeigtUnity = '%'
 
 function Shop() {
   return (
     <View style={'shop'}>
-      <Text data-aos="fade-down" data-aos-duration="1000" type='h1' style={`title`} text='Our best looks' />
+      <Text data-aos="fade-down" data-aos-duration="500" type='h1' style={`title`} text='Our best looks' />
       <View style={'looks'}>
         <Divider style={`line`} />
         <View style={'card-look'}> 
-          <ImgZoom src='look1.jpeg' h={imgHeigth} seconds={0.2} style={'img-look'} description='Look One' />
+          <ImgZoom src='look1.jpeg' h={imgHeigth} hUnity={imgHeigtUnity} seconds={0.2} style={'img-look'} description='Look One' />
           <Text style={`description`} text='Social Look' />
           <View style={'tags'}>
-            <Text text='$128,96' />
+            <Text text='$138,96' />
             <Button text='Buy Now!' onPress={() => null} />
           </View>
         </View>
         <View style={'card-look'}> 
-          <ImgZoom src='look2.jpg' h={imgHeigth} seconds={0.2} style={'img-look'} description='Look One' />
+          <ImgZoom src='look2.jpg' h={imgHeigth} hUnity={imgHeigtUnity} seconds={0.2} style={'img-look'} description='Look One' />
           <Text style={`description`} text='Fast Look' />
           <View style={'tags'}>
             <Text text='$85,24' />
@@ -25,10 +26,18 @@ function Shop() {
           </View>
         </View>
         <View style={'card-look'}> 
-          <ImgZoom src='look3.jpg' h={imgHeigth} seconds={0.2} style={'img-look'} description='Look One' />
+          <ImgZoom src='look3.jpg' h={imgHeigth} hUnity={imgHeigtUnity} seconds={0.2} style={'img-look'} description='Look One' />
           <Text style={`description`} text='Older Look' />
           <View style={'tags'}>
-            <Text text='$96,70' />
+            <Text text='$116,70' />
+            <Button text='Buy Now!' onPress={() => null} />
+          </View>
+        </View>
+        <View style={'card-look'}> 
+          <ImgZoom src='look4.jpeg' h={imgHeigth} hUnity={imgHeigtUnity} seconds={0.2} style={'img-look'} description='Look One' />
+          <Text style={`description`} text='Minimal Look' />
+          <View style={'tags'}>
+            <Text text='$76,70' />
             <Button text='Buy Now!' onPress={() => null} />
           </View>
         </View>
@@ -57,11 +66,12 @@ const ShopStyles = myStylesProvider.style(theme => ([
     ], true),
     
     theme.myStyles.create('looks', [
-      theme.w.size(90, '%'),
-      theme.h.size(70, '%'),
+      theme.w.size(95, '%'),
+      theme.h.size(65, '%'),
       theme.row.centerBetween,
       theme.margin.top.xl,
       theme.position.relative,
+      theme.gapEls.full.size(1.8),
       
       theme.responsiveness.platforms({
         mobile: [theme.h.auto(), theme.column.centerCenter, theme.w.size(100, '%'), theme.gapEls.full.size(3)],
@@ -69,12 +79,12 @@ const ShopStyles = myStylesProvider.style(theme => ([
       })
     ], [
       theme.myStyles.childClass('line', [
-        theme.w.size(120, '%'),
+        theme.w.size(150, '%'),
         theme.h.size(4),
         theme.border.hide,
         theme.position.absolute,
         theme.position.top.value(7),
-        theme.position.left.value(-2.5),
+        theme.position.right.value(-12),
         theme.border.rounded.size(5),
         theme.bg.primary,
         theme.overlap.value(1),
@@ -89,6 +99,7 @@ const ShopStyles = myStylesProvider.style(theme => ([
         theme.presets.shadow.hover,
         theme.border.rounded.size(1),
         theme.over.hide,
+        theme.position.relative,
         theme.overlap.value(2),
         theme.transition.apply(0.3),
         `transform: rotate(-1deg);`,
@@ -99,11 +110,15 @@ const ShopStyles = myStylesProvider.style(theme => ([
           tablet: [theme.w.size(70, '%'), theme.h.min(30), theme.h.auto(), `transform: rotate(0deg);`],
         })
       ], [
-        theme.myStyles.create('img-look', [theme.border.rounded.inPositions(6, 'bottom', 'left')]),
-
         theme.myStyles.childClass('description', [
-          theme.margin.left.size(1.4),
-          theme.font.apply('md', 1.1, theme.font.typography.title, theme.colors.black)
+          theme.margin.left.size(0.5),
+          theme.margin.top.size(0.5),
+          theme.effect.filter.opacity(0.85),
+          theme.position.absolute,
+          theme.padding.full.in(0.5, 2, 0.5, 2),
+          theme.border.rounded.size(1),
+          theme.bg.white,
+          theme.font.apply('md', 1, theme.font.typography.title, theme.colors.black)
         ]),
         
         theme.myStyles.childClass('tags', [
@@ -122,7 +137,7 @@ const ShopStyles = myStylesProvider.style(theme => ([
             theme.w.size(55, '%'),
             theme.border.rounded.inPositions(2, 'top', 'left'),
             theme.border.rounded.inPositions(2, 'bottom', 'left'),
-            theme.bg.black,
+            theme.bg.primary,
             theme.font.apply('rg', 1, theme.font.typography.title, theme.colors.background),
             theme.transition.apply(0.2),
             theme.effect.hover.inOwn([theme.effect.filter.glow(0.8)])

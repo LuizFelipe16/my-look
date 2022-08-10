@@ -7,8 +7,9 @@ export type ThemeEffects = {
     inOwnChild: (childFocus: string, styles: any, isChildClass?: boolean) => string;
   },
   filter: {
-    glow: (value: number) => string;
-    objectCover: () => string;
+    glow: (value: number) => `filter: brightness(${number});`;
+    objectCover: () => `object-fit: cover;`;
+    opacity: (percentage: number) => `opacity: ${number};`;
   };
 };
 
@@ -21,5 +22,6 @@ export const effects: ThemeEffects = {
   filter: {
     glow: (value: number) => `filter: brightness(${value});`,
     objectCover: () => `object-fit: cover;`,
+    opacity: (percentage: number) => `opacity: ${percentage};`,
   },
 };

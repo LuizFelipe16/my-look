@@ -7,6 +7,7 @@ interface ImgProps extends HTMLAttributes<HTMLImageElement> {
   src: string | any;
   h: number;
   seconds: number;
+  hUnity?: '%' | 'rem' | 'px';
   scale?: number;
 }
 
@@ -15,6 +16,7 @@ export const ImgZoom = (
     description,
     src,
     h,
+    hUnity,
     seconds,
     scale,
     style,
@@ -22,7 +24,7 @@ export const ImgZoom = (
   }: ImgProps
 ) => {
   return (
-    <WrapperImgZoom2 h={h} seconds={seconds} scale={scale}>
+    <WrapperImgZoom2 h={h} unity={hUnity} seconds={seconds} scale={scale}>
       <img className={`my-card-img-preset-zoom ${style}`} src={src} alt={description} {...rest} />
     </WrapperImgZoom2>
   )
@@ -36,7 +38,7 @@ type WrapperImgZoom = {
   children: ReactNode;
 };
 
-const WrapperImgZoom2 = ({ h, unity, children, seconds, scale }: WrapperImgZoom) => {
+const WrapperImgZoom2 = ({ h, unity = 'rem', children, seconds, scale }: WrapperImgZoom) => {
   const WrapperImgZoom = myStylesProvider.create((theme) => ([
     theme.w.fill(),
     theme.h.size(h, unity),

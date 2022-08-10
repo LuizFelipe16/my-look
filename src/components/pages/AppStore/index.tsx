@@ -37,9 +37,9 @@ const AppStoreStyles = myStylesProvider.style(theme => ([
     theme.padding.full.size(4),
     theme.bg.white,
 
-    theme.responsiveness.platforms({
-      mobile: [theme.column.startCenter, theme.gapEls.full.md, theme.padding.horizontal.size(2), theme.padding.vertical.size(4)],
-      tablet: [theme.column.startCenter, theme.gapEls.full.md, theme.padding.horizontal.size(2), theme.padding.vertical.size(4)],
+    theme.responsiveness.platforms({}, {
+      comommStyle: [theme.column.startCenter, theme.gapEls.full.md, theme.padding.horizontal.size(2), theme.padding.vertical.size(4)],
+      incluide: ['m', 't']
     })
   ], [
     theme.myStyles.childClass('content', [

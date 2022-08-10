@@ -1,4 +1,5 @@
-import { View, myStylesProvider, Button, Divider, Img, Text } from '../../../_lib/web';
+import { theme } from '../../../_app';
+import { View, myStylesProvider, Button, Divider, Img, Text, Spinner } from '../../../_lib/web';
 
 function Welcome() {
   return (
@@ -15,11 +16,18 @@ function Welcome() {
       </View>
 
       <View style={`images`}>
+        <Spinner wrapperStyles={wrapperStyles} color={theme.colors.primary} />
         <Img src="/girl.png" description="Girl look style" />
       </View>
     </View>
   );
 };
+
+const wrapperStyles = myStylesProvider.style(theme => ([
+  theme.position.absolute,
+  theme.position.top.percentage(50),
+  theme.position.left.percentage(50),
+]));
 
 const WelcomeContent = myStylesProvider.style(theme => ([
   theme.myStyles.create('content', [
@@ -73,6 +81,7 @@ const WelcomeImageGirl = myStylesProvider.style(theme => ([
     theme.presets.flex(),
     theme.over.hide,
     theme.centerColumn,
+    theme.position.relative,
     
     theme.animation.apply('scale_mutation_effect', 8, 'infinite'),
     theme.animation.define.full(
@@ -81,15 +90,18 @@ const WelcomeImageGirl = myStylesProvider.style(theme => ([
       [theme.animation.transform.apply((t) => [t.scale(0.9), t.rotate(10)])], 
       [theme.animation.transform.apply((t) => [t.scale(1.0), t.rotate(-10)])], 
     )
-  ], theme.myStyles.child('img', [
-    theme.w.size(33), 
-    theme.effect.filter.objectCover(),
-    theme.responsiveness.multiple({
-      phone: [theme.w.auto(), theme.w.max(16)],
-      tablet: [theme.w.auto(), theme.w.max(25)],
-      large: [theme.w.auto(), theme.w.max(30)],
-    }),
-  ])),
+  ], [
+    theme.myStyles.child('img', [
+      theme.w.size(33), 
+      theme.effect.filter.objectCover(),
+      theme.overlap.value(2),
+      theme.responsiveness.multiple({
+        phone: [theme.w.auto(), theme.w.max(16)],
+        tablet: [theme.w.auto(), theme.w.max(25)],
+        large: [theme.w.auto(), theme.w.max(30)],
+      }),
+    ]),
+  ]),
 ]));
 
 const WelcomeStyles = myStylesProvider.style(theme => ([
