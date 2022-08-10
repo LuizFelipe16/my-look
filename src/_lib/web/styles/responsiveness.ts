@@ -45,6 +45,27 @@ export const responsiveness: ThemeResponsiveness = {
     const laptop = devices?.laptop;
     const large = devices?.large;
 
+    if (devices && comommStyle && !!incluide) {
+      return `
+        @media (min-width: 100px) and (max-width: 540px) { 
+          ${myStyles.transformer(incluide.includes('m') && comommStyle)} 
+          ${myStyles.transformer(mobile)}
+        }
+        @media (min-width: 541px) and (max-width: 768px) {
+          ${myStyles.transformer(incluide.includes('t') && comommStyle)} 
+          ${myStyles.transformer(tablet)}
+        }
+        @media (min-width: 769px) and (max-width: 992px) { 
+          ${myStyles.transformer(incluide.includes('l') && comommStyle)} 
+          ${myStyles.transformer(laptop)}
+        }
+        @media (min-width: 993px) and (max-width: 1200px) { 
+          ${myStyles.transformer(incluide.includes('l2x') && comommStyle)} 
+          ${myStyles.transformer(large)}
+        }
+      `
+    }
+
     if (comommStyle && !!incluide) {
       return `
         @media (min-width: 100px) and (max-width: 540px) { ${myStyles.transformer(incluide.includes('m') ? comommStyle : mobile)} }
@@ -55,7 +76,7 @@ export const responsiveness: ThemeResponsiveness = {
     }
 
     return `
-      @media (min-width: 100px) and (max-width: 540px) { ${myStyles.transformer(mobile )} }
+      @media (min-width: 100px) and (max-width: 540px) { ${myStyles.transformer(mobile)} }
       @media (min-width: 541px) and (max-width: 768px) { ${myStyles.transformer(tablet)} }
       @media (min-width: 769px) and (max-width: 992px) { ${myStyles.transformer(laptop)} }
       @media (min-width: 993px) and (max-width: 1200px) { ${myStyles.transformer(large)} }

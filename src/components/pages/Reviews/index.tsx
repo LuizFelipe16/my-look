@@ -27,14 +27,17 @@ function Reviews() {
 const ReviewsStyles = myStylesProvider.style(theme => ([
   theme.myStyles.create('reviews', [
     theme.w.fill(),
-    theme.h.auto(),,
+    theme.h.auto(),
     theme.column.startCenter,
     theme.padding.full.size(6),
     theme.bg.blackTransparent,
 
-    theme.responsiveness.platforms({}, {
-      comommStyle: [theme.padding.horizontal.size(2), theme.padding.vertical.size(4)], incluide: ['m', 't']
-    }),
+    theme.responsiveness.platforms({
+      mobile: [theme.padding.horizontal.size(2), theme.padding.vertical.size(4)],
+      tablet: [theme.padding.horizontal.size(2), theme.padding.vertical.size(4)],
+      laptop: [theme.h.min(100, 'vh')],
+      large: [theme.h.min(100, 'vh')],
+    })
   ], [
     theme.myStyles.childClass('title', [
       theme.font.apply('sb', 2.2, theme.font.typography.title, theme.colors.black),
