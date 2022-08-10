@@ -111,7 +111,7 @@ const DescriptionStyles = myStylesProvider.style(theme => ([
         theme.bg.transparent,
 
         theme.responsiveness.platforms({}, {
-          comommStyle: [theme.h.size(20), theme.w.size(20)], incluide: ['m', 't']
+          comommStyle: [theme.h.size(23), theme.w.size(23)], incluide: ['m', 't']
         }),
       ], theme.myStyles.childClass('super-woman-illustration', [theme.w.fill(), theme.h.fill(), theme.effect.filter.objectCover]))
     ])
