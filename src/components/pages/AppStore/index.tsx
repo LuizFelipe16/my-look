@@ -5,7 +5,7 @@ function AppStore() {
   return (
     <View style={'app-store'}>
       <View style={`content`}>
-        <Text data-aos="fade-right" data-aos-duration="200" type='h1' style={`title`} text='A new experience,' />
+        <Text type='h1' style={`title`} text='A new experience,' />
         <Text data-aos="fade-right" data-aos-duration="500" type='h2' style={`subtitle`} text='mount looks in the palm of your hand.' />
         <Text data-aos="fade-right" data-aos-duration="800" style={`text`} text='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum scelerisque nisl quis viverra tincidunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit.' />
 
@@ -38,8 +38,8 @@ const AppStoreStyles = myStylesProvider.style(theme => ([
     theme.bg.white,
 
     theme.responsiveness.platforms({
-      mobile: [theme.column.startCenter, theme.gapEls.full.md, theme.padding.full.size(2)],
-      tablet: [theme.column.startCenter, theme.gapEls.full.md, theme.padding.full.size(2)],
+      mobile: [theme.column.startCenter, theme.gapEls.full.md, theme.padding.horizontal.size(2), theme.padding.vertical.size(4)],
+      tablet: [theme.column.startCenter, theme.gapEls.full.md, theme.padding.horizontal.size(2), theme.padding.vertical.size(4)],
     })
   ], [
     theme.myStyles.childClass('content', [

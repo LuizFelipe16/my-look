@@ -33,7 +33,7 @@ const ReviewsStyles = myStylesProvider.style(theme => ([
     theme.bg.blackTransparent,
 
     theme.responsiveness.platforms({}, {
-      comommStyle: [theme.padding.full.size(2)], incluide: ['m', 't']
+      comommStyle: [theme.padding.horizontal.size(2), theme.padding.vertical.size(4)], incluide: ['m', 't']
     }),
   ], [
     theme.myStyles.childClass('title', [
