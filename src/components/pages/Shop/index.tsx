@@ -69,7 +69,7 @@ const ShopStyles = myStylesProvider.style(theme => ([
       theme.w.size(95, '%'),
       theme.h.size(65, '%'),
       theme.row.centerBetween,
-      theme.margin.top.xl,
+      theme.margin.top.size(4),
       theme.position.relative,
       theme.gapEls.full.size(1.8),
       
@@ -94,7 +94,7 @@ const ShopStyles = myStylesProvider.style(theme => ([
 
       theme.myStyles.childClass('card-look', [
         theme.w.size(30, '%'),
-        theme.h.fill(),
+        theme.h.size(25, 'rem'),
         theme.column.startBetween,
         theme.presets.shadow.hover,
         theme.border.rounded.size(1),
@@ -106,8 +106,8 @@ const ShopStyles = myStylesProvider.style(theme => ([
         theme.effect.hover.inOwn([`transform: rotate(0deg);`]),
 
         theme.responsiveness.platforms({
-          mobile: [theme.w.size(90, '%'), theme.h.min(30), theme.h.auto(), `transform: rotate(0deg);`],
-          tablet: [theme.w.size(70, '%'), theme.h.min(30), theme.h.auto(), `transform: rotate(0deg);`],
+          mobile: [theme.w.size(90, '%'), theme.h.min(30, 'rem'), theme.h.auto(), `transform: rotate(0deg);`],
+          tablet: [theme.w.size(70, '%'), theme.h.min(30, 'rem'), theme.h.auto(), `transform: rotate(0deg);`],
         })
       ], [
         theme.myStyles.childClass('description', [
