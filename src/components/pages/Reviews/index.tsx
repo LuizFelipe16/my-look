@@ -27,7 +27,7 @@ function Reviews() {
 const ReviewsStyles = myStylesProvider.style(theme => ([
   theme.myStyles.create('reviews', [
     theme.w.fill(),
-    theme.h.min(100, 'vh'),
+    theme.h.auto(),,
     theme.column.startCenter,
     theme.padding.full.size(6),
     theme.bg.blackTransparent,

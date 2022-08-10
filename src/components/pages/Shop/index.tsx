@@ -48,7 +48,7 @@ const ShopStyles = myStylesProvider.style(theme => ([
     theme.responsiveness.media([], 100, 750),
 
     theme.responsiveness.platforms({}, {
-      comommStyle: [theme.column.centerCenter, theme.gapEls.full.size(1), theme.padding.full.sm], incluide: ['m', 't']
+      comommStyle: [theme.column.centerCenter, theme.gapEls.full.size(1), theme.padding.full.sm, theme.padding.bottom.size(4)], incluide: ['m', 't']
     })
   ], [
     theme.myStyles.child('title', [
@@ -64,8 +64,8 @@ const ShopStyles = myStylesProvider.style(theme => ([
       theme.position.relative,
       
       theme.responsiveness.platforms({
-        mobile: [theme.h.auto(), theme.column.centerCenter, theme.w.size(100, '%'), theme.gapEls.full.size(1)],
-        tablet: [theme.h.auto(), theme.column.centerCenter, theme.w.size(100, '%'), theme.gapEls.full.size(1)],
+        mobile: [theme.h.auto(), theme.column.centerCenter, theme.w.size(100, '%'), theme.gapEls.full.size(3)],
+        tablet: [theme.h.auto(), theme.column.centerCenter, theme.w.size(100, '%'), theme.gapEls.full.size(3)],
       })
     ], [
       theme.myStyles.childClass('line', [

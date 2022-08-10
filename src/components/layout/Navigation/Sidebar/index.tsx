@@ -19,7 +19,7 @@ export function SidebarNav() {
         px="5"
         top="-1"
       >
-        <Button bg={theme.colors.primary} size="lg" color="gray.900" onClick={onOpen} rounded={'full'}>
+        <Button bg={theme.colors.primary} size="lg" color="gray.900" onClick={onOpen} rounded={'full'} boxShadow='xl'>
           <Icon as={FaIndent} color={theme.colors.background} />
         </Button>
       </Flex>
