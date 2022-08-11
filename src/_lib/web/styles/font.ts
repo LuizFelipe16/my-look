@@ -31,6 +31,8 @@ export type ThemeFont = {
     italic: FontStyle;
     underline: string;
     alignCenter: string;
+    alignRight: string;
+    alignLeft: string;
   };
 
   line: (value: number) => string;
@@ -75,6 +77,8 @@ export const font: ThemeFont = {
     italic: 'font-style: italic;',
     underline: 'text-decoration: underline;',
     alignCenter: 'text-align: center;',
+    alignRight: 'text-align: right;',
+    alignLeft: 'text-align: left;',
   },
 
   line: (v: number) => `line-height: ${v};`,
