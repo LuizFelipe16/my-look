@@ -23,9 +23,9 @@ export default function Sign() {
             }
           </View>
 
-          <View style={`illustration`}>
+          <View data-aos="fade-left" data-aos-duration="500" style={`illustration`}>
             <Text type='h1' text='Welcome to,' />
-            <Text text='perfect place to find the best looks for different occasions!' />
+            <Text data-aos-duration="500" text='perfect place to find the best looks for different occasions!' />
           </View>
         </View>
         {/* <Footer /> */}
