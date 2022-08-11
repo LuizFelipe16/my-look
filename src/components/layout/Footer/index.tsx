@@ -1,6 +1,6 @@
-import { View, myStylesProvider, Text, Divider, Button, Link } from '../../../_lib/web';
+import { View, myStylesProvider, Text, Divider, Button, Link } from '_lib/web';
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
-import { ScrollTopButton } from '../../../_lib/web/components/ScrollTopButton';
+import { ScrollTopButton } from '_lib/web/components/ScrollTopButton';
 
 function Footer() {
   return (

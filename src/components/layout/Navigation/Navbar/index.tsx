@@ -1,4 +1,4 @@
-import { Button, myStylesProvider, Text, View } from "../../../../_lib/web";
+import { Button, myStylesProvider, Text, View } from "_lib/web";
 import { ItemNav } from "./ItemNav";
 
 export const Navbar = () => (

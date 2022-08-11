@@ -1,8 +1,8 @@
-import { View, TitlePage, myStylesProvider } from '../_lib/web';
-import { onMount, useState } from '../_lib/global';
-import { Navigation, Loading, Footer } from '../components';
-import { ShopStyles, Shop, Welcome, WelcomeStyles, Reviews, ReviewsStyles, AppStore, AppStoreStyles } from '../components/pages';
-import { Description, DescriptionStyles } from '../components/pages/Description';
+import { View, TitlePage, myStylesProvider } from '_lib/web';
+import { onMount, useState } from '_lib/global';
+import { Navigation, Loading, Footer } from 'components';
+import { ShopStyles, Shop, Welcome, WelcomeStyles, Reviews, ReviewsStyles, AppStore, AppStoreStyles } from 'components/pages';
+import { Description, DescriptionStyles } from 'components/pages/Description';
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);

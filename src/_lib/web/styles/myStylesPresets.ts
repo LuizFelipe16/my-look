@@ -1,5 +1,5 @@
 import { styleSize } from "../tools";
-import { ThemeColors, myAppColors, bg, textColor } from "../../../_app";
+import { ThemeColors, myAppColors, bg, textColor } from "_app";
 import { ThemeFont, font } from "./font";
 import { ThemePresets, presets } from "./presets";
 import { ThemeBorder, border } from "./border";

@@ -1,4 +1,4 @@
-import { View, myStylesProvider, Text, ImgZoom, Divider, Button } from '../../../_lib/web';
+import { View, myStylesProvider, Text, ImgZoom, Divider, Button } from '_lib/web';
 
 const imgHeigth = 25
 const imgHeigtUnity = 'rem'

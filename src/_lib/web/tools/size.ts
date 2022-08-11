@@ -1,4 +1,4 @@
-import { appVariables } from "../../../_app";
+import { appVariables } from "_app";
 
 export type UNITY_PROPERTY = 'px' | 'rem' | 'em' | '%' | 'vh' | 'vw';
 

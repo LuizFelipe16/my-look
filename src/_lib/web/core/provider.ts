@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { isTheme } from '../../../context';
+import { isTheme } from 'context';
 import { AppTheme as TypeAppTheme } from '../../global';
 import { ThemeStyle } from '../styles';
 import { myStylesPresets } from '../styles/myStylesPresets';

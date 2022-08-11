@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { appVariables } from "../../../../_app/app";
+import { appVariables } from "_app/app";
 
 interface TitlePageProps {
   t: string;

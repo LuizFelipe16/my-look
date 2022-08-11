@@ -1,4 +1,4 @@
-import { View, myStylesProvider, Text, Img, Button } from '../../../_lib/web';
+import { View, myStylesProvider, Text, Img, Button } from '_lib/web';
 
 function Description() {
   return (

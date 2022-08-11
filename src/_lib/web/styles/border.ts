@@ -1,4 +1,4 @@
-import { getStyleColorProperty, ThemeColors } from "../../../_app";
+import { getStyleColorProperty, ThemeColors } from "_app";
 import { styleSize } from "../tools";
 
 type Border = `border: ${string} solid ${string};`;

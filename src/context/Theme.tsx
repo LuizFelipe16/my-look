@@ -1,5 +1,5 @@
 import { createContext, useState, useContext } from 'react';
-import { onUpdate } from '../_lib/global';
+import { onUpdate } from '_lib/global';
 
 type Theme = 'dark' | 'light';
 

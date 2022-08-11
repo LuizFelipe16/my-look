@@ -1,4 +1,4 @@
-import { appVariables } from "../../../_app";
+import { appVariables } from "_app";
 import { styleSize, UNITY_PROPERTY } from "../tools";
 
 export type ThemePositions = {

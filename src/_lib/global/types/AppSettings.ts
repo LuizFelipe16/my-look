@@ -32,5 +32,6 @@ export type AppSettings<APIs extends Fetch> = {
   };
   ApiCredentials?: {
     FaunaKey?: string;
+    AuthSecretCode?: string;
   };
 };

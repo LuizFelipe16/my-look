@@ -1,4 +1,4 @@
-import { Link } from "../../../../_lib/web";
+import { Link } from "_lib/web";
 
 interface IItemNavProps {
   text: string;

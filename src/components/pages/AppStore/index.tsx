@@ -1,5 +1,5 @@
 import { FaApple, FaGooglePlay } from 'react-icons/fa';
-import { View, myStylesProvider, Text, Img, Divider, Button } from '../../../_lib/web';
+import { View, myStylesProvider, Text, Img, Divider, Button } from '_lib/web';
 
 function AppStore() {
   return (

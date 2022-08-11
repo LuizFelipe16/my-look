@@ -1,5 +1,5 @@
-import { theme } from '../../../_app';
-import { View, myStylesProvider, Button, Divider, Img, Text, Spinner } from '../../../_lib/web';
+import { theme } from '_app';
+import { View, myStylesProvider, Button, Divider, Img, Text, Spinner } from '_lib/web';
 
 function Welcome() {
   return (

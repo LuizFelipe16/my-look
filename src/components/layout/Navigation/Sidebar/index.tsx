@@ -1,5 +1,5 @@
 import { Flex, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerOverlay, Stack, useBreakpointValue, Button, Icon, Text, useDisclosure, VStack } from "@chakra-ui/react";
-import { theme } from "../../../../_app";
+import { theme } from "_app";
 import { FaIndent } from "react-icons/fa";
 import { ItemSidebarNav } from "./ItemSidebarNav";
 

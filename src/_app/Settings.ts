@@ -1,8 +1,8 @@
-import { AppSettings } from '../_lib/global';
+import { AppSettings } from '_lib/global';
 
 type FetchEndpoints = {
   ApiURL: string;
-  SwinsURL?: string;
+  ApiNextURL: string;
 }
 
 export const Settings: AppSettings<FetchEndpoints> = {
@@ -19,11 +19,15 @@ export const Settings: AppSettings<FetchEndpoints> = {
   },
   Fetch: {
     ApiURL: '',
-    SwinsURL: '',
+    ApiNextURL: '/api',
   },
   ContactINFO: {
     Website: 'luizfelipe.vercel.app',
     ContactEMAIL: 'felipefelizatti215@gmail.com',
     ContactPHONE: '+55 (19) 98952-2121',
   },
+  ApiCredentials: {
+    FaunaKey: process.env.FAUNA_DATABASE_KEY,
+    AuthSecretCode: process.env.AUTH_SECRET,
+  }
 };

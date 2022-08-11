@@ -1,4 +1,4 @@
-import { AppVariables } from "../_lib/global";
+import { AppVariables } from "_lib/global";
 
 export type AppTypography = 'Poppins' | 'Nunito' | 'Roboto';
 
