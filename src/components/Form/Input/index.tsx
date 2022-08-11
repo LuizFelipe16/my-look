@@ -8,6 +8,7 @@ import {
 
 import { forwardRef, ForwardRefRenderFunction } from "react";
 import { FieldError } from "react-hook-form";
+import { theme } from "_app";
 
 interface IInputProps extends CInputProps {
   is: string;
@@ -22,8 +23,11 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, IInputProps>
         {!!label && (
           <FormLabel
             fontWeight="400"
+            fontSize={'sm'}
+            fontFamily={theme.font.typography.text}
             color="black"
-            htmlFor={is}>
+            htmlFor={is}
+          >
             {label}
           </FormLabel>
         )}
@@ -31,6 +35,7 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, IInputProps>
         <CInput
           id={is}
           name={is}
+          fontFamily={theme.font.typography.text}
           focusBorderColor="gray.400"
           variant="filled"
           borderRadius={4}

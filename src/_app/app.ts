@@ -27,10 +27,10 @@ export const appVariables: AppVariables<AppTypography, AppTexts> = {
 
   texts: {
     signin: {
-      title: 'Welcome',
+      title: `it's good to have you back!`,
     },
     signup: {
-      title: 'Create an account',
+      title: 'Find your perfect self',
       description: 'Please fill in all the fields below properly'
     }
   }

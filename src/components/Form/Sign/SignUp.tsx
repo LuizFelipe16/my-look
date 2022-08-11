@@ -52,32 +52,27 @@ export const SignUp = ({ onClickAlreadyHaveAccount }: ISignUpProps) => {
     const response = await apiNext.post('/users/signup', data);
 
     if (response.data?.error) {
-      toast({ position: 'top', title: response.data?.error, status: 'error', ...toastOptions });
+      toast({ title: response.data?.error, status: 'error', ...toastOptions });
       setIsLoading(false);
       return;
     }
 
     if (response.data?.message) {
-      toast({ position: 'top', title: response.data?.message, status: 'success', ...toastOptions });
+      toast({ title: response.data?.message, status: 'success', ...toastOptions });
       reset();
       setIsLoading(false);
       return;
     }
 
     setIsLoading(false);
-    toast({
-      position: 'top',
-      title: 'Unexpected error. Unable to register the user.',
-      status: 'error',
-      ...toastOptions
-    });
+    toast({ title: 'Unexpected error. Unable to register the user.', status: 'error', ...toastOptions });
   }
 
   return (
     <Sign
-      title={appVariables.texts.signin.title}
-      description={appVariables.texts.signin.description}
-      buttonText="sign up"
+      title={appVariables.texts.signup.title}
+      description={appVariables.texts.signup.description}
+      buttonText="Signup"
       onSubmitForm={handleSubmit(handleRegisterNewUser)}
       subtitle="already have an account? begin session"
       onClick={onClickAlreadyHaveAccount}
@@ -109,7 +104,7 @@ export const SignUp = ({ onClickAlreadyHaveAccount }: ISignUpProps) => {
         <Input
           type="password"
           is="password_confirmation"
-          placeholder="Password Confirm"
+          placeholder="Password confirm"
           error={errors.password_confirmation}
           {...register('password_confirmation')}
         />

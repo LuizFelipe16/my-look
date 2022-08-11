@@ -47,13 +47,13 @@ export const SignIn = ({ onClickNotHaveAccount }: ISignInProps) => {
     const response = await apiNext.post('/users/signin', data);
 
     if (response.data?.error) {
-      toast({ position: 'top', title: response.data?.error, status: 'error', ...toastOptions });
+      toast({ title: response.data?.error, status: 'error', ...toastOptions });
       setIsLoading(false);
       return;
     }
 
     if (response.data?.message) {
-      toast({ position: 'top', title: response.data?.message, status: 'success', ...toastOptions });
+      toast({ title: response.data?.message, status: 'success', ...toastOptions });
 
       const token = response.data?.token;
       reset();
@@ -64,19 +64,14 @@ export const SignIn = ({ onClickNotHaveAccount }: ISignInProps) => {
       return;
     }
 
-    toast({
-      position: 'top',
-      title: 'Unexpected error. Unable to register the user.',
-      status: 'error',
-      ...toastOptions
-    });
+    toast({ title: 'Unexpected error. Unable to register the user.', status: 'error', ...toastOptions });
     setIsLoading(false);
   }
 
   return (
     <Sign
       title={appVariables.texts.signin.title}
-      buttonText="sign in"
+      buttonText="Signin"
       onSubmitForm={handleSubmit(handleSignInUser)}
       subtitle="not have an account yet?"
       onClick={onClickNotHaveAccount}
@@ -86,7 +81,7 @@ export const SignIn = ({ onClickNotHaveAccount }: ISignInProps) => {
         type="email"
         is="email"
         label="Your e-mail"
-        placeholder="e-mail"
+        placeholder="E-mail"
         error={errors.email}
         {...register('email')}
       />
@@ -95,7 +90,7 @@ export const SignIn = ({ onClickNotHaveAccount }: ISignInProps) => {
         type="password"
         is="password"
         label="Your password"
-        placeholder="password"
+        placeholder="Password"
         error={errors.password}
         {...register('password')}
       />

@@ -53,14 +53,16 @@ export const Sign = (
       gap="1.2rem"
     >
       <Box flexDirection={'column'}>
-        <Heading fontSize="lg" mb="3">{title}</Heading>
-        <Text fontSize="md">{description}</Text>
+        <Heading fontSize="lg" fontFamily={theme.font.typography.title} mb="3">{title}</Heading>
+        <Text fontSize="sm" fontFamily={theme.font.typography.text}>{description}</Text>
       </Box>
 
       {children}
 
       <Button
         type="submit"
+        fontFamily={theme.font.typography.text}
+        fontSize="sm"
         isLoading={isLoading}
         marginTop="1.2rem"
         w="100%"
@@ -80,8 +82,9 @@ export const Sign = (
         as="button"
         onClick={onClick}
         mt="2"
+        fontFamily={theme.font.typography.text}
         textDecoration="underline"
-        fontSize="md"
+        fontSize="sm"
         fontWeight="400"
         alignSelf="flex-end"
         cursor="pointer"
