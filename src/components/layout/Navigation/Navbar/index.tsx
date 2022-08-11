@@ -1,19 +1,33 @@
-import { Button, myStylesProvider, Text, View } from "_lib/web";
+import { Link, myStylesProvider, Text, View } from "_lib/web";
 import { ItemNav } from "./ItemNav";
 
-export const Navbar = () => (
-  <HeaderNavigation>
-    <Text type='h2' style={`logo`} text='My'><strong>Look!</strong></Text>
+export const Navbar = ({ showLogin, showOnlyLogo }: any) => {
+  if (showOnlyLogo) {
+    return (
+      <HeaderNavigation>
+        <Link href='/'>
+          <Text type='h2' style={`logo`} text='My'><strong>Look!</strong></Text>
+        </Link>
+        <View />
+        <View />
+      </HeaderNavigation>
+    )
+  }
 
-    <View style={`links`}>
-      <ItemNav href="#" text='Home' />
-      <ItemNav href="#" text='Services' />
-      <ItemNav href="#" text='Contact' />
-    </View>
-
-    <Button style={`login`} onPress={() => null}>Login</Button>
-  </HeaderNavigation>
-);
+  return (
+    <HeaderNavigation>
+      <Text type='h2' style={`logo`} text='My'><strong>Look!</strong></Text>
+  
+      <View style={`links`}>
+        <ItemNav href="#" text='Home' />
+        <ItemNav href="#" text='Services' />
+        <ItemNav href="#" text='Contact' />
+      </View>
+  
+      {!showLogin ? <View /> : <Link style={`login`} href='/signup'>Login</Link>}
+    </HeaderNavigation>
+  );
+}
 
 const HeaderNavigation = myStylesProvider.create((theme) => [
   theme.w.fill(),
@@ -50,6 +64,7 @@ const HeaderNavigation = myStylesProvider.create((theme) => [
 
   theme.myStyles.create('login', [
     theme.w.size(8.5),
+    theme.centerRow,
     theme.border.fill(0.12, theme.colors.primary),
     theme.border.rounded.size(1.5),
     theme.textColor.primary,

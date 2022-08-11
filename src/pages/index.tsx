@@ -5,13 +5,11 @@ import { ShopStyles, Shop, Welcome, WelcomeStyles, Reviews, ReviewsStyles, AppSt
 import { Description, DescriptionStyles } from 'components/pages/Description';
 
 export default function App() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingPage, setIsLoadingPage] = useState(true);
 
-  onMount(() => {
-    setTimeout(() => setIsLoading(false), 500)
-  });
+  onMount(() => { setTimeout(() => setIsLoadingPage(false), 0) });
 
-  if (isLoading) return <Loading />;
+  if (isLoadingPage) return <Loading />;
 
   return (
     <MyStyles>
