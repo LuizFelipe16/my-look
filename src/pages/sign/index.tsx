@@ -2,7 +2,7 @@ import { View, TitlePage, myStylesProvider } from '_lib/web';
 import { onMount, useState } from '_lib/global';
 import { Navigation, Loading, SignIn, SignUp } from 'components';
 
-export default function Signup() {
+export default function Sign() {
   const [isLoadingPage, setIsLoadingPage] = useState(true);
   const [isFormSign, setIsFormSign] = useState<"signup" | "signin">("signin");
 

@@ -24,7 +24,7 @@ export const Navbar = ({ showLogin, showOnlyLogo }: any) => {
         <ItemNav href="#" text='Contact' />
       </View>
   
-      {!showLogin ? <View /> : <Link style={`login`} href='/signup'>Login</Link>}
+      {!showLogin ? <View /> : <Link style={`login`} href='/sign'>Login</Link>}
     </HeaderNavigation>
   );
 }
