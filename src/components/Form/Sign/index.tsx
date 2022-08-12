@@ -1,6 +1,7 @@
 import { MouseEventHandler, ReactNode } from "react";
 import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
 import { theme } from "_app";
+import { myStylesProvider } from "_lib/web";
 
 interface ISignProps {
   title: string;
@@ -28,13 +29,7 @@ export const Sign = (
     isLoading
   }: ISignProps
 ) => (
-  <Flex
-    w={["100%", "100%", "100%"]}
-    h="100%"
-    align="center"
-    justify="center"
-    mt={["10", "10", "0"]}
-  >
+  <SignStyles>
     <Flex
       data-aos="zoom-in"
       data-aos-duration="1000"
@@ -93,5 +88,15 @@ export const Sign = (
         {subtitle}
       </Text>
     </Flex>
-  </Flex>
+  </SignStyles>
 );
+
+const SignStyles = myStylesProvider.create(theme => ([
+  theme.w.fill(),
+  theme.h.fill(),
+  theme.centerColumn,
+
+  theme.myStyles.create('signup-terms-conditions', [
+    theme.font.apply('rg', 0.9, theme.font.typography.text, theme.colors.grayLight)
+  ])
+]), 'div');

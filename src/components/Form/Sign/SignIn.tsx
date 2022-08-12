@@ -1,16 +1,12 @@
 import { MouseEventHandler, useState } from 'react';
-
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as validateYup from 'yup';
-
+import { apiNext } from 'services';
+import { useUser, useToast } from 'hooks';
+import { appVariables } from '_app';
 import { Sign } from '.';
 import { Input } from '../Input';
-import { useToast } from '@chakra-ui/react';
-import { toastOptions } from 'utils/toast';
-import { apiNext } from 'services/api';
-import { useUser } from 'hooks/useUser';
-import { appVariables } from '_app';
+import { validation } from '_lib/global';
 
 interface ISignInProps {
   onClickNotHaveAccount: MouseEventHandler<HTMLParagraphElement>;
@@ -21,14 +17,14 @@ type SignInUserFormData = {
   password: string;
 }
 
-const signInUserFormSchema = validateYup.object().shape({
-  email: validateYup.string().email("Invalid e-mail").required("E-mail is required"),
-  password: validateYup.string().required("Password is required"),
-});
+const signInUserFormSchema = validation.createForm(is => ({
+  email: is.string().email("Invalid e-mail").required("E-mail is required"),
+  password: is.string().required("Password is required"),
+}))
 
 export const SignIn = ({ onClickNotHaveAccount }: ISignInProps) => {
-  const toast = useToast();
-  const { signIn, isLoading: isLoadingUser } = useUser();
+  const { signIn, isLoading: isLoadingUser, onFailSignin } = useUser();
+  const { errorToast, successToast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -42,30 +38,30 @@ export const SignIn = ({ onClickNotHaveAccount }: ISignInProps) => {
 
   const errors = formState.errors;
 
-  const handleSignInUser: SubmitHandler<SignInUserFormData> = async (data) => {
+  const handleSignInUser: SubmitHandler<SignInUserFormData> = async (values) => {
     setIsLoading(true);
-    const response = await apiNext.post('/users/signin', data);
 
-    if (response.data?.error) {
-      toast({ title: response.data?.error, status: 'error', ...toastOptions });
+    await apiNext.post('/users/signin', values).then(({ data }) => {
+      if (data?.error) {
+        errorToast(data?.error);
+        setIsLoading(false);
+        return;
+      }
+
+      if (data?.message) {
+        successToast(data?.message);
+
+        reset();
+        signIn({ token: data?.token });
+        setIsLoading(isLoadingUser);
+        setIsLoading(false);
+
+        return;
+      }
+    }).catch(() => {
+      onFailSignin();
       setIsLoading(false);
-      return;
-    }
-
-    if (response.data?.message) {
-      toast({ title: response.data?.message, status: 'success', ...toastOptions });
-
-      const token = response.data?.token;
-      reset();
-      signIn({ token });
-      setIsLoading(isLoadingUser);
-      setIsLoading(false);
-
-      return;
-    }
-
-    toast({ title: 'Unexpected error. Unable to register the user.', status: 'error', ...toastOptions });
-    setIsLoading(false);
+    });
   }
 
   return (

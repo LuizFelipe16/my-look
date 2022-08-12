@@ -1,9 +1,6 @@
 import { NextApiResponse } from 'next';
 import { query as q } from 'faunadb';
-import { sign } from 'jsonwebtoken';
-
 import { fauna } from 'services';
-import { Settings } from '_app';
 import { cryptography } from '_lib/global';
 import { usersRepository } from '.';
 
@@ -39,17 +36,11 @@ async function signin({ email, password }: SinginRequest, res: NextApiResponse) 
       return res.status(200).json({ error: messageError });
     }
 
-    const token = sign(
-      {
-        username: resp.data.username,
-        email: resp.data.email,
-      },
-      String(Settings.ApiCredentials?.AuthSecretCode),
-      {
-        subject: resp.ref.id,
-        expiresIn: "1d"
-      }
-    );
+    const token = usersRepository.config.generateToken({
+      username: resp.data.username,
+      email: resp.data.email,
+      id: resp.ref.id
+    })
 
     return res.status(200).json({ message: messageSuccess, token: token });
   }).catch(() => {

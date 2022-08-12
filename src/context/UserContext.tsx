@@ -2,9 +2,8 @@ import Router from "next/router";
 import { Dispatch, SetStateAction, createContext, ReactNode, useState } from "react";
 import { decode } from 'jsonwebtoken';
 import { setCookie, destroyCookie, parseCookies } from 'nookies';
-import { useToast } from "@chakra-ui/react";
-
-import { toastOptions } from "utils";
+import { useToast } from "hooks";
+import { appVariables } from "_app";
 
 type TokenPayload = {
   username: string;
@@ -16,6 +15,7 @@ type TokenPayload = {
 
 interface SignInData {
   token: string;
+  isFirstSignin?: boolean;
 }
 
 type User = {
@@ -36,6 +36,9 @@ type UserContextData = {
 
   isLoading: boolean;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
+
+  onFailSignin: () => void;
+  onFailSignup: () => void;
 }
 
 interface UserProviderProps {
@@ -45,12 +48,12 @@ interface UserProviderProps {
 export const UserContext = createContext({} as UserContextData);
 
 export function UserProvider({ children }: UserProviderProps) {
-  const toast = useToast();
+  const { errorToast } = useToast();
 
   const cookies = parseCookies(null);
 
-  const username = cookies['codeleap.username'];
-  const token = cookies['codeleap.token'];
+  const username = cookies[appVariables.cookies.username];
+  const token = cookies[appVariables.cookies.token];
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -64,24 +67,19 @@ export function UserProvider({ children }: UserProviderProps) {
     } as User
   });
 
-  const [isAccountConfirm, setIsAccountConfirm] = useState(false); // edit
+  const [isAccountConfirm, setIsAccountConfirm] = useState(false); // edit data user
 
   function signOut(): void {
     setIsLoading(true);
 
     if (!isAccountConfirm) {
-      toast({
-        position: "top",
-        title: 'Logged Out',
-        status: 'success',
-        ...toastOptions
-      });
+      errorToast('Logged Out');
     }
 
     setIsAccountConfirm(false);
     setUser({ username: "", token: "", decode: {} as TokenPayload });
-    destroyCookie(undefined, 'codeleap.username');
-    destroyCookie(undefined, 'codeleap.token');
+    destroyCookie(undefined, appVariables.cookies.username);
+    destroyCookie(undefined, appVariables.cookies.token);
 
     Router.push('/');
     setIsLoading(false);
@@ -89,19 +87,19 @@ export function UserProvider({ children }: UserProviderProps) {
     return;
   }
 
-  function signIn({ token }: SignInData): void {
+  function signIn({ token, isFirstSignin = false }: SignInData): void {
     setIsLoading(true);
 
     const decodeToken = decode(token) as TokenPayload;
 
     const { username } = decodeToken;
 
-    setCookie(undefined, 'codeleap.username', username, {
+    setCookie(undefined, appVariables.cookies.username, username, {
       maxAge: 60 * 60 * 24,
       path: '/'
     });
 
-    setCookie(undefined, 'codeleap.token', token, {
+    setCookie(undefined, appVariables.cookies.token, token, {
       maxAge: 60 * 60 * 24,
       path: '/'
     });
@@ -113,12 +111,15 @@ export function UserProvider({ children }: UserProviderProps) {
         decodeToken
     });
 
-    Router.push('/network');
+    Router.push(!isFirstSignin ? '/network' : '/welcome');
     setIsLoading(false);
 
     return;
   }
 
+  const onFailSignin = () => errorToast('Unexpected error. Unable to signin the user.')
+  const onFailSignup = () => errorToast('Unexpected error. Unable to register the user.')
+  
   return (
     <UserContext.Provider value={{
       user,
@@ -128,7 +129,9 @@ export function UserProvider({ children }: UserProviderProps) {
       signIn,
       signOut,
       isLoading,
-      setIsLoading
+      setIsLoading,
+      onFailSignin,
+      onFailSignup
     }}>
       {children}
     </UserContext.Provider>

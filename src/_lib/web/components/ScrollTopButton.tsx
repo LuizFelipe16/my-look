@@ -18,7 +18,7 @@ export function ScrollTopButton({ style, children, isNotIcon = false, ...rest }:
       {...rest}
     >
       {!isNotIcon && <Icon as={FaArrowUp} />} 
-      {isNotIcon && 'Voltar ao topo'}
+      {isNotIcon && 'back to top'}
       {children}
     </Button>
   );

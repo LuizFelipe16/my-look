@@ -11,8 +11,13 @@ export type AppTexts = {
     description?: string;
   };
 };
+type AppCookies = {
+  expire: string;
+  username: string;
+  token: string;
+};
 
-export const appVariables: AppVariables<AppTypography, AppTexts> = {
+export const appVariables: AppVariables<AppTypography, AppTexts, AppCookies> = {
   size: {
     MULTIPLIER: 1,
     UNITY: 'rem',
@@ -24,7 +29,14 @@ export const appVariables: AppVariables<AppTypography, AppTexts> = {
   },
   projectDescription: 'E-commerce for stylish and high-end clothing.',
   nameProject: 'MyLook',
+  nameMinProject: 'mylook',
 
+  cookies: {
+    expire: '1d',
+    username: `mylook.username`,
+    token: `mylook.token`,
+  },
+  
   texts: {
     signin: {
       title: `it's good to have you back!`,

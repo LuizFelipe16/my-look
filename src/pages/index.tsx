@@ -14,7 +14,7 @@ export default function App() {
   return (
     <MyStyles>
       <View style={`page`}>
-        <TitlePage t='Welcome!' />
+        <TitlePage t='Home' />
         <Navigation />
 
         <Welcome />

@@ -12,3 +12,5 @@ export * from './HeaderNavigation';
 export * from './Img';
 export * from './ImgZoom';
 export * from './Spinner';
+
+export * from './Form';

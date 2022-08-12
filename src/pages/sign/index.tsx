@@ -1,4 +1,4 @@
-import { View, TitlePage, myStylesProvider, Text } from '_lib/web';
+import { View, TitlePage, myStylesProvider, Text, Link } from '_lib/web';
 import { onMount, useState } from '_lib/global';
 import { Navigation, Loading, SignIn, SignUp } from 'components';
 
@@ -14,7 +14,6 @@ export default function Sign() {
     <MyStyles>
       <View style={`page`}>
         <TitlePage t={isFormSign === 'signin' ? 'Signin' : 'Signup'} />
-        <Navigation showOnlyLogo />
         <View style={'signup'}>
           <View style={`signup-content`}>
             {isFormSign === "signin"
@@ -26,6 +25,8 @@ export default function Sign() {
           <View data-aos="fade-left" data-aos-duration="500" style={`illustration`}>
             <Text type='h1' text='Welcome to,' />
             <Text data-aos-duration="500" text='perfect place to find the best looks for different occasions!' />
+
+            <Link href='/' text='Back page' />
           </View>
         </View>
         {/* <Footer /> */}
@@ -68,6 +69,12 @@ const MyStyles = myStylesProvider.create((theme) => ([
         theme.font.apply('sr', 1.2, theme.font.typography.text, theme.colors.white),
         theme.font.style.alignRight,
         theme.margin.top.size(1)
+      ]),
+      theme.myStyles.child('a', [
+        theme.font.apply('md', 0.9, theme.font.typography.text, theme.colors.white),
+        theme.font.style.alignRight,
+        theme.margin.top.size(3.5),
+        theme.font.style.underline,
       ]),
     ])
   ])

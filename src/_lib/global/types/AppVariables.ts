@@ -1,4 +1,4 @@
-export type AppVariables<AppTypography, AppTexts> = {
+export type AppVariables<AppTypography, AppTexts, AppCookies> = {
   size: {
     MULTIPLIER: number;
     UNITY: 'rem' | 'em' | 'px';
@@ -10,6 +10,9 @@ export type AppVariables<AppTypography, AppTexts> = {
   },
   projectDescription: string;
   nameProject: string;
+  nameMinProject: string;
+
+  cookies: AppCookies;
 
   texts: AppTexts;
 };
