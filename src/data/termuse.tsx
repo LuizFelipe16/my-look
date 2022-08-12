@@ -2,7 +2,7 @@
 export const renderHTMLTermUses = () => (
   <>
     <h2>
-    <span style={{ color: '#576d96;' }}>1. Terms of Service</span></h2><h3>
+    <span style={{ color: '#576d96;' }}>Terms of Service</span></h2><h3>
       <span style={{ color: '#576d96;' }}>1. Terms</span></h3><p>
         <span style={{ color: '#576d96;' }}>By accessing the website at 
         
