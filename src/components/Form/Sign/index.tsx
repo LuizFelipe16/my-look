@@ -97,6 +97,7 @@ const SignStyles = myStylesProvider.create(theme => ([
   theme.centerColumn,
 
   theme.myStyles.create('signup-terms-conditions', [
-    theme.font.apply('rg', 0.9, theme.font.typography.text, theme.colors.grayLight)
+    theme.font.apply('rg', 0.9, theme.font.typography.text, theme.colors.grayLight),
+    theme.effect.hover.inOwn([theme.font.style.underline])
   ])
 ]), 'div');

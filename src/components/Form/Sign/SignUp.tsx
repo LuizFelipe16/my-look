@@ -116,6 +116,7 @@ export const SignUp = ({ onClickAlreadyHaveAccount }: ISignUpProps) => {
         ml='1' 
         textStyle={'signup-terms-conditions'} 
         error={errors.isAcceptTerms}
+        href='/terms'
         label='I have read and agree to the terms of use.' 
         {...register('isAcceptTerms')}
       />

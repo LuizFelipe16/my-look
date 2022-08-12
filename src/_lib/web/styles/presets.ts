@@ -21,7 +21,7 @@ export const presets: ThemePresets = {
   hide: () => `display: none !important;`,
 
   debugger: (color: 'blue' | 'red' | 'yellow' | 'green' | 'purple', weight?: number) => {
-    const w = !weight ? 1 : weight
+    const w = !weight ? 2 : weight
     const c = color
     const hex = c === 'blue' ? '#00D' : c === 'red' ? '#F00' : c === 'green' ? '#0F0' : c === 'purple' ? '#9400D3' : '#FF0'
     return `border: ${w}px solid ${hex};`

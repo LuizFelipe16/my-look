@@ -7,17 +7,18 @@ import {
 
 import { forwardRef, ForwardRefRenderFunction, InputHTMLAttributes } from "react";
 import { FieldError } from "react-hook-form";
-import { Text } from "_lib/web";
+import { Link, Text } from "_lib/web";
 
 interface ICheckboxProps extends CheckboxProps {
   is: string;
   label?: string;
   error?: FieldError;
+  href?: string;
   textStyle: string | any
 }
 
 const CheckboxBase: ForwardRefRenderFunction<HTMLInputElement, ICheckboxProps>
-  = ({ label, textStyle, is, error = null, ...rest }, ref) => {
+  = ({ label, href, textStyle, is, error = null, ...rest }, ref) => {
     return (
       <FormControl w="100%" flexDirection={'column'} isInvalid={!!error}>
         <CCheck
@@ -26,7 +27,11 @@ const CheckboxBase: ForwardRefRenderFunction<HTMLInputElement, ICheckboxProps>
           ref={ref}
           {...rest}
         >
-          {!!label && <Text style={textStyle} text={label} />}
+          {!!label && !!href ? (
+            <Link href={href}>
+              <Text style={textStyle} text={label} />
+            </Link>
+          ) : !!label && <Text style={textStyle} text={label} />}
         </CCheck>
 
         {!!error && <FormErrorMessage>{error.message}</FormErrorMessage>}
