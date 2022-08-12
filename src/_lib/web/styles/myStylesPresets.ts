@@ -17,6 +17,7 @@ import { ThemeEffects, effects } from "./effect";
 import { ThemeOverflow, over } from "./overflow";
 import { ThemeShadow, shadow } from "./shadow";
 import { ThemeAnimation, animation } from "./animation";
+import { ThemeBgs, bgImage } from "./background";
 import { MyStyles, myStyles } from "./myStyles";
 
 export type ThemeStyle = {
@@ -44,6 +45,7 @@ export type ThemeStyle = {
   centerColumn: string;
   row: ThemeFlexRow;
   column: ThemeFlexColumn;
+  bgImage: ThemeBgs;
   spacing: {
     size: Function
   };
@@ -57,6 +59,7 @@ export const myStylesPresets: ThemeStyle = {
   myStyles,
   h,
   w,
+  bgImage,
   animation,
   over,
   shadow,

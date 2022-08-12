@@ -1,7 +1,10 @@
-import { Link, myStylesProvider, Text, View } from "_lib/web";
+import { useUser } from "hooks";
+import { Link, myStylesProvider, Text, View, Avatar } from "_lib/web";
 import { ItemNav } from "./ItemNav";
 
 export const Navbar = ({ showLogin, showOnlyLogo }: any) => {
+  const { user } = useUser();
+
   if (showOnlyLogo) {
     return (
       <HeaderNavigation>
@@ -19,12 +22,15 @@ export const Navbar = ({ showLogin, showOnlyLogo }: any) => {
       <Text type='h2' style={`logo`} text='My'><strong>Look!</strong></Text>
   
       <View style={`links`}>
-        <ItemNav href="#" text='Home' />
-        <ItemNav href="#" text='Services' />
-        <ItemNav href="#" text='Contact' />
+        <ItemNav href="/" text='Home' />
+        <ItemNav href="/shop" text='Shop' />
       </View>
   
-      {!showLogin ? <View /> : <Link style={`login`} href='/sign'>Login</Link>}
+      {!showLogin ? <View /> : !user?.username ? (
+        <Link style={`login`} href='/sign'>Login</Link>
+      ) : (
+        <Avatar style={`user-avatar`} size='md' name={user?.username} />
+      ) }
     </HeaderNavigation>
   );
 }
@@ -65,15 +71,18 @@ const HeaderNavigation = myStylesProvider.create((theme) => [
   theme.myStyles.create('login', [
     theme.w.size(8.5),
     theme.centerRow,
-    theme.border.fill(0.12, theme.colors.primary),
     theme.border.rounded.size(1.5),
-    theme.textColor.primary,
-    theme.bg.background,
-    theme.font.size(1),
-    theme.padding.vertical.size(0.25),
+    theme.bg.blackTransparent,
+    theme.padding.vertical.size(0.45),
     theme.padding.horizontal.size(1.25),
+    theme.font.apply('sb', 0.9, theme.font.typography.title, theme.colors.black),
+    theme.presets.shadow.box,
       
     theme.transition.apply(0.2),
-    theme.effect.hover.inOwn([theme.bg.primary, theme.textColor.background, theme.presets.shadow.box])
+    theme.effect.hover.inOwn([theme.bg.primary, theme.textColor.background])
+  ]),
+
+  theme.myStyles.childClass('user-avatar', [
+    theme.border.fill(0.15, theme.colors.primary)
   ])
 ], 'header', false)

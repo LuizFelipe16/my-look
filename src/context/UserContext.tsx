@@ -111,7 +111,7 @@ export function UserProvider({ children }: UserProviderProps) {
         decodeToken
     });
 
-    Router.push(!isFirstSignin ? '/network' : '/welcome');
+    Router.push(!isFirstSignin ? '/' : '/welcome');
     setIsLoading(false);
 
     return;
