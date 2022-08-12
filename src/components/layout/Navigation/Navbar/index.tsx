@@ -83,6 +83,6 @@ const HeaderNavigation = myStylesProvider.create((theme) => [
   ]),
 
   theme.myStyles.childClass('user-avatar', [
-    theme.border.fill(0.15, theme.colors.primary)
+    // theme.border.fill(0.15, theme.colors.primary)
   ])
 ], 'header', false)
