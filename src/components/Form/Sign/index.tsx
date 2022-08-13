@@ -77,7 +77,7 @@ export const Sign = (
             }}
           >
             <FaGoogle />
-            Sign with Google
+            Signin with Google
           </Button>
         )}
         <Button
