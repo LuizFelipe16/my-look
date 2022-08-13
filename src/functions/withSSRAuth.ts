@@ -12,7 +12,7 @@ export function withSSRAuth<P>(fn: GetServerSideProps<P>) {
     if (!username || !token) {
       return {
         redirect: {
-          destination: '/',
+          destination: '/sign',
           permanent: false,
         }
       }

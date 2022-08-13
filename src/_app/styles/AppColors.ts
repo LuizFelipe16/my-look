@@ -1,34 +1,4 @@
-export type ThemeColors = {
-  black: string;
-  white: string;
-
-  input: {
-    background: string;
-    placeholder: string;
-  };
-
-  primary: string;
-  secondary: string;
-  secondaryLight: string;
-
-  success: string;
-  successLight: string;
-
-  attention: string;
-  attentionLight: string;
-
-  shape: string;
-  title: string;
-  text: string;
-  background: string;
-  transparent: string;
-  gray: string;
-  grayLight: string;
-  blackTransparent: string;
-  googleBlue: string;
-}
-
-// NOTE type of nesse type
+export type ThemeColors = typeof appColors;
 
 type Property = 'color' | 'background-color' | 'border-color';
 
@@ -37,7 +7,7 @@ type Color = {
   value: string;
 };
 
-export const appColors: ThemeColors = {
+export const appColors = {
   black: '#121015',
   white: '#fff',
 
@@ -67,6 +37,7 @@ export const appColors: ThemeColors = {
 
   blackTransparent: '#0001',
   googleBlue: '#4885ed',
+  blackOverlap: '#0007',
 };
 
 const colorsArray: Color[] = [
@@ -90,6 +61,7 @@ const colorsArray: Color[] = [
   { name: 'grayLight', value: appColors.grayLight },
   { name: 'blackTransparent', value: appColors.blackTransparent },
   { name: 'googleBlue', value: appColors.googleBlue },
+  { name: 'blackOverlap', value: appColors.blackOverlap },
 ];
 
 export function getStyleColorProperty(property: Property) {
@@ -122,6 +94,7 @@ export function getStyleColorProperty(property: Property) {
     grayLight: stylesArray[17].grayLight,
     blackTransparent: stylesArray[18].blackTransparent,
     googleBlue: stylesArray[19].googleBlue,
+    blackOverlap: stylesArray[20].blackOverlap,
   };
 
   return styles;
