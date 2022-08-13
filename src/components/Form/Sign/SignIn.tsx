@@ -74,6 +74,7 @@ export const SignIn = ({ onClickNotHaveAccount }: ISignInProps) => {
       subtitle="not have an account yet?"
       onClick={onClickNotHaveAccount}
       isLoading={isLoading}
+      isSigninGoogle
     >
       <Input
         type="email"
@@ -92,11 +93,6 @@ export const SignIn = ({ onClickNotHaveAccount }: ISignInProps) => {
         error={errors.password}
         {...register('password')}
       />
-
-      <Button style={`signin-google`} onPress={() => null}>
-        <FaGoogle />
-        Sign with Google
-      </Button>
     </Sign>
   );
 }

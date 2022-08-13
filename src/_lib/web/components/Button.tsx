@@ -11,6 +11,8 @@ interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
 
   w?: string | number;
   h?: string | number;
+
+  type?: 'button' | 'reset' | 'submit';
 }
 
 export const Button = (
@@ -20,6 +22,7 @@ export const Button = (
     onPress,
     text,
     isTextRight,
+    type = 'button',
     w,
     h,
     ...rest
@@ -28,7 +31,7 @@ export const Button = (
   const inlineStylesComponent: CSSProperties = { width: `${w}`, height: `${h}` }
 
   return (
-    <button className={style} style={inlineStylesComponent} onClick={onPress} {...rest}>
+    <button type={type} className={style} style={inlineStylesComponent} onClick={onPress} {...rest}>
       {isTextRight ? (
         <>
           {children}

@@ -1,7 +1,8 @@
 import { MouseEventHandler, ReactNode } from "react";
 import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
 import { theme } from "_app";
-import { myStylesProvider } from "_lib/web";
+import { myStylesProvider, Button as LibButton } from "_lib/web";
+import { FaGoogle } from "react-icons/fa";
 
 interface ISignProps {
   title: string;
@@ -15,6 +16,8 @@ interface ISignProps {
   onSubmitForm: any;
 
   isLoading: boolean;
+
+  isSigninGoogle?: boolean;
 }
 
 export const Sign = (
@@ -26,7 +29,8 @@ export const Sign = (
     onClick,
     subtitle,
     description,
-    isLoading
+    isLoading,
+    isSigninGoogle = false
   }: ISignProps
 ) => (
   <SignStyles>
@@ -54,24 +58,33 @@ export const Sign = (
 
       {children}
 
-      <Button
-        type="submit"
-        fontFamily={theme.font.typography.text}
-        fontSize="sm"
-        isLoading={isLoading}
-        marginTop="1.2rem"
-        w="100%"
-        size="md"
-        bgColor={theme.colors.primary}
-        color="white"
-        fontWeight="400"
-        transition="0.2s"
-        _hover={{
-          filter: "brightness(70%)"
-        }}
-      >
-        {buttonText}
-      </Button>
+      {/*  */}
+
+      <Flex w="100%" flexDirection={'column'} marginTop="1.2rem" gap="1rem">
+        {isSigninGoogle && (
+          <LibButton type='button' style={`signin-google`} onPress={() => null}>
+            <FaGoogle />
+            Sign with Google
+          </LibButton>
+        )}
+        <Button
+          type="submit"
+          fontFamily={theme.font.typography.text}
+          fontSize="sm"
+          isLoading={isLoading}
+          w="100%"
+          size="md"
+          bgColor={theme.colors.primary}
+          color="white"
+          fontWeight="400"
+          transition="0.2s"
+          _hover={{
+            filter: "brightness(70%)"
+          }}
+        >
+          {buttonText}
+        </Button>
+      </Flex>
 
       <Text
         as="button"
@@ -110,6 +123,6 @@ const SignStyles = myStylesProvider.create(theme => ([
     theme.gapEls.full.sm,
     theme.font.apply('rg', 0.9, theme.font.typography.text, theme.colors.white),
     theme.transition.apply(0.2),
-    theme.effect.hover.inOwn([theme.effect.filter.glow(0.7)])
+    theme.effect.hover.inOwn([theme.effect.filter.glow(0.7)]),
   ])
 ]), 'div');
