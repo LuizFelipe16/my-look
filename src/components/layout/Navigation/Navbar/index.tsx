@@ -1,9 +1,10 @@
-import { useUser } from "hooks";
-import { Link, myStylesProvider, Text, View, Avatar } from "_lib/web";
+import { useToast, useUser } from "hooks";
+import { Link, myStylesProvider, Text, View, Avatar, Button } from "_lib/web";
 import { ItemNav } from "./ItemNav";
 
 export const Navbar = ({ showLogin, showOnlyLogo }: any) => {
-  const { user } = useUser();
+  const { user, signOut } = useUser();
+  const { successToast } = useToast();
 
   if (showOnlyLogo) {
     return (
@@ -29,7 +30,9 @@ export const Navbar = ({ showLogin, showOnlyLogo }: any) => {
       {!showLogin ? <View /> : !user?.username ? (
         <Link style={`login`} href='/sign'>Login</Link>
       ) : (
-        <Avatar style={`user-avatar`} size='md' name={user?.username} />
+        <Button onPress={signOut}>
+          <Avatar style={`user-avatar`} size='md' name={user?.username} />
+        </Button>
       ) }
     </HeaderNavigation>
   );

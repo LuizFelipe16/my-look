@@ -7,6 +7,8 @@ import { appVariables } from '_app';
 import { Sign } from '.';
 import { Input } from '../Input';
 import { validation } from '_lib/global';
+import { Button } from '_lib/web';
+import { FaGoogle } from 'react-icons/fa';
 
 interface ISignInProps {
   onClickNotHaveAccount: MouseEventHandler<HTMLParagraphElement>;
@@ -90,6 +92,11 @@ export const SignIn = ({ onClickNotHaveAccount }: ISignInProps) => {
         error={errors.password}
         {...register('password')}
       />
+
+      <Button style={`signin-google`} onPress={() => null}>
+        <FaGoogle />
+        Sign with Google
+      </Button>
     </Sign>
   );
 }

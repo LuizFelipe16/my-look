@@ -73,7 +73,7 @@ export function UserProvider({ children }: UserProviderProps) {
     setIsLoading(true);
 
     if (!isAccountConfirm) {
-      errorToast('Logged Out');
+      errorToast('You have been logged out');
     }
 
     setIsAccountConfirm(false);

@@ -22,7 +22,7 @@ type SignupRequest = {
   password: string;
 };
 
-const messageSuccess = 'Created user.';
+const messageSuccess = 'Your account has been successfully created!';
 const messageError = 'This user already exists. Use another email!';
 
 async function signup({ email, password, username }: SignupRequest, res: NextApiResponse) {

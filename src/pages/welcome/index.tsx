@@ -1,8 +1,10 @@
-import { View, TitlePage, myStylesProvider, Text } from '_lib/web';
+import { View, TitlePage, myStylesProvider, Text, Link } from '_lib/web';
 import { onMount, useState } from '_lib/global';
 import { Loading } from 'components';
+import { useUser } from 'hooks';
 
 export default function Welcome() {
+  const { user } = useUser();
   const [isLoadingPage, setIsLoadingPage] = useState(true);
 
   onMount(() => { setTimeout(() => setIsLoadingPage(false), 0) });
@@ -12,10 +14,16 @@ export default function Welcome() {
   return (
     <MyStyles>
       <View style={`page`}>
-        <TitlePage t='Welcome' />
+        <TitlePage t='Welcome!' />
 
         <View style={`page-welcome`}>
-          <Text data-aos="fade-right" data-aos-duration="800" type='h1' text='MyLook Terms and Conditions of Use' />
+          <Text data-aos="fade-down" text={`Hello ${user.username}`} />
+          <Text data-aos="fade-down" type='h1' text='Welcome to My'><strong>Look!</strong></Text>
+          <Text>
+            We are happy to have you with us, we suggest you start by looking <br /> 
+            at the best looks available this week.
+          </Text>
+          <Link href='/' text='Get Started' />
         </View>
       </View>
     </MyStyles>
@@ -27,22 +35,30 @@ const MyStyles = myStylesProvider.create((theme) => ([
     theme.w.size(100, '%'),
     theme.h.auto(),
     theme.h.min(100, 'vh'),
-    theme.column.centerStart,
+    theme.column.centerCenter,
     theme.padding.full.md,
-    theme.bgImage.path('/welcome.jpg')
+    theme.bgImage.path('/bg-welcome.png'),
   ], [
     theme.myStyles.child('h1', [
-      theme.w.size(80, '%'),
-      theme.font.apply('bl', 3, theme.font.typography.title, theme.colors.black),
-      theme.font.style.alignLeft,
-      theme.margin.top.size(3),
+      theme.font.apply('sb', 3, theme.font.typography.title, theme.colors.white),
+      theme.myStyles.child('strong', [theme.textColor.background])
     ]),
     
     theme.myStyles.child('p', [
-      theme.w.size(80, '%'),
-      theme.font.apply('sr', 1.2, theme.font.typography.text, theme.colors.black),
-      theme.font.style.alignLeft,
-      theme.margin.top.size(3),
+      theme.font.apply('sr', 1.3, theme.font.typography.text, theme.colors.white),
+      theme.font.style.alignCenter,
+      theme.margin.top.size(2),
+    ]),
+
+    theme.myStyles.child('a', [
+      theme.font.apply('sr', 1.1, theme.font.typography.text, theme.colors.white),  
+      theme.margin.top.size(5),
+      theme.padding.horizontal.size(2.8),
+      theme.padding.vertical.size(0.4),
+      theme.border.rounded.sm,
+      theme.bg.primary,
+      theme.transition.apply(0.2),
+      theme.effect.hover.inOwn([theme.effect.filter.glow(0.9)])
     ]),
   ])
 ]), 'div', true);

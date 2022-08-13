@@ -99,5 +99,17 @@ const SignStyles = myStylesProvider.create(theme => ([
   theme.myStyles.create('signup-terms-conditions', [
     theme.font.apply('rg', 0.9, theme.font.typography.text, theme.colors.grayLight),
     theme.effect.hover.inOwn([theme.font.style.underline])
+  ]),
+
+  theme.myStyles.create('signin-google', [
+    theme.centerRow,
+    theme.bg.googleBlue,
+    theme.border.rounded.size(0.4),
+    theme.w.fill(),
+    theme.padding.vertical.size(0.7),
+    theme.gapEls.full.sm,
+    theme.font.apply('rg', 0.9, theme.font.typography.text, theme.colors.white),
+    theme.transition.apply(0.2),
+    theme.effect.hover.inOwn([theme.effect.filter.glow(0.7)])
   ])
 ]), 'div');

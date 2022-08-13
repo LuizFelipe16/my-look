@@ -1,4 +1,4 @@
-import { useToast as ChakraUseToast } from '@chakra-ui/react';
+import { useToast as ChakraUseToast, Box } from '@chakra-ui/react';
 import { toastOptions } from 'utils';
 
 const useToast = () => {
@@ -9,7 +9,11 @@ const useToast = () => {
   }
 
   function successToast(title: string) {
-    toast({ title: title, status: 'success', ...toastOptions });
+    toast({ 
+      title: title, 
+      status: 'success', 
+      ...toastOptions 
+    });
   }
 
   return {

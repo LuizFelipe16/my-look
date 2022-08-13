@@ -25,7 +25,10 @@ export type ThemeColors = {
   gray: string;
   grayLight: string;
   blackTransparent: string;
+  googleBlue: string;
 }
+
+// NOTE type of nesse type
 
 type Property = 'color' | 'background-color' | 'border-color';
 
@@ -63,6 +66,7 @@ export const appColors: ThemeColors = {
   grayLight: '#606163',
 
   blackTransparent: '#0001',
+  googleBlue: '#4885ed',
 };
 
 const colorsArray: Color[] = [
@@ -85,6 +89,7 @@ const colorsArray: Color[] = [
   { name: 'gray', value: appColors.gray },
   { name: 'grayLight', value: appColors.grayLight },
   { name: 'blackTransparent', value: appColors.blackTransparent },
+  { name: 'googleBlue', value: appColors.googleBlue },
 ];
 
 export function getStyleColorProperty(property: Property) {
@@ -116,6 +121,7 @@ export function getStyleColorProperty(property: Property) {
     gray: stylesArray[16].gray,
     grayLight: stylesArray[17].grayLight,
     blackTransparent: stylesArray[18].blackTransparent,
+    googleBlue: stylesArray[19].googleBlue,
   };
 
   return styles;
