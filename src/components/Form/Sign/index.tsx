@@ -1,7 +1,7 @@
 import { MouseEventHandler, ReactNode } from "react";
 import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
 import { theme } from "_app";
-import { myStylesProvider, Button as LibButton } from "_lib/web";
+import { myStylesProvider } from "_lib/web";
 import { FaGoogle } from "react-icons/fa";
 
 interface ISignProps {
@@ -58,14 +58,27 @@ export const Sign = (
 
       {children}
 
-      {/*  */}
-
       <Flex w="100%" flexDirection={'column'} marginTop="1.2rem" gap="1rem">
         {isSigninGoogle && (
-          <LibButton type='button' style={`signin-google`} onPress={() => null}>
+          <Button
+            type="button"
+            fontFamily={theme.font.typography.text}
+            fontSize="sm"
+            isLoading={isLoading}
+            w="100%"
+            size="md"
+            bgColor={theme.colors.googleBlue}
+            color="white"
+            fontWeight="400"
+            transition="0.2s"
+            gap="0.4rem"
+            _hover={{
+              filter: "brightness(70%)"
+            }}
+          >
             <FaGoogle />
             Sign with Google
-          </LibButton>
+          </Button>
         )}
         <Button
           type="submit"
@@ -113,16 +126,4 @@ const SignStyles = myStylesProvider.create(theme => ([
     theme.font.apply('rg', 0.9, theme.font.typography.text, theme.colors.grayLight),
     theme.effect.hover.inOwn([theme.font.style.underline])
   ]),
-
-  theme.myStyles.create('signin-google', [
-    theme.centerRow,
-    theme.bg.googleBlue,
-    theme.border.rounded.size(0.4),
-    theme.w.fill(),
-    theme.padding.vertical.size(0.7),
-    theme.gapEls.full.sm,
-    theme.font.apply('rg', 0.9, theme.font.typography.text, theme.colors.white),
-    theme.transition.apply(0.2),
-    theme.effect.hover.inOwn([theme.effect.filter.glow(0.7)]),
-  ])
 ]), 'div');
