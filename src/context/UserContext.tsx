@@ -94,7 +94,7 @@ export function UserProvider({ children }: UserProviderProps) {
     }
 
     setIsAccountConfirm(false);
-    setUser({ username: "", token: "", avatar: "", decode: {} as TokenPayload });
+    setUser({ username: "", token: "", avatar: "", email: "", id: "", decode: {} as TokenPayload });
     destroyCookie(undefined, appVariables.cookies.username);
     destroyCookie(undefined, appVariables.cookies.token);
 
