@@ -31,7 +31,7 @@ export const Navbar = ({ showLogin, showOnlyLogo }: any) => {
         <Link style={`login`} href='/sign'>Login</Link>
       ) : (
         <Button onPress={signOut}>
-          <Avatar style={`user-avatar`} size='md' name={user?.username} />
+          <Avatar style={`user-avatar`} size='md' name={user?.username} src={user?.avatar}  />
         </Button>
       ) }
     </HeaderNavigation>

@@ -7,8 +7,8 @@ import { appVariables } from '_app';
 import { Sign } from '.';
 import { Input } from '../Input';
 import { validation } from '_lib/global';
-import { Button } from '_lib/web';
-import { FaGoogle } from 'react-icons/fa';
+
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
 interface ISignInProps {
   onClickNotHaveAccount: MouseEventHandler<HTMLParagraphElement>;
@@ -25,7 +25,7 @@ const signInUserFormSchema = validation.createForm(is => ({
 }))
 
 export const SignIn = ({ onClickNotHaveAccount }: ISignInProps) => {
-  const { signIn, isLoading: isLoadingUser, onFailSignin } = useUser();
+  const { signIn, isLoading: isLoadingUser, onFailSignin, signInWithGoogle } = useUser();
   const { errorToast, successToast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -66,6 +66,29 @@ export const SignIn = ({ onClickNotHaveAccount }: ISignInProps) => {
     });
   }
 
+  const handleSigninUserWithGoogle = async () => {
+    const provider = new GoogleAuthProvider();
+    const auth = getAuth();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+
+        const token = credential?.accessToken;
+        const user = result.user;
+
+        signInWithGoogle({ 
+          username: String(user?.displayName),
+          avatar: String(user?.photoURL),
+          email: String(user?.email),
+          id: user?.uid,
+          token: String(token)
+        });
+
+        successToast('Sign in successfully! Wait a moment.');
+
+      }).catch(onFailSignin);
+  }
+
   return (
     <Sign
       title={appVariables.texts.signin.title}
@@ -75,6 +98,7 @@ export const SignIn = ({ onClickNotHaveAccount }: ISignInProps) => {
       onClick={onClickNotHaveAccount}
       isLoading={isLoading}
       isSigninGoogle
+      onSubmitSigninGoogle={handleSigninUserWithGoogle}
     >
       <Input
         type="email"

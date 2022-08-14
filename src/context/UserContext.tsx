@@ -8,6 +8,8 @@ import { appVariables } from "_app";
 type TokenPayload = {
   username: string;
   email: string;
+  avatar: string;
+  id: string;
   sub: string;
   exp: number;
   iat: number;
@@ -18,10 +20,21 @@ interface SignInData {
   isFirstSignin?: boolean;
 }
 
+interface SignInDataWithGoogle {
+  username: string;
+  token: string;
+  avatar: string;
+  email: string;
+  id: string;
+}
+
 type User = {
   username: string;
   token: string;
-  decode: TokenPayload;
+  avatar?: string;
+  email?: string;
+  decode?: TokenPayload;
+  id?: string;
 }
 
 type UserContextData = {
@@ -33,6 +46,8 @@ type UserContextData = {
 
   signIn: ({ token }: SignInData) => void;
   signOut: () => void;
+
+  signInWithGoogle: (props: SignInDataWithGoogle) => void;
 
   isLoading: boolean;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
@@ -63,6 +78,8 @@ export function UserProvider({ children }: UserProviderProps) {
     return {
       username: !username ? "" : username,
       token: !token ? "" : token,
+      avatar: !decodeToken ? "" : decodeToken.avatar,
+      id: !decodeToken ? "" : decodeToken.id,
       decode: !token ? {} : decodeToken
     } as User
   });
@@ -77,7 +94,7 @@ export function UserProvider({ children }: UserProviderProps) {
     }
 
     setIsAccountConfirm(false);
-    setUser({ username: "", token: "", decode: {} as TokenPayload });
+    setUser({ username: "", token: "", avatar: "", decode: {} as TokenPayload });
     destroyCookie(undefined, appVariables.cookies.username);
     destroyCookie(undefined, appVariables.cookies.token);
 
@@ -107,11 +124,39 @@ export function UserProvider({ children }: UserProviderProps) {
     setUser({
       username,
       token,
+      avatar: "",
       decode:
         decodeToken
     });
 
     Router.push(!isFirstSignin ? '/' : '/welcome');
+    setIsLoading(false);
+
+    return;
+  }
+
+  function signInWithGoogle({ token, username, avatar, email, id }: SignInDataWithGoogle): void {
+    setIsLoading(true);
+
+    setCookie(undefined, appVariables.cookies.username, username, {
+      maxAge: 60 * 60 * 24,
+      path: '/'
+    });
+
+    setCookie(undefined, appVariables.cookies.token, token, {
+      maxAge: 60 * 60 * 24,
+      path: '/'
+    });
+
+    setUser({
+      username,
+      token,
+      avatar,
+      email,
+      id,
+    });
+
+    Router.push('/');
     setIsLoading(false);
 
     return;
@@ -131,7 +176,8 @@ export function UserProvider({ children }: UserProviderProps) {
       isLoading,
       setIsLoading,
       onFailSignin,
-      onFailSignup
+      onFailSignup,
+      signInWithGoogle
     }}>
       {children}
     </UserContext.Provider>

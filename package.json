@@ -20,6 +20,7 @@
     "axios": "^0.27.2",
     "bcryptjs": "^2.4.3",
     "faunadb": "4.5.4",
+    "firebase": "^9.9.2",
     "framer-motion": "^6.3.5",
     "jsonwebtoken": "^8.5.1",
     "next": "12.1.6",

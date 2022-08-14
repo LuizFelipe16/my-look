@@ -18,6 +18,7 @@ interface ISignProps {
   isLoading: boolean;
 
   isSigninGoogle?: boolean;
+  onSubmitSigninGoogle?: any
 }
 
 export const Sign = (
@@ -30,7 +31,8 @@ export const Sign = (
     subtitle,
     description,
     isLoading,
-    isSigninGoogle = false
+    isSigninGoogle = false,
+    onSubmitSigninGoogle
   }: ISignProps
 ) => (
   <SignStyles>
@@ -62,9 +64,9 @@ export const Sign = (
         {isSigninGoogle && (
           <Button
             type="button"
+            onClick={onSubmitSigninGoogle}
             fontFamily={theme.font.typography.text}
             fontSize="sm"
-            isLoading={isLoading}
             w="100%"
             size="md"
             bgColor={theme.colors.googleBlue}
