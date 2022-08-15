@@ -1,5 +1,6 @@
 import { useToast, useUser } from "hooks";
-import { Link, myStylesProvider, Text, View, Avatar, Button } from "_lib/web";
+import { Link, myStylesProvider, Text, View, Button } from "_lib/web";
+import { AvatarMenu } from "../AvatarMenu";
 import { ItemNav } from "./ItemNav";
 
 export const Navbar = ({ showLogin, showOnlyLogo }: any) => {
@@ -19,22 +20,22 @@ export const Navbar = ({ showLogin, showOnlyLogo }: any) => {
   }
 
   return (
-    <HeaderNavigation>
-      <Text type='h2' style={`logo`} text='My'><strong>Look!</strong></Text>
-  
-      <View style={`links`}>
-        <ItemNav href="/" text='Home' />
-        <ItemNav href="/shop" text='Shop' />
-      </View>
-  
-      {!showLogin ? <View /> : !user?.username ? (
-        <Link style={`login`} href='/sign'>Login</Link>
-      ) : (
-        <Button onPress={signOut}>
-          <Avatar style={`user-avatar`} size='md' name={user?.username} src={user?.avatar}  />
-        </Button>
-      ) }
-    </HeaderNavigation>
+    <>
+      <HeaderNavigation>
+        <Text type='h2' style={`logo`} text='My'><strong>Look!</strong></Text>
+    
+        <View style={`links`}>
+          <ItemNav href="/" text='Home' />
+          <ItemNav href="/shop" text='Shop' />
+        </View>
+    
+        {!showLogin ? <View /> : !user?.username ? (
+          <Link style={`login`} href='/sign'>Login</Link>
+        ) : <View />}
+      </HeaderNavigation>
+
+      {user.username && <AvatarMenu username={user.username} src={user.avatar} />}
+    </>
   );
 }
 
@@ -84,8 +85,4 @@ const HeaderNavigation = myStylesProvider.create((theme) => [
     theme.transition.apply(0.2),
     theme.effect.hover.inOwn([theme.bg.primary, theme.textColor.background])
   ]),
-
-  theme.myStyles.childClass('user-avatar', [
-    // theme.border.fill(0.15, theme.colors.primary)
-  ])
 ], 'header', false)
