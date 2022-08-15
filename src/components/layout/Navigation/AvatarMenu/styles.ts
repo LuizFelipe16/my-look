@@ -12,22 +12,21 @@ export const MenuContentStyled = styled(DropdownMenu.Content, {
   borderRadius: 6,
   transition: '0.2s',
   boxShadow: '1px 3px 18px 5px rgba(0,0,0,0.08)'
-
-  //   'rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px'
 });
 
 export const MenuItemStyled = styled(DropdownMenu.Item, {
   all: 'unset',
-  fontSize: '0.9rem',
+  fontSize: '1rem',
   fontWeight: 500,
-  fontFamily: theme.font.typography.text,
+  fontFamily: theme.font.typography.title,
   lineHeight: 1,
   color: theme.colors.primary,
   borderRadius: 5,
   display: 'flex',
   alignItems: 'center',
+  justifyContent: 'space-between',
   height: 45,
-  padding: '0 5px',
+  padding: '3px 25px',
   position: 'relative',
   cursor: 'pointer',
   paddingLeft: 25,

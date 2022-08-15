@@ -2,6 +2,8 @@ import { Button } from '@chakra-ui/react';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { useUser } from 'hooks';
 import { useState } from 'react';
+import { BiLogOutCircle } from 'react-icons/bi';
+import { AiOutlineUser } from 'react-icons/ai';
 import { Avatar, Link } from '_lib/web';
 import { MenuContentStyled, MenuItemStyled } from './styles';
 
@@ -29,9 +31,9 @@ export function AvatarMenu({ username, src }: any) {
 
       <MenuContentStyled sideOffset={5}>
         <Link href='/account'>
-          <MenuItemStyled>Profile</MenuItemStyled>
+          <MenuItemStyled>Profile <AiOutlineUser size={20} /></MenuItemStyled>
         </Link>
-        <MenuItemStyled onClick={signOut}>Logout</MenuItemStyled>
+        <MenuItemStyled onClick={signOut}>Logout <BiLogOutCircle size={20} /></MenuItemStyled>
       </MenuContentStyled>
     </DropdownMenu.Root>
   );
