@@ -69,24 +69,27 @@ export function UserProvider({ children }: UserProviderProps) {
 
   const username = cookies[appVariables.cookies.username];
   const token = cookies[appVariables.cookies.token];
-
+  const userCookie = cookies[appVariables.cookies.user];
+  
   const [isLoading, setIsLoading] = useState(false);
 
   const [user, setUser] = useState<User>(() => {
     const decodeToken = decode(token) as TokenPayload;
+    const data = !userCookie ? '' : JSON.parse(userCookie) as User;
 
     return {
       username: !username ? "" : username,
       token: !token ? "" : token,
-      avatar: !decodeToken ? "" : decodeToken.avatar,
-      id: !decodeToken ? "" : decodeToken.id,
+      avatar: !data ? "" : data.avatar,
+      email: !data ? "" : data.email,
+      id: !data ? "" : data.id,
       decode: !token ? {} : decodeToken
     } as User
   });
 
   const [isAccountConfirm, setIsAccountConfirm] = useState(false); // edit data user
 
-  function signOut(): void {
+  function signOut() {
     setIsLoading(true);
 
     if (!isAccountConfirm) {
@@ -97,6 +100,7 @@ export function UserProvider({ children }: UserProviderProps) {
     setUser({ username: "", token: "", avatar: "", email: "", id: "", decode: {} as TokenPayload });
     destroyCookie(undefined, appVariables.cookies.username);
     destroyCookie(undefined, appVariables.cookies.token);
+    destroyCookie(undefined, appVariables.cookies.user);
 
     Router.push('/');
     setIsLoading(false);
@@ -104,12 +108,21 @@ export function UserProvider({ children }: UserProviderProps) {
     return;
   }
 
-  function signIn({ token, isFirstSignin = false }: SignInData): void {
+  function signIn({ token, isFirstSignin = false }: SignInData) {
     setIsLoading(true);
 
     const decodeToken = decode(token) as TokenPayload;
 
-    const { username } = decodeToken;
+    const { username, email, id, avatar } = decodeToken;
+
+    const user = {
+      username,
+      token,
+      avatar,
+      email,
+      id,
+      decode: decodeToken
+    };
 
     setCookie(undefined, appVariables.cookies.username, username, {
       maxAge: 60 * 60 * 24,
@@ -121,13 +134,12 @@ export function UserProvider({ children }: UserProviderProps) {
       path: '/'
     });
 
-    setUser({
-      username,
-      token,
-      avatar: "",
-      decode:
-        decodeToken
+    setCookie(undefined, appVariables.cookies.user, JSON.stringify(user), {
+      maxAge: 60 * 60 * 24,
+      path: '/'
     });
+
+    setUser(user);
 
     Router.push(!isFirstSignin ? '/' : '/welcome');
     setIsLoading(false);
@@ -135,8 +147,16 @@ export function UserProvider({ children }: UserProviderProps) {
     return;
   }
 
-  function signInWithGoogle({ token, username, avatar, email, id }: SignInDataWithGoogle): void {
+  function signInWithGoogle({ token, username, avatar, email, id }: SignInDataWithGoogle) {
     setIsLoading(true);
+
+    const user = {
+      username,
+      token,
+      avatar,
+      email,
+      id,
+    };
 
     setCookie(undefined, appVariables.cookies.username, username, {
       maxAge: 60 * 60 * 24,
@@ -148,13 +168,12 @@ export function UserProvider({ children }: UserProviderProps) {
       path: '/'
     });
 
-    setUser({
-      username,
-      token,
-      avatar,
-      email,
-      id,
+    setCookie(undefined, appVariables.cookies.user, JSON.stringify(user), {
+      maxAge: 60 * 60 * 24,
+      path: '/'
     });
+
+    setUser(user);
 
     Router.push('/');
     setIsLoading(false);
@@ -162,8 +181,8 @@ export function UserProvider({ children }: UserProviderProps) {
     return;
   }
 
-  const onFailSignin = () => errorToast('Unexpected error. Unable to signin the user.')
-  const onFailSignup = () => errorToast('Unexpected error. Unable to register the user.')
+  const onFailSignin = () => errorToast('Unexpected error. Unable to signin the user.');
+  const onFailSignup = () => errorToast('Unexpected error. Unable to register the user.');
   
   return (
     <UserContext.Provider value={{
@@ -182,4 +201,4 @@ export function UserProvider({ children }: UserProviderProps) {
       {children}
     </UserContext.Provider>
   );
-}
+};

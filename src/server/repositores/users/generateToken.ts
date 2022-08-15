@@ -5,13 +5,16 @@ type GenerateToken = {
   email: string;
   username: string;
   id: string;
+  avatar?: string;
 };
 
-function generateToken({ email, username, id }: GenerateToken) {
+function generateToken({ email, username, id, avatar }: GenerateToken) {
   const token = sign(
     {
       username: username,
       email: email,
+      id: id,
+      avatar,
     },
     String(Settings.ApiCredentials?.AuthSecretCode),
     {

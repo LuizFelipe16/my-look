@@ -1,6 +1,7 @@
 import { AppVariables } from "_lib/global";
 
 export type AppTypography = 'Poppins' | 'Nunito' | 'Roboto';
+
 export type AppTexts = {
   signin: {
     title: string;
@@ -11,10 +12,12 @@ export type AppTexts = {
     description?: string;
   };
 };
+
 type AppCookies = {
   expire: string;
   username: string;
   token: string;
+  user: string;
 };
 
 export const appVariables: AppVariables<AppTypography, AppTexts, AppCookies> = {
@@ -35,6 +38,7 @@ export const appVariables: AppVariables<AppTypography, AppTexts, AppCookies> = {
     expire: '1d',
     username: `mylook.username`,
     token: `mylook.token`,
+    user: `mylook.user`
   },
   
   texts: {
