@@ -7,6 +7,7 @@ export type ThemeWidth = {
   fullView: () => PropertyWidth;
   fill: () => PropertyWidth;
   size: (multiplier: number, unity?: UNITY_PROPERTY) => PropertyWidth;
+  min: (multiplier: number, unity?: UNITY_PROPERTY) => string;
   max: (multiplier: number, unity?: UNITY_PROPERTY) => string;
 }
 
@@ -15,5 +16,6 @@ export const w: ThemeWidth = {
   fullView: () => 'width: 100vh;',
   fill: () => 'width: 100%;',
   size: (multiplier: number, unity?: UNITY_PROPERTY) => `width: ${mutableSize(multiplier, unity)};`,
+  min: (multiplier: number, unity?: UNITY_PROPERTY) => `min-width: ${mutableSize(multiplier, unity)};`,
   max: (multiplier: number, unity?: UNITY_PROPERTY) => `max-width: ${mutableSize(multiplier, unity)};`,
 };

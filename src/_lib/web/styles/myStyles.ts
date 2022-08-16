@@ -12,8 +12,12 @@ type CreateStyles = `.${string} { ${StylesProps} }`
 type CreateChildStyles = `> .${string} { ${any} ${any} }` | `> ${string} { ${any} ${any} }`
 
 const stylesTranformer = (styles: any) => {
-  const transformer = !isArray(styles) ? styles : `${styles?.map((s: any) => `${s}`)}`?.replace(/,/g, "\n")
-  return transformer;
+  const transformer = !isArray(styles) 
+    ? styles 
+    : `${styles?.map((s: any) => `${s}`)}`?.replace(/,/g, "\n")
+  
+  const newStyles = !isArray(styles) ? transformer : transformer.replace(/vig/g, ",")
+  return newStyles
 };
 
 const addStyle = (styleName: string, styles: any, childrenStyles?: any ): CreateStyles => {

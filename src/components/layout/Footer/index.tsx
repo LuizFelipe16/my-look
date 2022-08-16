@@ -27,15 +27,15 @@ function Footer() {
 
         <View style='session'>
           <Text type='h1' text='HELP' />
-          <Text text='Getting Started' />
           <Text text='FAQ' />
           <Text text='Feedback' />
+          <Text text='Terms &amp; Conditions' />
         </View>
 
         <Divider style='separator' />
 
         <View style='session-subscribe'>
-          <Text type='h2' text='SUBSCRIBE' />
+          <Text type='h2' text='NETWORKS' />
           <View style='social-links'>
             <Link href='#'><FaFacebookF /></Link>
             <Link href='#'><FaInstagram /></Link>

@@ -47,6 +47,11 @@ export const GlobalStyle = createGlobalStyle`
     display: flex;
   }
 
+  *::selection {
+    color: #000;
+    background-color: var(--orange)
+  }
+
   [disabled] {
     opacity: 0.6;
     cursor: not-allowed;

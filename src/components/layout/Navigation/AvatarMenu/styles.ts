@@ -6,7 +6,7 @@ export const MenuContentStyled = styled(DropdownMenu.Content, {
   zIndex: 10000,
   minWidth: 150,
   marginTop: 10,
-  backgroundColor: theme.colors.background,
+  backgroundColor: theme.colors.white,
   display: 'flex',
   flexDirection: 'column',
   borderRadius: 6,
@@ -33,6 +33,6 @@ export const MenuItemStyled = styled(DropdownMenu.Item, {
   transition: '0.2s',
 
   '&:focus': {
-    backgroundColor: theme.colors.backgroundDark,
+    filter: 'brightness(0.7)',
   },
 });

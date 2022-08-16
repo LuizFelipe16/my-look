@@ -18,6 +18,10 @@ type TokenPayload = {
 interface SignInData {
   token: string;
   isFirstSignin?: boolean;
+
+  phone: string;
+  name: string;
+  bio: string;
 }
 
 interface SignInDataWithGoogle {
@@ -35,6 +39,12 @@ type User = {
   email?: string;
   decode?: TokenPayload;
   id?: string;
+
+  phone: string;
+  name: string;
+  bio: string;
+
+  accountType: 'google' | 'mylook';
 }
 
 type UserContextData = {
@@ -77,14 +87,20 @@ export function UserProvider({ children }: UserProviderProps) {
     const decodeToken = decode(token) as TokenPayload;
     const data = !userCookie ? '' : JSON.parse(userCookie) as User;
 
-    return {
-      username: !username ? "" : username,
-      token: !token ? "" : token,
-      avatar: !data ? "" : data.avatar,
-      email: !data ? "" : data.email,
-      id: !data ? "" : data.id,
-      decode: !token ? {} : decodeToken
-    } as User
+    const newUser: User = {
+      username: !username ? '' : username,
+      token: !token ? '' : token,
+      avatar: !data ? '' : data.avatar,
+      email: !data ? '' : data.email,
+      id: !data ? '' : data.id,
+      decode: !token ? {} as TokenPayload : decodeToken,
+      bio: !data ? '' : data.bio,
+      name: !data ? '' : data.name,
+      accountType: !data ? 'mylook' : data.accountType,
+      phone: !data ? '' : data.phone,
+    };
+
+    return newUser;
   });
 
   const [isAccountConfirm, setIsAccountConfirm] = useState(false); // edit data user
@@ -92,36 +108,55 @@ export function UserProvider({ children }: UserProviderProps) {
   function signOut() {
     setIsLoading(true);
 
+    const resetUser: User = {
+      username: '', 
+      token: '', 
+      avatar: '', 
+      email: '', 
+      id: '', 
+      phone: '',
+      bio: '',
+      name: '',
+      decode: {} as TokenPayload,
+      accountType: 'mylook'
+    }
+
     if (!isAccountConfirm) {
       errorToast('You have been logged out');
     }
 
+    Router.push('/').then(() => {
+      setUser(resetUser);
+    
+      destroyCookie(undefined, appVariables.cookies.username);
+      destroyCookie(undefined, appVariables.cookies.token);
+      destroyCookie(undefined, appVariables.cookies.user);
+    });
+    
     setIsAccountConfirm(false);
-    setUser({ username: "", token: "", avatar: "", email: "", id: "", decode: {} as TokenPayload });
-    destroyCookie(undefined, appVariables.cookies.username);
-    destroyCookie(undefined, appVariables.cookies.token);
-    destroyCookie(undefined, appVariables.cookies.user);
-
-    Router.push('/');
+    
     setIsLoading(false);
-
     return;
   }
 
-  function signIn({ token, isFirstSignin = false }: SignInData) {
+  function signIn({ token, isFirstSignin = false, name, phone, bio }: SignInData) {
     setIsLoading(true);
 
     const decodeToken = decode(token) as TokenPayload;
 
     const { username, email, id, avatar } = decodeToken;
 
-    const user = {
+    const user: User = {
       username,
       token,
       avatar,
       email,
       id,
-      decode: decodeToken
+      decode: decodeToken,
+      bio,
+      phone,
+      name,
+      accountType: 'mylook'
     };
 
     setCookie(undefined, appVariables.cookies.username, username, {
@@ -150,12 +185,16 @@ export function UserProvider({ children }: UserProviderProps) {
   function signInWithGoogle({ token, username, avatar, email, id }: SignInDataWithGoogle) {
     setIsLoading(true);
 
-    const user = {
+    const user: User = {
       username,
       token,
       avatar,
       email,
       id,
+      bio: "",
+      phone: "",
+      name: "",
+      accountType: "google",
     };
 
     setCookie(undefined, appVariables.cookies.username, username, {

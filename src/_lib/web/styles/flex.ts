@@ -5,6 +5,7 @@ export type ThemeFlexRow = {
   centerEnd: string;
   startStart: string;
   startEnd: string;
+  startCenter: string;
   endEnd: string;
   endStart: string;
 };
@@ -101,6 +102,12 @@ export const flex: ThemeFlex = {
       flex-direction: row;
       align-items: flex-start;
       justify-content: flex-end;
+    `,
+    startCenter: `
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: center;
     `,
     endEnd: `
       display: flex;

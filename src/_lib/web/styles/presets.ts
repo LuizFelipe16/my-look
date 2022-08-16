@@ -3,6 +3,7 @@ import { styleSize } from "../tools";
 export type ThemePresets = {
   hide: () => string;
   size: (multiplier: number) => string;
+  neon: (color: string) => string;
   flex: () => `flex: 1;`;
   debugger: (color: 'blue' | 'red' | 'yellow' | 'green' | 'purple', weight?: number) => string;
   fullView: string;
@@ -29,10 +30,10 @@ export const presets: ThemePresets = {
 
   shadow: {
     box: 'box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;',
-    hover: `
-    box-shadow: #0005 0px 3px 8px;
-    `,
+    hover: `box-shadow: #0005 0px 3px 8px;`,
   },
+
+  neon: (c) => `box-shadow: 0 0 10px ${c}, 0 0 40px ${c}, 0 0 80px ${c};`,
 
   flex: () => `flex: 1;`,
 

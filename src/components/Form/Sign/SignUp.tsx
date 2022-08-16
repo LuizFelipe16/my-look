@@ -28,7 +28,7 @@ const createUserFormSchema = validation.createForm(is => ({
   password: is.string().required("Password is required").min(6, 'Minimum of 6 characters'),
   password_confirmation: is.string().oneOf([null, is.ref('password')], 'Passwords do not match'),
   isAcceptTerms: is.boolean().isTrue().required("To continue, accept our terms of use"),
-}))
+}));
 
 export const SignUp = ({ onClickAlreadyHaveAccount }: ISignUpProps) => {
   const { errorToast, successToast } = useToast();

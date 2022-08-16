@@ -1,6 +1,7 @@
 import { View, TitlePage, myStylesProvider, Text, Link } from '_lib/web';
 import { onMount, useState } from '_lib/global';
-import { Navigation, Loading, SignIn, SignUp } from 'components';
+import { Loading, SignIn, SignUp } from 'components';
+import { withSSRGuest } from 'functions';
 
 export default function Sign() {
   const [isLoadingPage, setIsLoadingPage] = useState(true);
@@ -29,7 +30,6 @@ export default function Sign() {
             <Link href='/' text='Back page' />
           </View>
         </View>
-        {/* <Footer /> */}
       </View>
     </MyStyles>
   );
@@ -79,3 +79,9 @@ const MyStyles = myStylesProvider.create((theme) => ([
     ])
   ])
 ]), 'div', true);
+
+export const getServerSideProps = withSSRGuest(async (ctx) => {
+  return {
+    props: {}
+  }
+});

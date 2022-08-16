@@ -18,7 +18,7 @@ interface ITextareaProps extends CTextareaProps {
 const TextareaBase: ForwardRefRenderFunction<HTMLTextAreaElement, ITextareaProps>
   = ({ label, is, error = null, ...rest }, ref) => {
     return (
-      <FormControl w="100%" isInvalid={!!error}>
+      <FormControl w="100%" flexDirection={'column'} isInvalid={!!error}>
         {!!label && (
           <FormLabel
             fontWeight="400"
