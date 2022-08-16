@@ -7,7 +7,7 @@ export default function Sign() {
   const [isLoadingPage, setIsLoadingPage] = useState(true);
   const [isFormSign, setIsFormSign] = useState<"signup" | "signin">("signin");
 
-  onMount(() => { setTimeout(() => setIsLoadingPage(false), 100) });
+  onMount(() => { setTimeout(() => setIsLoadingPage(false), 1000) });
 
   if (isLoadingPage) return <Loading />;
 

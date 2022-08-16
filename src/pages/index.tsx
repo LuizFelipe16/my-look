@@ -7,7 +7,7 @@ import { Description, DescriptionStyles } from 'components/pages/Description';
 export default function App() {
   const [isLoadingPage, setIsLoadingPage] = useState(true);
 
-  onMount(() => { setTimeout(() => setIsLoadingPage(false), 0) });
+  onMount(() => { setTimeout(() => setIsLoadingPage(false), 1000) });
 
   if (isLoadingPage) return <Loading />;
 

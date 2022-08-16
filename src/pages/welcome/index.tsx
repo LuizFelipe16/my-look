@@ -8,7 +8,7 @@ export default function Welcome() {
   const { user } = useUser();
   const [isLoadingPage, setIsLoadingPage] = useState(true);
 
-  onMount(() => { setTimeout(() => setIsLoadingPage(false), 100) });
+  onMount(() => { setTimeout(() => setIsLoadingPage(false), 1000) });
 
   if (isLoadingPage) return <Loading />;
 
