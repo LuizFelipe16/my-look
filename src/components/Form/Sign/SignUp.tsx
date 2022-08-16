@@ -59,7 +59,7 @@ export const SignUp = ({ onClickAlreadyHaveAccount }: ISignUpProps) => {
       if (data?.message) {
         successToast(data?.message);
         reset();
-        signIn({ token: data?.token, isFirstSignin: true });
+        signIn({ token: data?.token, isFirstSignin: true, bio: '', name: '', phone: '' });
         setIsLoading(false);
         return;
       }
