@@ -23,7 +23,7 @@ const createUserFormSchema = validation.createForm(is => ({
   username: is.string().required("Username is required").min(3, 'Minimum of 3 characters'),
   name: is.string().required("Name is required").min(3, 'Minimum of 3 characters'),
   email: is.string().email("Invalid e-mail").required("E-mail is required"),
-  phone: is.number().required("E-mail is required").min(11, 'Minimum of 11 characters'),
+  phone: is.number().min(10, 'Minimum of 11 characters').max(11, 'Max of 11 characters').required("Phone is required"),
   bio: is.string().required("Bio is required").min(10, 'Minimum of 10 characters'),
 }));
 

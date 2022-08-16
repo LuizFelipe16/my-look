@@ -28,9 +28,9 @@ const CheckboxBase: ForwardRefRenderFunction<HTMLInputElement, ICheckboxProps>
           {...rest}
         >
           {!!label && !!href ? (
-            <Link href={href}>
+            <a target='_blank' href='https://my-look.vercel.app/terms' rel='noreferrer'>
               <Text style={textStyle} text={label} />
-            </Link>
+            </a>
           ) : !!label && <Text style={textStyle} text={label} />}
         </CCheck>
 
