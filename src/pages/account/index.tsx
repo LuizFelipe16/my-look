@@ -78,7 +78,7 @@ export default function Account() {
     });
   }
 
-  onMount(() => { setTimeout(() => setIsLoadingPage(false), 0) });
+  onMount(() => { setTimeout(() => setIsLoadingPage(false), 100) });
 
   if (isLoadingPage) return <Loading />;
 

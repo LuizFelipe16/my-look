@@ -6,7 +6,7 @@ import { renderHTMLTermUses, renderHTMLPolicy } from 'data/termuse';
 export default function Terms() {
   const [isLoadingPage, setIsLoadingPage] = useState(true);
 
-  onMount(() => { setTimeout(() => setIsLoadingPage(false), 0) });
+  onMount(() => { setTimeout(() => setIsLoadingPage(false), 100) });
 
   if (isLoadingPage) return <Loading />;
 
