@@ -54,7 +54,7 @@ export const SignIn = ({ onClickNotHaveAccount }: ISignInProps) => {
         successToast(data?.message);
 
         reset();
-        signIn({ token: data?.token });
+        signIn({ token: data?.token, bio: '', name: '', phone: '' });
         setIsLoading(isLoadingUser);
         setIsLoading(false);
 
