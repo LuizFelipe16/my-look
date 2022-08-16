@@ -9,6 +9,9 @@ interface User {
     email: string;
     username: string;
     password: string;
+    name: string;
+    phone: string;
+    bio: string;
   };
   ts: number;
   ref: {
@@ -40,9 +43,16 @@ async function signin({ email, password }: SinginRequest, res: NextApiResponse) 
       username: resp.data.username,
       email: resp.data.email,
       id: resp.ref.id
-    })
+    });
 
-    return res.status(200).json({ message: messageSuccess, token: token });
+    const newUser = {
+      name: resp.data.name,
+      phone: resp.data.phone,
+      bio: resp.data.bio,
+      token,
+    }
+
+    return res.status(200).json({ message: messageSuccess, ...newUser });
   }).catch(() => {
     return res.status(200).json({ error: messageError });
   });

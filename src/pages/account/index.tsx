@@ -5,12 +5,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { View, TitlePage, myStylesProvider, Text, Avatar, Button } from '_lib/web';
 import { onMount, useState, validation } from '_lib/global';
 import { Navigation, Loading, Footer, Input, Textarea } from 'components';
-import { useUser } from 'hooks';
+import { useToast, useUser } from 'hooks';
 import { withSSRAuth } from 'functions';
 import { Button as CButton, Stack } from '@chakra-ui/react';
 import { theme } from '_app';
+import { apiNext } from 'services';
 
-type CreateEditFormData = {
+type EditFormData = {
   username: string;
   name: string;
   email: string;
@@ -27,7 +28,8 @@ const createUserFormSchema = validation.createForm(is => ({
 }));
 
 export default function Account() {
-  const { user, signOut } = useUser();
+  const { user, signOut, signIn, isLoading, setIsLoading } = useUser();
+  const { successToast, errorToast } = useToast();
   const [isLoadingPage, setIsLoadingPage] = useState(true);
   const [isInputsDisable, setIsInputsDisable] = useState(user.accountType === 'google')
 
@@ -36,11 +38,45 @@ export default function Account() {
     reset,
     formState,
     handleSubmit
-  } = useForm<CreateEditFormData>({
-    resolver: yupResolver(createUserFormSchema)
+  } = useForm<EditFormData>({
+    resolver: yupResolver(createUserFormSchema),
+    defaultValues: {
+      ...user
+    }
   });
 
   const errors = formState.errors;
+
+  const handleUpdateUser: SubmitHandler<EditFormData> = async (values) => {
+    setIsLoading(true);
+
+    await apiNext.put(`/users/${user?.id}`, values).then(({ data }) => {
+      if (data?.error) {
+        errorToast(data?.error);
+        setIsLoading(false);
+        return;
+      }
+
+      if (data?.message) {
+        successToast(data?.message);
+
+        const user = data?.user;
+
+        signIn({
+          token: String(user?.token),
+          name: String(user?.name),
+          phone: String(user?.phone),
+          bio: String(user?.bio),
+        });
+        setIsLoading(false);
+
+        return;
+      }
+    }).catch(() => {
+      errorToast('Unexpected error, contact support.');
+      setIsLoading(false);
+    });
+  }
 
   onMount(() => { setTimeout(() => setIsLoadingPage(false), 0) });
 
@@ -55,7 +91,7 @@ export default function Account() {
         <View style={`page-welcome`}>
           <View style={`side-menu`}>
             <View style={`infos`}>
-              <Avatar size='xl' src={user?.avatar} />
+              <Avatar size='xl' name={user?.name} src={user?.avatar} />
               <Text style={`username`} text={user?.username} />
               <Text style={`email`} text={user?.email} />
 
@@ -84,13 +120,12 @@ export default function Account() {
             <Text type='h1' text='Account Details' />
             <Text type='h2' text='Basic Info' />
 
-            <Stack as='form' direction={'column'} w='100%' spacing={["4", "6", "6"]} align={['center', 'center', 'flex-start']}>
+            <Stack as='form' onSubmit={handleSubmit(handleUpdateUser)} direction={'column'} w='100%' spacing={["4", "6", "6"]} align={['center', 'center', 'flex-start']}>
               <Stack direction={["column", "row", "row"]} w="100%" spacing={["4", "2", "2"]} justify="space-between">
                 <Input
                   is="username"
                   label='Username'
                   placeholder="Username"
-                  value={user?.username}
                   error={errors.username}
                   isDisabled={isInputsDisable}
                   {...register('username')}
@@ -99,7 +134,6 @@ export default function Account() {
                   is="name"
                   label='Full name'
                   placeholder="name"
-                  value={user?.name}
                   error={errors.name}
                   isDisabled={isInputsDisable}
                   {...register('name')}
@@ -111,16 +145,14 @@ export default function Account() {
                   is="email"
                   label='E-mail address'
                   placeholder="email"
-                  value={user?.email}
                   error={errors.email}
-                  isDisabled={isInputsDisable}
+                  isDisabled={true}
                   {...register('email')}
                 />
                 <Input
                   is="phone"
                   label='Phone (+55)'
                   placeholder="19 00000 0000"
-                  value={user?.phone}
                   error={errors.phone}
                   isDisabled={isInputsDisable}
                   {...register('phone')}
@@ -134,7 +166,6 @@ export default function Account() {
                 minHeight={110}
                 resize={'none'}
                 placeholder="Add a short bio..."
-                value={user?.bio}
                 error={errors.bio}
                 isDisabled={isInputsDisable}
                 {...register('bio')}
@@ -142,6 +173,7 @@ export default function Account() {
 
               <CButton
                 type="submit"
+                isLoading={isLoading}
                 fontFamily={theme.font.typography.text}
                 fontSize="sm"
                 w={["50%", "50%", "35%"]}

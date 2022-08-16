@@ -15,18 +15,23 @@ type UserUpdateRequest = {
   id: any;
   email: string;
   username: string;
-  user_email: string;
-  password: any;
+  name: string;
+  phone: string;
+  bio: string;
+  password?: any;
 };
 
 const messageSuccess = 'Account successfully updated! Sign in again.';
 const messageError = 'This email already belongs to another account.';
 
-async function update({ id, email, password, user_email, username }: UserUpdateRequest, res: NextApiResponse) {
+async function update({ id, email, password, username, bio, name, phone }: UserUpdateRequest, res: NextApiResponse) {
   const data = {
-    username,
     email,
-    password: cryptography.encryptValue(password)
+    username,
+    name,
+    phone,
+    bio,
+    // password: cryptography.encryptValue(password)
   };
 
   await fauna.query<UserRequest>(
@@ -36,7 +41,7 @@ async function update({ id, email, password, user_email, username }: UserUpdateR
   ).then((response) => {
     const user_find = response;
 
-    if (user_find.data.email === user_email) {
+    if (user_find.data.email === email) {
       fauna.query(
         q.Update(
           q.Ref(q.Collection(usersRepository.config.name), id),
@@ -44,7 +49,15 @@ async function update({ id, email, password, user_email, username }: UserUpdateR
         )
       );
 
-      return res.status(200).json({ message: messageSuccess });
+      const token = usersRepository.config.generateToken({
+        username: data?.username,
+        email: data?.email,
+        id: id,
+      });
+
+      const newUser = { ...data, token }
+
+      return res.status(200).json({ message: messageSuccess, user: newUser });
     }
 
     return res.status(200).json({ error: messageError });
@@ -58,7 +71,15 @@ async function update({ id, email, password, user_email, username }: UserUpdateR
       )
     );
 
-    return res.status(200).json({ message: messageSuccess });
+    const token = usersRepository.config.generateToken({
+      username: data?.username,
+      email: data?.email,
+      id: id,
+    });
+
+    const newUser = { ...data, token }
+
+    return res.status(200).json({ message: messageSuccess, user: newUser });
   });
 }
 

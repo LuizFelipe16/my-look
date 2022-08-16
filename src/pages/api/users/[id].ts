@@ -7,16 +7,18 @@ export default async function handler(req: NextApiRequest, response: NextApiResp
     const {
       email,
       username,
-      user_email,
-      password
+      name,
+      phone,
+      bio,
     } = req.body;
 
     await repositories.users.updateUser({
       id,
       email,
       username,
-      user_email,
-      password
+      name,
+      phone,
+      bio,
     }, response);
   }
 };
