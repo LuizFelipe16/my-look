@@ -151,7 +151,7 @@ export default function Account() {
                 />
                 <Input
                   is="phone"
-                  label='Phone (+55)'
+                  label='Phone (+55) * no special characters'
                   placeholder="19 00000 0000"
                   error={errors.phone}
                   isDisabled={isInputsDisable}
