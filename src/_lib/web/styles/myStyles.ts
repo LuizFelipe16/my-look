@@ -14,9 +14,11 @@ type CreateChildStyles = `> .${string} { ${any} ${any} }` | `> ${string} { ${any
 const stylesTranformer = (styles: any) => {
   const transformer = !isArray(styles) 
     ? styles 
-    : `${styles?.map((s: any) => `${s}`)}`?.replace(/,/g, "\n")
+    // : `${styles?.map((s: any) => `${s}`)}`?.replace(/,/g, "\n")
+    : `${styles?.map((s: any) => `${s}`)}`?.split(",").join(" ").split('undefined')
+
+  const newStyles = !isArray(styles) ? transformer : `${`${`${transformer}`.split('false')}`.split('true')}`
   
-  const newStyles = !isArray(styles) ? transformer : transformer.replace(/vig/g, ",")
   return newStyles
 };
 

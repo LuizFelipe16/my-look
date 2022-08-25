@@ -14,4 +14,5 @@ export * from './ImgZoom';
 export * from './Spinner';
 
 export * from './Form';
+export * from './ButtonNeon';
 export * from './Avatar';

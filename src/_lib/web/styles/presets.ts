@@ -33,7 +33,7 @@ export const presets: ThemePresets = {
     hover: `box-shadow: #0005 0px 3px 8px;`,
   },
 
-  neon: (c) => `box-shadow: 0 0 10px ${c}, 0 0 40px ${c}, 0 0 80px ${c};`,
+  neon: (c) => `box-shadow: 0 0 10px ${c} virgula 0 0 40px ${c} virgula 0 0 80px ${c};`,
 
   flex: () => `flex: 1;`,
 

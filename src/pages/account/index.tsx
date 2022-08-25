@@ -209,6 +209,7 @@ const OptionStyles = myStylesProvider.style((theme) => ([
     theme.margin.top.size(0.5),
     theme.gapEls.full.size(0.5),
     theme.font.apply('rg', 1, theme.font.typography.title, theme.colors.black),
+    theme.presets.neon(theme.colors.primary),
 
     theme.transition.apply(0.2),
     theme.effect.hover.inOwn([theme.bg.primary, theme.textColor.background, theme.effect.filter.opacity(0.7)]),
