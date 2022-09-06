@@ -59,8 +59,8 @@ export const font: ThemeFont = {
   }, 
 
   typography: {
-    title: `font-family: "${appVariables.typography.title}";`,
-    text: `font-family: "${appVariables.typography.text}";`,
+    title: `font-family: ${appVariables.typography.title};`,
+    text: `font-family: ${appVariables.typography.text};`,
   },
 
   weight: {

@@ -7,7 +7,7 @@ function Welcome() {
       <View data-aos="fade-right" data-aos-duration="700" style={`content`}>
         <Text type='h1' style={`subtitle`}>Welcome to <span>MyLook!</span> Mount <br /> your beautiful look.</Text>
         <Divider style={`line`} />
-        <Text style={`text`} text={`
+        <Text type='p' style={`text`} text={`
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Non,
           reprehenderit ipsa. Ut nisi possimus quaerat dolor?
           Ex dolores dolor deserunt itaque officiis non minus? Nesciunt amet ex a facilis rem!
@@ -71,7 +71,9 @@ const WelcomeContent = myStyles.style(theme => ([
       theme.bg.blackTransparent,
       theme.transition.apply(0.2),
       theme.presets.shadow.box,
-      theme.font.apply('md', 1, theme.font.typography.text, theme.colors.white),
+      theme.font.weight.md,
+      theme.textColor.white,
+      theme.font.size(1),
       theme.effect.hover.inOwn([theme.margin.left.size(0.3)]),
       theme.responsiveness.notWeb([theme.w.size(100, '%')])
     ]),

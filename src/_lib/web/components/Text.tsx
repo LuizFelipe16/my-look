@@ -20,12 +20,11 @@ export const Text = (
     ...rest
   }: TextProps
 ) => {
-  if (type === 'p') return <p className={style} {...rest}>{text}{children}</p>
-  else if (type === 'h1') return <h1 className={style} {...rest}>{text}{children}</h1>
-  else if (type === 'h2') return <h2 className={style} {...rest}>{text}{children}</h2>
-  else if (type === 'h3') return <h3 className={style} {...rest}>{text}{children}</h3>
-  else if (type === 'h4') return <h4 className={style} {...rest}>{text}{children}</h4>
-  else if (type === 'h5') return <h5 className={style} {...rest}>{text}{children}</h5>
-  else if (type === 'h6') return <h6 className={style} {...rest}>{text}{children}</h6>
+  if (type === 'p') return (<p className={style} {...rest}>{text}{children}</p>)
+  else if (type === 'h1') return (<h1 className={style} {...rest}>{text}{children}</h1>)
+  else if (type === 'h2') return (<h2 className={style} {...rest}>{text}{children}</h2>)
+  else if (type === 'h3') return (<h3 className={style} {...rest}>{text}{children}</h3>)
+  else if (type === 'h4') return (<h4 className={style} {...rest}>{text}{children}</h4>)
+  else if (type === 'h5') return (<h5 className={style} {...rest}>{text}{children}</h5>)
   else return <span className={style}>Type not found</span>
 };
