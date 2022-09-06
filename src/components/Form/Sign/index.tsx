@@ -54,8 +54,8 @@ export const Sign = (
       gap="1.2rem"
     >
       <Box flexDirection={'column'}>
-        <Heading fontSize="lg" mb="3">{title}</Heading>
-        <Text fontSize="sm" >{description}</Text>
+        <Heading fontSize="lg" mb="3" fontFamily={`'Poppins', sans-serif`}>{title}</Heading>
+        <Text fontSize="sm" fontFamily={`'Poppins', sans-serif`}>{description}</Text>
       </Box>
 
       {children}
@@ -66,6 +66,7 @@ export const Sign = (
             type="button"
             onClick={onSubmitSigninGoogle}
             fontSize="sm"
+            fontFamily={`'Poppins', sans-serif`}
             w="100%"
             size="md"
             bgColor={theme.colors.googleBlue}
@@ -84,6 +85,7 @@ export const Sign = (
         <Button
           type="submit"
           fontSize="sm"
+          fontFamily={`'Poppins', sans-serif`}
           isLoading={isLoading}
           w="100%"
           size="md"
@@ -106,6 +108,7 @@ export const Sign = (
         textDecoration="underline"
         fontSize="sm"
         fontWeight="400"
+        fontFamily={`'Poppins', sans-serif`}
         alignSelf="flex-end"
         cursor="pointer"
         _hover={{ textDecoration: 'none' }}

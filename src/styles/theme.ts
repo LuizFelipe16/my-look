@@ -3,7 +3,7 @@ import { appColors } from "_app";
 
 export const theme = extendTheme({
   colors: {
-    ...appColors
+    // ...appColors
   },
   fonts: {
     title: `'Poppins', sans-serif`,

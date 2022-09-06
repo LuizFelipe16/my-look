@@ -7,12 +7,12 @@ import { theme } from 'styles/theme';
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider>
-      <ChakraProvider theme={theme} resetCSS>
-        <UserProvider>
-          <MyStylesGlobal />
+      <UserProvider>
+        <MyStylesGlobal />
+        <ChakraProvider theme={theme} resetCSS>
           <Component {...pageProps} />
-        </UserProvider>
-      </ChakraProvider>
+        </ChakraProvider>
+      </UserProvider>
     </ThemeProvider>
   );
 };
