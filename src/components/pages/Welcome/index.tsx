@@ -58,7 +58,7 @@ const WelcomeContent = myStyles.style(theme => ([
     theme.myStyles.create('text', [
       theme.margin.top.size(1),
       theme.font.line(1.7),
-      theme.font.apply('rg', 0.9, theme.font.typography.text, theme.colors.background)
+      theme.font.apply('rg', 1, theme.font.typography.text, theme.colors.background)
     ]),
     
     theme.myStyles.create('about', [
