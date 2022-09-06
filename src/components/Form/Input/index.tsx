@@ -25,6 +25,7 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, IInputProps>
             fontWeight="400"
             fontSize={'sm'}
             // fontFamily={'Poppins'}
+            fontFamily={'title'}
             color="black"
             htmlFor={is}
           >
@@ -36,6 +37,7 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, IInputProps>
           id={is}
           name={is}
           // fontFamily={'Poppins'}
+          fontFamily={'title'}
           focusBorderColor="gray.400"
           variant="filled"
           borderRadius={4}
