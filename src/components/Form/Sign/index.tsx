@@ -54,8 +54,8 @@ export const Sign = (
       gap="1.2rem"
     >
       <Box flexDirection={'column'}>
-        <Heading fontSize="lg" fontFamily={theme.font.typography.title} mb="3">{title}</Heading>
-        <Text fontSize="sm" fontFamily={theme.font.typography.text}>{description}</Text>
+        <Heading fontSize="lg" mb="3">{title}</Heading>
+        <Text fontSize="sm" >{description}</Text>
       </Box>
 
       {children}
@@ -65,7 +65,6 @@ export const Sign = (
           <Button
             type="button"
             onClick={onSubmitSigninGoogle}
-            fontFamily={theme.font.typography.text}
             fontSize="sm"
             w="100%"
             size="md"
@@ -84,7 +83,6 @@ export const Sign = (
         )}
         <Button
           type="submit"
-          fontFamily={theme.font.typography.text}
           fontSize="sm"
           isLoading={isLoading}
           w="100%"
@@ -105,7 +103,6 @@ export const Sign = (
         as="button"
         onClick={onClick}
         mt="2"
-        fontFamily={theme.font.typography.text}
         textDecoration="underline"
         fontSize="sm"
         fontWeight="400"
