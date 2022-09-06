@@ -1,18 +1,20 @@
-export type AppVariables<AppTypography, AppTexts, AppCookies> = {
+export type AppVariables<TF, TX, TC> = {
   size: {
     MULTIPLIER: number;
     UNITY: 'rem' | 'em' | 'px';
   };
   typography: {
-    title: AppTypography;
-    subtitle: AppTypography;
-    text: AppTypography;
+    title: TF;
+    subtitle: TF;
+    text: TF;
   },
   projectDescription: string;
   nameProject: string;
   nameMinProject: string;
+  onDuration: {
+    loadingPage: number; // mili
+  }
 
-  cookies: AppCookies;
-
-  texts: AppTexts;
+  cookies: TC;
+  texts: TX;
 };

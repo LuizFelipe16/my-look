@@ -1,39 +1,29 @@
-import { View, TitlePage, myStylesProvider, Text, Link } from '_lib/web';
-import { onMount, useState } from '_lib/global';
-import { Loading } from 'components';
+import { View, myStyles, Text, Link } from '_lib/web';
+import { Page } from 'components';
 import { useUser } from 'hooks';
 import { withSSRAuth } from 'functions';
 
 export default function Welcome() {
   const { user } = useUser();
-  const [isLoadingPage, setIsLoadingPage] = useState(true);
-
-  onMount(() => { setTimeout(() => setIsLoadingPage(false), 1000) });
-
-  if (isLoadingPage) return <Loading />;
 
   return (
-    <MyStyles>
-      <View style={`page`}>
-        <TitlePage t='Welcome!' />
-
-        <View style={`page-welcome`}>
-          <View style={`overlap`}>
-            <Text data-aos="fade-down" text={`Hello ${user.username}`} />
-            <Text data-aos="fade-down" type='h1' text='Welcome to My'><strong>Look!</strong></Text>
-            <Text>
-              We are happy to have you with us, we suggest you start by looking <br /> 
-              at the best looks available this week.
-            </Text>
-            <Link href='/' text='Get Started' />
-          </View>
+    <Page styles={MyStyles} title='Welcome!' showFooter={false} showNavigation={false}>
+      <View style={`page-welcome`}>
+        <View style={`overlap`}>
+          <Text data-aos="fade-down" text={`Hello ${user.username}`} />
+          <Text data-aos="fade-down" type='h1' text='Welcome to My'><strong>Look!</strong></Text>
+          <Text>
+            We are happy to have you with us, we suggest you start by looking <br /> 
+            at the best looks available this week.
+          </Text>
+          <Link href='/' text='Get Started' />
         </View>
       </View>
-    </MyStyles>
+    </Page>
   );
 }
 
-const MyStyles = myStylesProvider.create((theme) => ([
+const MyStyles = myStyles.create((theme) => ([
   theme.myStyles.create('page-welcome', [
     theme.w.size(100, '%'),
     theme.h.auto(),

@@ -1,5 +1,5 @@
 import { appVariables } from "_app/app";
-import { styleSize } from "../tools";
+import { mutableSize, styleSize, UNITY_PROPERTY } from "../tools";
 
 type FontWeight = `font-weight: ${number};`
 type FontStyle = `font-style: ${string};`
@@ -9,7 +9,7 @@ type FontFamily = `font-family: ${string};`
 type WeightTypes = 'th' | 'sr' | 'rg' | 'md' | 'sb' | 'bl' | 'xb'
 
 export type ThemeFont = {
-  size: Function;
+  size: (multiplier: number, unity?: UNITY_PROPERTY) => `font-size: ${any};`;
   apply: (w: WeightTypes, multiplier: number, type: string, color: string) => string;
 
   typography: {
@@ -52,7 +52,7 @@ const fontWeights: FontWeights = {
 }
 
 export const font: ThemeFont = {
-  size: (multiplier: number) => `font-size: ${styleSize(multiplier)};`,
+  size: (multiplier: number, unity?: UNITY_PROPERTY) => `font-size: ${mutableSize(multiplier, unity)};`,
 
   apply: (w: WeightTypes, multiplier: number, type: string, color: string) => {
     return `${type} color: ${color}; font-size: ${styleSize(multiplier)}; font-weight: ${fontWeights[w]};`

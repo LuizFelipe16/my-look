@@ -1,29 +1,13 @@
 import { AppVariables } from "_lib/global";
-
-export type AppTypography = 'Poppins' | 'Nunito' | 'Roboto';
-
-export type AppTexts = {
-  signin: {
-    title: string;
-    description?: string;
-  };
-  signup: {
-    title: string;
-    description?: string;
-  };
-};
-
-type AppCookies = {
-  expire: string;
-  username: string;
-  token: string;
-  user: string;
-};
+import { AppTypography, AppTexts, AppCookies } from './types';
 
 export const appVariables: AppVariables<AppTypography, AppTexts, AppCookies> = {
   size: {
     MULTIPLIER: 1,
     UNITY: 'rem',
+  },
+  onDuration: {
+    loadingPage: 100,
   },
   typography: {
     title: 'Poppins',

@@ -1,4 +1,4 @@
-import { View, myStylesProvider, Text, Img, Button } from '_lib/web';
+import { View, myStyles, Text, Img, Button } from '_lib/web';
 
 function Description() {
   return (
@@ -31,7 +31,7 @@ function Description() {
   );
 }
 
-const DescriptionStyles = myStylesProvider.style(theme => ([
+const DescriptionStyles = myStyles.style(theme => ([
   theme.myStyles.create('services-description', [
     theme.w.fill(),
     theme.h.min(100, 'vh'),

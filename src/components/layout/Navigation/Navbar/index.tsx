@@ -1,11 +1,19 @@
 import { useToast, useUser } from "hooks";
-import { Link, myStylesProvider, Text, View, Button } from "_lib/web";
+import { Link, myStyles, Text, View, Button } from "_lib/web";
 import { AvatarMenu } from "../AvatarMenu";
 import { ItemNav } from "./ItemNav";
 
-export const Navbar = ({ showLogin, showOnlyLogo }: any) => {
-  const { user, signOut } = useUser();
-  const { successToast } = useToast();
+type TProps = {
+  hasImage?: boolean
+}
+
+interface NavbarProps extends TProps {
+  showLogin: any
+  showOnlyLogo: any  
+}
+
+export const Navbar = ({ showLogin, showOnlyLogo, hasImage = false }: NavbarProps) => {
+  const { user } = useUser();
 
   if (showOnlyLogo) {
     return (
@@ -21,7 +29,7 @@ export const Navbar = ({ showLogin, showOnlyLogo }: any) => {
 
   return (
     <>
-      <HeaderNavigation>
+      <HeaderNavigation theme={{ hasImage }}>
         <Text type='h2' style={`logo`} text='My'><strong>Look!</strong></Text>
     
         <View style={`links`}>
@@ -39,7 +47,7 @@ export const Navbar = ({ showLogin, showOnlyLogo }: any) => {
   );
 }
 
-const HeaderNavigation = myStylesProvider.create((theme) => [
+const HeaderNavigation = myStyles.mutate.create((theme, props: TProps) => ([
   theme.w.fill(),
   theme.h.size(5),
 
@@ -57,7 +65,7 @@ const HeaderNavigation = myStylesProvider.create((theme) => [
 
   theme.myStyles.create('logo', [
     theme.font.apply('sb', 1.8, theme.font.typography.title, theme.colors.black)
-  ], theme.myStyles.child('strong', [theme.textColor.primary])),
+  ], theme.myStyles.child('strong', [theme.compare.prop(props.hasImage, theme.textColor.background, theme.textColor.primary)])),
 
   theme.myStyles.create('links', [
     theme.w.auto(),
@@ -68,7 +76,8 @@ const HeaderNavigation = myStylesProvider.create((theme) => [
       theme.transition.apply(0.2),
       theme.font.size(1.1),
       theme.font.weight.md,
-      theme.effect.hover.inOwn([theme.textColor.primary]),
+      theme.effect.hover.inOwn([theme.compare.prop(props.hasImage, theme.margin.top.size(0.4), theme.textColor.primary)]),
+      theme.compare.prop(props.hasImage, theme.textColor.white, theme.textColor.black)
     ])
   ]),
 
@@ -79,10 +88,10 @@ const HeaderNavigation = myStylesProvider.create((theme) => [
     theme.bg.blackTransparent,
     theme.padding.vertical.size(0.45),
     theme.padding.horizontal.size(1.25),
-    theme.font.apply('sb', 0.9, theme.font.typography.title, theme.colors.black),
+    theme.font.apply('sb', 0.9, theme.font.typography.title, props.hasImage ? theme.colors.background : theme.colors.black),
     theme.presets.shadow.box,
       
     theme.transition.apply(0.2),
-    theme.effect.hover.inOwn([theme.bg.primary, theme.textColor.background])
+    theme.effect.hover.inOwn([theme.bg.background, theme.textColor.primary])
   ]),
-], 'header', false)
+]), 'header');

@@ -1,34 +1,26 @@
-import { View, TitlePage, myStylesProvider } from '_lib/web';
-import { onMount, useState } from '_lib/global';
-import { Navigation, Loading, Footer } from 'components';
-import { ShopStyles, Shop, Welcome, WelcomeStyles, Reviews, ReviewsStyles, AppStore, AppStoreStyles } from 'components/pages';
-import { Description, DescriptionStyles } from 'components/pages/Description';
+import { myStyles } from '_lib/web';
+import { Page } from 'components';
+import { 
+  ShopStyles, Shop, 
+  Welcome, WelcomeStyles, 
+  Reviews, ReviewsStyles, 
+  AppStore, AppStoreStyles, 
+  Description, DescriptionStyles
+} from 'components/pages';
 
 export default function App() {
-  const [isLoadingPage, setIsLoadingPage] = useState(true);
-
-  onMount(() => { setTimeout(() => setIsLoadingPage(false), 1000) });
-
-  if (isLoadingPage) return <Loading />;
-
   return (
-    <MyStyles>
-      <View style={`page`}>
-        <TitlePage t='Home' />
-        <Navigation />
-
-        <Welcome />
-        <Shop />
-        <Description />
-        <Reviews />
-        <AppStore />
-    
-        <Footer />
-      </View>
-    </MyStyles>
+    <Page styles={MyStyles} title='Home' navProps={{ hasImage: true }}>
+      <Welcome />
+      <Shop />
+      <Description />
+      <Reviews />
+      <AppStore />
+    </Page>
   );
 }
 
-const MyStyles = myStylesProvider.create(() => ([
+const MyStyles = myStyles.create((theme) => ([
+  theme.over.hide('full'),
   WelcomeStyles, ShopStyles, ReviewsStyles, AppStoreStyles, DescriptionStyles
 ]), 'div', true);

@@ -1,4 +1,4 @@
-import { myStyles } from "./myStyles";
+import { myStylesMethods } from "./myStyles";
 
 export type ThemeEffects = {
   hover: {
@@ -15,9 +15,9 @@ export type ThemeEffects = {
 
 export const effects: ThemeEffects = {
   hover: {
-    in: (elementFocus: string, styles: string) => `${elementFocus}:hover { ${myStyles.transformer(styles)} }`,
-    inOwn: (styles: string) => `&:hover { ${myStyles.transformer(styles)} }`,
-    inOwnChild: (childFocus: string, styles: any, isC?: boolean) => `&:hover > ${isC ? `.${childFocus}` : childFocus} { ${myStyles.transformer(styles)} }`
+    in: (elementFocus: string, styles: string) => `${elementFocus}:hover { ${myStylesMethods.transformer(styles)} }`,
+    inOwn: (styles: string) => `&:hover { ${myStylesMethods.transformer(styles)} }`,
+    inOwnChild: (childFocus: string, styles: any, isC?: boolean) => `&:hover > ${isC ? `.${childFocus}` : childFocus} { ${myStylesMethods.transformer(styles)} }`
   },
   filter: {
     glow: (value: number) => `filter: brightness(${value});`,

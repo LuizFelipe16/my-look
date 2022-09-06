@@ -1,41 +1,33 @@
-import { View, TitlePage, myStylesProvider, Text, Link } from '_lib/web';
-import { onMount, useState } from '_lib/global';
-import { Loading, SignIn, SignUp } from 'components';
+import { View, myStyles, Text, Link } from '_lib/web';
+import { useState } from '_lib/global';
+import { Page, SignIn, SignUp } from 'components';
 import { withSSRGuest } from 'functions';
 
 export default function Sign() {
-  const [isLoadingPage, setIsLoadingPage] = useState(true);
   const [isFormSign, setIsFormSign] = useState<"signup" | "signin">("signin");
 
-  onMount(() => { setTimeout(() => setIsLoadingPage(false), 1000) });
-
-  if (isLoadingPage) return <Loading />;
-
   return (
-    <MyStyles>
-      <View style={`page`}>
-        <TitlePage t={isFormSign === 'signin' ? 'Signin' : 'Signup'} />
-        <View style={'signup'}>
-          <View style={`signup-content`}>
-            {isFormSign === "signin"
-              ? <SignIn onClickNotHaveAccount={() => setIsFormSign("signup")} />
-              : <SignUp onClickAlreadyHaveAccount={() => setIsFormSign("signin")} />
-            }
-          </View>
+    <Page styles={MyStyles} title={isFormSign === 'signin' ? 'Signin' : 'Signup'} showNavigation={false} showFooter={false}>
+      <View style={'signup'}>
+        <View style={`signup-content`}>
+          {isFormSign === "signin"
+            ? <SignIn onClickNotHaveAccount={() => setIsFormSign("signup")} />
+            : <SignUp onClickAlreadyHaveAccount={() => setIsFormSign("signin")} />
+          }
+        </View>
 
-          <View data-aos="fade-left" data-aos-duration="500" style={`illustration`}>
-            <Text type='h1' text='Welcome to,' />
-            <Text data-aos-duration="500" text='perfect place to find the best looks for different occasions!' />
+        <View data-aos="fade-left" data-aos-duration="500" style={`illustration`}>
+          <Text type='h1' text='Welcome to,' />
+          <Text data-aos-duration="500" text='perfect place to find the best looks for different occasions!' />
 
-            <Link href='/' text='Back page' />
-          </View>
+          <Link href='/' text='Back page' />
         </View>
       </View>
-    </MyStyles>
+    </Page>
   );
 }
 
-const MyStyles = myStylesProvider.create((theme) => ([
+const MyStyles = myStyles.create((theme) => ([
   theme.myStyles.create('signup', [
     theme.w.size(100, '%'),
     theme.h.min(100, 'vh'),

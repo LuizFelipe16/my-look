@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { Spinner as ChakraSpinner, SpinnerProps as ChakraSpinnerProps } from "@chakra-ui/react";
-import { myStylesProvider } from "../core/provider";
+import { myStyles } from "../MyStyles/Provider";
 
 interface SpinnerProps extends ChakraSpinnerProps {
   style?: string | undefined | any;
@@ -39,7 +39,7 @@ type WrapperSpinnerProps = {
 };
 
 const WrapperSpinner = ({ children, wrapperStyles }: WrapperSpinnerProps) => {
-  const WrapperSpinnerStyles = myStylesProvider.create((theme) => ([
+  const WrapperSpinnerStyles = myStyles.create((theme) => ([
     `
       display: flex;
       align-items: center;

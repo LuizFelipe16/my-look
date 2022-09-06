@@ -1,4 +1,4 @@
-import { myStyles } from "./myStyles";
+import { myStylesMethods } from "./myStyles";
 
 type Transformers = {
   scale: (value: number) => `scale(${number})`,
@@ -42,16 +42,16 @@ export const animation: ThemeAnimation = {
   define: {
     full: (n: string, init: any, middle: any, final: any) => `
       @keyframes ${n} {
-        0% { ${myStyles.transformer(init)} }
-        25% { ${myStyles.transformer(middle)} }
-        50% { ${myStyles.transformer(init)} }
-        75% { ${myStyles.transformer(final)} }
-        100% { ${myStyles.transformer(init)} }
+        0% { ${myStylesMethods.transformer(init)} }
+        25% { ${myStylesMethods.transformer(middle)} }
+        50% { ${myStylesMethods.transformer(init)} }
+        75% { ${myStylesMethods.transformer(final)} }
+        100% { ${myStylesMethods.transformer(init)} }
       }
     `
   },
   transform: {
     transformers,
-    apply: (definitions: (t: Transformers) => any) => `transform: ${myStyles.transformer(definitions(transformers))};`
+    apply: (definitions: (t: Transformers) => any) => `transform: ${myStylesMethods.transformer(definitions(transformers))};`
    }
 };

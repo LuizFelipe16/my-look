@@ -1,5 +1,5 @@
 import { HTMLAttributes, ReactNode } from "react";
-import { myStylesProvider } from "../core/provider";
+import { myStyles } from "../MyStyles/Provider";
 
 interface ImgProps extends HTMLAttributes<HTMLImageElement> {
   style?: string | undefined | any;
@@ -39,10 +39,10 @@ type WrapperImgZoom = {
 };
 
 const WrapperImgZoom2 = ({ h, unity = 'rem', children, seconds, scale }: WrapperImgZoom) => {
-  const WrapperImgZoom = myStylesProvider.create((theme) => ([
+  const WrapperImgZoom = myStyles.create((theme) => ([
     theme.w.fill(),
     theme.h.size(h, unity),
-    theme.over.hide,
+    theme.over.hide('full'),
     theme.position.relative,
     
     theme.myStyles.childClass('my-card-img-preset-zoom', [

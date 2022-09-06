@@ -1,10 +1,19 @@
 import { isArray } from "../../global";
 
-export type MyStyles = {
-  create: (styleName: string, styles: any, childrenStyles?: any) => CreateStyles,
-  child: (element: string, styles: any, isClass?: boolean, childrenStyles?: any) => CreateChildStyles,
-  childClass: (element: string, styles: any, childrenStyles?: any) => CreateChildStyles,
+export type TMyStylesMethods = {
+  create: (styleName: string, styles: any, childrenStyles?: any) => CreateStyles;
+  child: (element: string, styles: any, isClass?: boolean, childrenStyles?: any) => CreateChildStyles;
+  childClass: (element: string, styles: any, childrenStyles?: any) => CreateChildStyles;
   transformer: (styles: any) => CreateStyles,
+  global: {
+    insert: (styles: any) => `* { ${any} }`;
+  };
+  childTag: (tag: string, styles: any) => any;
+  tag: (tag: string, styles: any) => any;
+  webkit: (tag: string, styles: any) => any;
+  selectorProp: (tag: string, styles: any) => any;
+  elementProp: (tag: string, styles: any) => any;
+  inOwnHasClass: (className: string, styles: any) => any;
 }
 
 type StylesProps = string;
@@ -35,10 +44,50 @@ const createChildClassStyle = (element: string, styles: StylesProps, childrenSty
   return `> .${element} { ${stylesTranformer(styles)} ${stylesTranformer(childrenStyles)} }`
 }
 
-export const myStyles: MyStyles = {
+const insertInGlobal = (styles: StylesProps): `* { ${any} }` => {
+  return `* { ${stylesTranformer(styles)} }`
+}
+
+const createTagStyle = (tag: string, styles: StylesProps) => {
+  return `${tag} { ${stylesTranformer(styles)} }` 
+}
+
+const createChildTagStyle = (tag: string, styles: StylesProps) => {
+  return `> ${tag} { ${stylesTranformer(styles)} }` 
+}
+
+const createWebkitStyle = (webkit: string, styles: StylesProps) => {
+  return `::-webkit-${webkit} { ${stylesTranformer(styles)} }` 
+}
+
+const createExtraStyle = (propStyle: string, styles: StylesProps) => {
+  return `*::${propStyle} { ${stylesTranformer(styles)} }` 
+}
+
+const createPerPropStyle = (propName: string, styles: StylesProps) => {
+  return `[${propName}] { ${stylesTranformer(styles)} }` 
+}
+
+const inOwnClass = (className: string, styles: StylesProps) => {
+  return `
+    &.${className} {
+      ${stylesTranformer(styles)}
+    }
+  `
+}
+
+export const myStylesMethods: TMyStylesMethods = {
   create: addStyle,
   child: createChildStyle,
   childClass: createChildClassStyle,
+  childTag: createChildTagStyle,
   transformer: stylesTranformer,
+  global: {
+    insert: insertInGlobal,
+  },
+  tag: createTagStyle,
+  webkit: createWebkitStyle,
+  selectorProp: createExtraStyle,
+  elementProp: createPerPropStyle,
+  inOwnHasClass: inOwnClass
 }
-

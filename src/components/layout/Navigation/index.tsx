@@ -2,12 +2,13 @@ import { useBreakpointValue } from "@chakra-ui/react";
 import { Navbar } from "./Navbar";
 import { SidebarNav } from "./Sidebar";
 
-type NavigationProps = {
+export type TNavigationProps = {
   showLogin?: boolean;
   showOnlyLogo?: boolean;
+  hasImage?: boolean;
 };
 
-export function Navigation({ showLogin = true, showOnlyLogo = false }: NavigationProps) {
+export function Navigation({ showLogin = true, showOnlyLogo = false, hasImage = false }: TNavigationProps) {
   const isDrawerSidebar = useBreakpointValue({
     base: true,
     lg: false,
@@ -17,5 +18,5 @@ export function Navigation({ showLogin = true, showOnlyLogo = false }: Navigatio
     return <SidebarNav />
   }
 
-  return <Navbar showLogin={showLogin} showOnlyLogo={showOnlyLogo} />
+  return <Navbar hasImage={hasImage} showLogin={showLogin} showOnlyLogo={showOnlyLogo} />
 }

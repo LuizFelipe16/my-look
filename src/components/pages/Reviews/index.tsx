@@ -1,4 +1,4 @@
-import { View, myStylesProvider, Text, ImgZoom, Divider, Button } from '_lib/web';
+import { View, myStyles, Text, ImgZoom, Divider, Button } from '_lib/web';
 
 function Reviews() {
   return (
@@ -24,7 +24,7 @@ function Reviews() {
   );
 }
 
-const ReviewsStyles = myStylesProvider.style(theme => ([
+const ReviewsStyles = myStyles.style(theme => ([
   theme.myStyles.create('reviews', [
     theme.w.fill(),
     theme.h.auto(),

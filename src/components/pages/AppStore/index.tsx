@@ -1,5 +1,5 @@
 import { FaApple, FaGooglePlay } from 'react-icons/fa';
-import { View, myStylesProvider, Text, Img, Divider, Button } from '_lib/web';
+import { View, myStyles, Text, Img, Divider, Button } from '_lib/web';
 
 function AppStore() {
   return (
@@ -29,7 +29,7 @@ function AppStore() {
   );
 }
 
-const AppStoreStyles = myStylesProvider.style(theme => ([
+const AppStoreStyles = myStyles.style(theme => ([
   theme.myStyles.create('app-store', [
     theme.w.fill(),
     theme.h.auto(),
@@ -114,7 +114,7 @@ const AppStoreStyles = myStylesProvider.style(theme => ([
         theme.myStyles.childClass('logo', [
           theme.w.fill(), 
           theme.h.fill(), 
-          theme.over.hide, 
+          theme.over.hide('full'), 
         ]),
       ])
     ])

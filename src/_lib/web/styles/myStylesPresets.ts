@@ -18,13 +18,15 @@ import { ThemeOverflow, over } from "./overflow";
 import { ThemeShadow, shadow } from "./shadow";
 import { ThemeAnimation, animation } from "./animation";
 import { ThemeBgs, bgImage } from "./background";
-import { MyStyles, myStyles } from "./myStyles";
+import { ThemeCompare, compare } from "./compareProps";
+import { TMyStylesMethods, myStylesMethods } from "./myStyles";
 
 export type ThemeStyle = {
-  myStyles: MyStyles;
+  myStyles: TMyStylesMethods;
   h: ThemeHeight;
   w: ThemeWidth;
   animation: ThemeAnimation;
+  compare: ThemeCompare;
   shadow: ThemeShadow;
   over: ThemeOverflow;
   effect: ThemeEffects;
@@ -56,9 +58,10 @@ export type ThemeStyle = {
 };
 
 export const myStylesPresets: ThemeStyle = {
-  myStyles,
+  myStyles: myStylesMethods,
   h,
   w,
+  compare,
   bgImage,
   animation,
   over,

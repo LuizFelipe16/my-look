@@ -1,4 +1,4 @@
-import { View, myStylesProvider, Text, Divider, Button, Link } from '_lib/web';
+import { View, myStyles, Text, Divider, Button, Link } from '_lib/web';
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
 import { ScrollTopButton } from '_lib/web/components/ScrollTopButton';
 
@@ -53,7 +53,7 @@ function Footer() {
   );
 }
 
-const Wrapper = myStylesProvider.create(theme => ([
+const Wrapper = myStyles.create(theme => ([
   theme.w.fill(),
   theme.h.auto(),
   theme.column.centerBetween,
@@ -84,7 +84,7 @@ const Wrapper = myStylesProvider.create(theme => ([
         theme.font.apply('rg', 1, theme.font.typography.text, theme.colors.gray),
         theme.margin.top.size(1),
         theme.transition.apply(0.2),
-        theme.presets.cursor.pointer,
+        theme.presets.cursor('pointer'),
         theme.effect.hover.inOwn([theme.margin.left.size(0.1), theme.textColor.primary]),
       ]),
     ]),
@@ -142,7 +142,7 @@ const Wrapper = myStylesProvider.create(theme => ([
         theme.animation.define.full(
           'jump-text', 
           [theme.animation.transform.apply((t) => [t.translate.y(0)])], 
-          [theme.animation.transform.apply((t) => [t.translate.y(-10)])], 
+          [theme.animation.transform.apply((t) => [t.translate.y(-5)])], 
           [theme.animation.transform.apply((t) => [t.translate.y(0)])], 
         ),
 

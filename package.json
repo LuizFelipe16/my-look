@@ -32,6 +32,7 @@
     "react-hook-form": "^7.34.0",
     "react-icons": "^4.4.0",
     "react-scroll": "^1.8.7",
+    "react-use": "^17.4.0",
     "styled-components": "^5.3.5",
     "yup": "^0.32.11"
   },

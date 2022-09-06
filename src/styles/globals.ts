@@ -1,69 +1,16 @@
-import { createGlobalStyle } from 'styled-components';
+import { myStyles } from '_lib/web';
 
-export const GlobalStyle = createGlobalStyle`
-  :root {
-    --red: #e52e4d;
-    --white: #fff;
-
-    --gray-900: #171923;
-    --gray-700: #2D3748;
-    --gray-600: #4A5568;
-    --gray-300: #B3B5C6;
-    --gray-200: #B3B5C6;
-    --gray-100: #D1D2DC;
-    --gray-50: #fff;
-
-    --white-200: #edf2fc;
-    --gray-400: #606163;
-    --gray-800: #212121;
-    --orange: #ff4321;
-  }
-
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  html {
-    @media (max-width: 1000px) {
-      font-size: 93.75%;
-    }
-    @media (max-width: 720px) {
-      font-size: 87.5%;
-    }
-  }
-
-  body {
-    overflow-x: hidden;
-    background-color: var(--white-200);
-  }
-
-  button {
-    cursor: pointer;
-  }
-
-  div {
-    display: flex;
-  }
-
-  *::selection {
-    color: #000;
-    background-color: var(--orange)
-  }
-
-  [disabled] {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-
-  ::-webkit-scrollbar {
-    width: 9px;
-    background: var(--white-200);
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    background: var(--orange);
-    border-radius: 2rem;
-  }
-`;
+export const { MyStylesGlobal } = myStyles.global.create(theme => ([
+  theme.myStyles.global.insert([theme.margin.full.size(0), theme.padding.full.size(0), theme.presets.boxBorder]),
+  theme.myStyles.tag('body', [theme.bg.background, theme.over.hide('horizontal')]),
+  theme.myStyles.tag('button', [theme.presets.cursor('pointer')]),
+  theme.myStyles.tag('div', [theme.presets.displayFlex]),
+  theme.myStyles.tag('html', [
+    theme.responsiveness.media([theme.font.size(93.75, '%')], 721, 1000),
+    theme.responsiveness.media([theme.font.size(87.5, '%')], 100, 720)
+  ]),
+  theme.myStyles.selectorProp('selection', [theme.textColor.black, theme.bg.primary]),
+  theme.myStyles.elementProp('disabled', [theme.effect.filter.opacity(0.6), theme.presets.cursor('not-allowed')]),
+  theme.myStyles.webkit('scrollbar', [theme.w.size(6, 'px'), theme.bg.background]),
+  theme.myStyles.webkit('scrollbar-thumb', [theme.bg.primary]),
+]));

@@ -1,7 +1,7 @@
 import { MouseEventHandler, ReactNode } from "react";
 import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
 import { theme } from "_app";
-import { myStylesProvider } from "_lib/web";
+import { myStyles } from "_lib/web";
 import { FaGoogle } from "react-icons/fa";
 
 interface ISignProps {
@@ -119,7 +119,7 @@ export const Sign = (
   </SignStyles>
 );
 
-const SignStyles = myStylesProvider.create(theme => ([
+const SignStyles = myStyles.create(theme => ([
   theme.w.fill(),
   theme.h.fill(),
   theme.centerColumn,

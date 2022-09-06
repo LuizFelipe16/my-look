@@ -1,36 +1,22 @@
-import { View, TitlePage, myStylesProvider, Text } from '_lib/web';
-import { onMount, useState } from '_lib/global';
-import { Navigation, Loading, Footer } from 'components';
+import { View, myStyles, Text } from '_lib/web';
+import { Page } from 'components';
 import { renderHTMLTermUses, renderHTMLPolicy } from 'data/termuse';
 
 export default function Terms() {
-  const [isLoadingPage, setIsLoadingPage] = useState(true);
-
-  onMount(() => { setTimeout(() => setIsLoadingPage(false), 1000) });
-
-  if (isLoadingPage) return <Loading />;
-
   return (
-    <MyStyles>
-      <View style={`page`}>
-        <TitlePage t='Home' />
-        <Navigation />
-
-        <View style={`terms`}>
-          <Text type='h1' text='MyLook Terms and Conditions of Use' />
-          <View style={`text`}>
-            {renderHTMLTermUses()}
-            {renderHTMLPolicy()}
-          </View>
+    <Page styles={MyStyles} title='Terms and Conditions of Use'>
+      <View style={`terms`}>
+        <Text type='h1' text='MyLook Terms and Conditions of Use' />
+        <View style={`text`}>
+          {renderHTMLTermUses()}
+          {renderHTMLPolicy()}
         </View>
-
-        <Footer />
       </View>
-    </MyStyles>
+    </Page>
   );
 }
 
-const MyStyles = myStylesProvider.create((theme) => ([
+const MyStyles = myStyles.create((theme) => ([
   theme.myStyles.create('terms', [
     theme.w.size(100, '%'),
     theme.h.auto(),

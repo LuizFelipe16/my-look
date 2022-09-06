@@ -3,8 +3,8 @@ import { styleSize } from "../tools";
 export type ThemePresets = {
   hide: () => string;
   size: (multiplier: number) => string;
-  neon: (color: string) => string;
   flex: () => `flex: 1;`;
+  displayFlex: `display: flex;`;
   debugger: (color: 'blue' | 'red' | 'yellow' | 'green' | 'purple', weight?: number) => string;
   fullView: string;
   fillView: string;
@@ -12,10 +12,11 @@ export type ThemePresets = {
     box: string;
     hover: string;
   };
-  cursor: {
-    pointer: string;
-  };
+  cursor: (define: CursorType) => `cursor: ${CursorType};`;
+  boxBorder: `box-sizing: border-box;`;
 };
+
+type CursorType = 'pointer' | 'not-allowed';
 
 export const presets: ThemePresets = {
   size: styleSize,
@@ -33,9 +34,10 @@ export const presets: ThemePresets = {
     hover: `box-shadow: #0005 0px 3px 8px;`,
   },
 
-  neon: (c) => `box-shadow: 0 0 10px ${c} virgula 0 0 40px ${c} virgula 0 0 80px ${c};`,
+  boxBorder: `box-sizing: border-box;`,
 
   flex: () => `flex: 1;`,
+  displayFlex: `display: flex;`,
 
   fillView: `
     width: 100%;
@@ -46,7 +48,5 @@ export const presets: ThemePresets = {
     height: 100vh;
   `,
 
-  cursor: {
-    pointer: 'cursor: pointer;'
-  }
+  cursor: (define: CursorType) => `cursor: ${define};`
 };
