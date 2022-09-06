@@ -14,8 +14,8 @@ export type ThemeFont = {
   apply: (w: WeightTypes, multiplier: number, type: string, color: string) => string;
 
   typography: {
-    title: FontFamily;
-    text: FontFamily;
+    title: string;
+    text: string;
   };
 
   weight: {
@@ -56,12 +56,12 @@ export const font: ThemeFont = {
   size: (multiplier: number, unity?: UNITY_PROPERTY) => `font-size: ${mutableSize(multiplier, unity)};`,
 
   apply: (w: WeightTypes, multiplier: number, type: string, color: string) => {
-    return `${type} color: ${color}; font-size: ${styleSize(multiplier)}; font-weight: ${fontWeights[w]};`
+    return `color: ${color}; font-size: ${styleSize(multiplier)}; font-weight: ${fontWeights[w]};`
   }, 
 
   typography: {
-    title: `font-family: 'Poppins';`,
-    text: `font-family: 'Poppins';`,
+    title: ``,
+    text: ``,
   },
 
   weight: {
