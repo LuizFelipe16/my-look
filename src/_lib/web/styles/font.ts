@@ -55,12 +55,13 @@ export const font: ThemeFont = {
   size: (multiplier: number, unity?: UNITY_PROPERTY) => `font-size: ${mutableSize(multiplier, unity)};`,
 
   apply: (w: WeightTypes, multiplier: number, type: string, color: string) => {
+    console.log(`${type} color: ${color}; font-size: ${styleSize(multiplier)}; font-weight: ${fontWeights[w]};`)
     return `${type} color: ${color}; font-size: ${styleSize(multiplier)}; font-weight: ${fontWeights[w]};`
   }, 
 
   typography: {
-    title: `font-family: ${appVariables.typography.title};`,
-    text: `font-family: ${appVariables.typography.text};`,
+    title: `font-family: '${appVariables.typography.title}';`,
+    text: `font-family: '${appVariables.typography.text}';`,
   },
 
   weight: {
