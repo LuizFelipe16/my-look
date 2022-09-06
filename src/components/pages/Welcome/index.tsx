@@ -44,7 +44,6 @@ const WelcomeContent = myStyles.style(theme => ([
       theme.font.size(2.7), 
       theme.font.weight.sb,
       theme.textColor.white,
-      theme.font.typography.title
     ]),
 
     theme.myStyles.create('line', [

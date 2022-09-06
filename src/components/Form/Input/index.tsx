@@ -24,7 +24,7 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, IInputProps>
           <FormLabel
             fontWeight="400"
             fontSize={'sm'}
-            fontFamily={theme.font.typography.text}
+            fontFamily={'Poppins'}
             color="black"
             htmlFor={is}
           >
@@ -35,7 +35,7 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, IInputProps>
         <CInput
           id={is}
           name={is}
-          fontFamily={theme.font.typography.text}
+          fontFamily={'Poppins'}
           focusBorderColor="gray.400"
           variant="filled"
           borderRadius={4}
