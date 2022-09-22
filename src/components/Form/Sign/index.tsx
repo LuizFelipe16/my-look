@@ -1,8 +1,9 @@
-import { MouseEventHandler, ReactNode } from "react";
+import { ReactNode } from "react";
 import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
 import { theme } from "_app";
 import { myStyles } from "_lib/web";
 import { FaGoogle } from "react-icons/fa";
+import { ClickElement } from "_lib/global";
 
 interface ISignProps {
   title: string;
@@ -10,7 +11,7 @@ interface ISignProps {
   children: ReactNode;
 
   subtitle: string;
-  onClick: MouseEventHandler<HTMLParagraphElement>;
+  onClick: ClickElement<HTMLParagraphElement>;
 
   buttonText: string;
   onSubmitForm: any;
