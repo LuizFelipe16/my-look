@@ -1,9 +1,13 @@
 import Router from "next/router";
-import { Dispatch, SetStateAction, createContext, ReactNode, useState } from "react";
+import { createContext, useState } from "react";
 import { decode } from 'jsonwebtoken';
 import { setCookie, destroyCookie, parseCookies } from 'nookies';
 import { useToast } from "hooks";
 import { appVariables } from "_app";
+import { apiNext } from 'services'
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { onMount, ReactChildren, SetState, SetStateBoolean } from "_lib/global";
+import { useAppStatus } from "./AppStatusContext";
 
 type TokenPayload = {
   username: string;
@@ -35,10 +39,10 @@ interface SignInDataWithGoogle {
 type User = {
   username: string;
   token: string;
-  avatar?: string;
-  email?: string;
+  avatar: string;
+  email: string;
   decode?: TokenPayload;
-  id?: string;
+  id: string;
 
   phone: string;
   name: string;
@@ -49,93 +53,130 @@ type User = {
 
 type UserContextData = {
   user: User;
-  setUser: Dispatch<SetStateAction<User>>;
+  setUser: SetState<User>;
 
   isAccountConfirm: boolean;
-  setIsAccountConfirm: Dispatch<SetStateAction<boolean>>;
+  setIsAccountConfirm: SetStateBoolean;
 
   signIn: ({ token }: SignInData) => void;
   signOut: () => void;
 
   signInWithGoogle: (props: SignInDataWithGoogle) => void;
+  tryLoginWithGoogle: () => void;
 
   isLoading: boolean;
-  setIsLoading: Dispatch<SetStateAction<boolean>>;
+  setIsLoading: SetStateBoolean;
+  isSessionLoading: boolean;
 
   onFailSignin: () => void;
   onFailSignup: () => void;
+
+  Session: {
+    loadProfile: (token: string, activeLoading?: boolean) => Promise<User | {}>;
+    reset: () => void;
+  }
 }
 
 interface UserProviderProps {
-  children: ReactNode;
+  children: ReactChildren;
 }
 
 export const UserContext = createContext({} as UserContextData);
 
 export function UserProvider({ children }: UserProviderProps) {
-  const { errorToast } = useToast();
+  const { errorToast, successToast } = useToast();
+  const { AppStatus } = useAppStatus();
 
-  const cookies = parseCookies(null);
-
-  const username = cookies[appVariables.cookies.username];
-  const token = cookies[appVariables.cookies.token];
-  const userCookie = cookies[appVariables.cookies.user];
+  const token = parseCookies(null)[appVariables.cookies.token];
   
   const [isLoading, setIsLoading] = useState(false);
+  const [isSessionLoading, setIsSessionLoading] = useState(false);
 
-  const [user, setUser] = useState<User>(() => {
-    const decodeToken = decode(token) as TokenPayload;
-    const data = !userCookie ? '' : JSON.parse(userCookie) as User;
+  const [user, setUser] = useState<User>({} as User);
 
-    const newUser: User = {
-      username: !username ? '' : username,
-      token: !token ? '' : token,
-      avatar: !data ? '' : data.avatar,
-      email: !data ? '' : data.email,
-      id: !data ? '' : data.id,
-      decode: !token ? {} as TokenPayload : decodeToken,
-      bio: !data ? '' : data.bio,
-      name: !data ? '' : data.name,
-      accountType: !data ? 'mylook' : data.accountType,
-      phone: !data ? '' : data.phone,
-    };
+  const [isAccountConfirm, setIsAccountConfirm] = useState(false); // NOTE edit data user
 
-    return newUser;
-  });
-
-  const [isAccountConfirm, setIsAccountConfirm] = useState(false); // edit data user
-
-  function signOut() {
-    setIsLoading(true);
-
-    const resetUser: User = {
-      username: '', 
-      token: '', 
-      avatar: '', 
-      email: '', 
-      id: '', 
-      phone: '',
-      bio: '',
-      name: '',
-      decode: {} as TokenPayload,
-      accountType: 'mylook'
+  onMount(() => {
+    const loadUserProfile = async () => {
+      if (token) {
+        await Session.loadProfile(token)
+      }
     }
 
-    if (!isAccountConfirm) {
-      errorToast('You have been logged out');
-    }
+    loadUserProfile()
+  })
 
-    Router.push('/').then(() => {
+  const Session = {
+    loadProfile: async (token: string, activeLoading = true) => {
+      setIsSessionLoading(activeLoading);
+     
+      const decodeToken = await decode(token) as TokenPayload;
+
+      if (!decodeToken?.email) {
+        return
+      }
+
+      const result = await apiNext.post(`/session/${String(decodeToken?.id)}`, { email: decodeToken?.email }).then(({ data }) => {
+        if (data?.error) {
+          errorToast(data?.error);
+          setIsSessionLoading(false);
+          Session.reset();
+          return { };
+        }
+      
+        if (data?.message) {
+          const session = { ...data?.user, decode: decode(data?.user?.token) }
+          Session.set(session)
+          setIsSessionLoading(false);
+          return session;
+        }
+      }).catch(() => setIsSessionLoading(false));
+
+      return result
+    },
+    reset: () => {
+      const resetUser: User = {
+        username: '', 
+        token: '', 
+        avatar: '', 
+        email: '', 
+        id: '', 
+        phone: '',
+        bio: '',
+        name: '',
+        decode: {} as TokenPayload,
+        accountType: 'mylook'
+      }
+
       setUser(resetUser);
     
       destroyCookie(undefined, appVariables.cookies.username);
       destroyCookie(undefined, appVariables.cookies.token);
       destroyCookie(undefined, appVariables.cookies.user);
-    });
+
+      setIsAccountConfirm(false);
+      setIsLoading(false);
+    },
+    set: (newUser: User) => {
+      setUser(newUser);
+      setCookie(undefined, appVariables.cookies.token, newUser?.token, {
+        maxAge: 60 * 60 * 24,
+        path: '/'
+      });
+      setIsLoading(false);
+    }
+  }
+
+  function signOut() {
+    setIsLoading(true);
+
+    if (!isAccountConfirm) {
+      errorToast('You have been logged out');
+    }
+
+    Router.push('/');
+    Session.reset();
     
-    setIsAccountConfirm(false);
-    
-    setIsLoading(false);
     return;
   }
 
@@ -159,33 +200,15 @@ export function UserProvider({ children }: UserProviderProps) {
       accountType: 'mylook'
     };
 
-    setCookie(undefined, appVariables.cookies.username, username, {
-      maxAge: 60 * 60 * 24,
-      path: '/'
-    });
-
-    setCookie(undefined, appVariables.cookies.token, token, {
-      maxAge: 60 * 60 * 24,
-      path: '/'
-    });
-
-    setCookie(undefined, appVariables.cookies.user, JSON.stringify(user), {
-      maxAge: 60 * 60 * 24,
-      path: '/'
-    });
-
-    setUser(user);
-
+    Session.set(user);
     Router.push(!isFirstSignin ? '/' : '/welcome');
-    setIsLoading(false);
-
     return;
   }
 
-  function signInWithGoogle({ token, username, avatar, email, id }: SignInDataWithGoogle) {
-    setIsLoading(true);
+  async function signInWithGoogle({ token, username, avatar, email, id }: SignInDataWithGoogle) {
+    AppStatus.set('loading');
 
-    const user: User = {
+    const user = {
       username,
       token,
       avatar,
@@ -195,29 +218,61 @@ export function UserProvider({ children }: UserProviderProps) {
       phone: "",
       name: "",
       accountType: "google",
+      provider: 'google'
     };
 
-    setCookie(undefined, appVariables.cookies.username, username, {
-      maxAge: 60 * 60 * 24,
-      path: '/'
-    });
+    await apiNext.post('/users/signup', user).then(async ({ data }) => {
+      if (data?.error) {
+        AppStatus.set('none');
+        return;
+      }
+    
+      if (data?.message) {
+        await Session.loadProfile(data?.token, false).then(() => {
+          AppStatus.set('done');
+          setTimeout(() => {
+            Router.push('/');
+          }, 1000);
+        });
+      }
+    }).catch(async (data) => {
+      if (data?.token) {
+        await Session.loadProfile(data?.token, false).then(() => {
+          AppStatus.set('done');
+          setTimeout(() => {
+            Router.push('/');
+          }, 1000);
+        });
+      } else {
+        AppStatus.set('none');
+        onFailSignin();
+      }
+    })
 
-    setCookie(undefined, appVariables.cookies.token, token, {
-      maxAge: 60 * 60 * 24,
-      path: '/'
-    });
-
-    setCookie(undefined, appVariables.cookies.user, JSON.stringify(user), {
-      maxAge: 60 * 60 * 24,
-      path: '/'
-    });
-
-    setUser(user);
-
-    Router.push('/');
     setIsLoading(false);
+  }
 
-    return;
+  async function tryLoginWithGoogle() {
+    const provider = new GoogleAuthProvider();
+    const auth = getAuth();
+
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+
+        const token = credential?.accessToken;
+        const user = result.user;
+
+        signInWithGoogle({ 
+          username: String(user?.displayName),
+          avatar: String(user?.photoURL),
+          email: String(user?.email),
+          id: user?.uid,
+          token: String(token)
+        });
+      }).catch(onFailSignin);
+
+    setIsLoading(false);
   }
 
   const onFailSignin = () => errorToast('Unexpected error. Unable to signin the user.');
@@ -235,7 +290,10 @@ export function UserProvider({ children }: UserProviderProps) {
       setIsLoading,
       onFailSignin,
       onFailSignup,
-      signInWithGoogle
+      signInWithGoogle,
+      isSessionLoading,
+      Session,
+      tryLoginWithGoogle
     }}>
       {children}
     </UserContext.Provider>

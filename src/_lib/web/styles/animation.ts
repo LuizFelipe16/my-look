@@ -10,7 +10,7 @@ type Transformers = {
 }
 
 export type ThemeAnimation = {
-  apply: (name: string, seconds: number, type: 'infinite') => `animation: ${string} ${number}s ${string};`;
+  apply: (name: string, seconds: number, type: 'infinite' | 'initial') => `animation: ${string} ${number}s ${string};`;
   define: {
     full: (name: string, stylesInit: any, stylesMiddle: any, stylesFinal: any) => string;
   };
@@ -38,15 +38,25 @@ const transformers: Transformers = {
 }
 
 export const animation: ThemeAnimation = {
-  apply: (n: string, s: number, type: 'infinite') => `animation: ${n} ${s}s ${type};`,
+  apply: (n: string, s: number, type = 'infinite') => `animation: ${n} ${s}s ${type};`,
   define: {
     full: (n: string, init: any, middle: any, final: any) => `
       @keyframes ${n} {
-        0% { ${myStylesMethods.transformer(init)} }
-        25% { ${myStylesMethods.transformer(middle)} }
-        50% { ${myStylesMethods.transformer(init)} }
-        75% { ${myStylesMethods.transformer(final)} }
-        100% { ${myStylesMethods.transformer(init)} }
+        0% { 
+          ${myStylesMethods.transformer(init)} 
+        }
+        25% { 
+          ${myStylesMethods.transformer(middle)} 
+        }
+        50% { 
+          ${myStylesMethods.transformer(init)} 
+        }
+        75% { 
+          ${myStylesMethods.transformer(final)} 
+        }
+        100% { 
+          ${myStylesMethods.transformer(init)} 
+        }
       }
     `
   },

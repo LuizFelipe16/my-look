@@ -2,12 +2,14 @@ import { Button as CButton, Stack } from '@chakra-ui/react';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { BiLockAlt, BiLogOutCircle } from 'react-icons/bi';
 import { View, myStyles, Text, Avatar, Button } from '_lib/web';
-import { validation, FormSubmit, useForm } from '_lib/global';
+import { validation, FormSubmit, useForm, onUpdate } from '_lib/global';
 import { Input, Textarea, Page } from 'components';
 import { useToast, useUser } from 'hooks';
 import { withSSRAuth } from 'functions';
 import { theme } from '_app';
 import { apiNext } from 'services';
+import { useAppStatus } from 'context';
+import { OnEndHandle } from 'types';
 
 type EditFormData = {
   username: string;
@@ -17,64 +19,66 @@ type EditFormData = {
   bio: string;
 }
 
-const formSchema = validation.createForm(is => ({
+const schema = validation.createForm(is => ({
   username: is.string().required("Username is required").min(3, 'Minimum of 3 characters'),
   name: is.string().required("Name is required").min(3, 'Minimum of 3 characters'),
   email: is.string().email("Invalid e-mail").required("E-mail is required"),
-  phone: is.number().min(10, 'Minimum of 11 characters').max(11, 'Max of 11 characters').required("Phone is required"),
+  phone: is.number().required("Phone is required"),
   bio: is.string().required("Bio is required").min(10, 'Minimum of 10 characters'),
 }));
 
 export default function Account() {
-  const { user, signOut, signIn, isLoading, setIsLoading } = useUser();
-  const { successToast, errorToast } = useToast();
-  const isDisableInputs = user.accountType === 'google';
+  const { user, signOut, Session, isLoading, setIsLoading } = useUser();
+  const { AppStatus } = useAppStatus();
+  const { errorToast } = useToast();
+  const isDisableInputs = isLoading
 
-  const { register, errors, onSubmit } = useForm<EditFormData>({ schema: formSchema, initialState: user });
+  const { register, errors, onSubmit, setValue } = useForm<EditFormData>({ schema, initialState: user });
+
+  onUpdate(() => {
+    if (user) {
+      setValue('bio', user.bio)
+      setValue('name', user.name)
+      setValue('username', user.username)
+      setValue('phone', user.phone)
+      setValue('email', user.email)
+    }
+  }, [user])
 
   const handleUpdateUser: FormSubmit<EditFormData> = async (values) => {
     setIsLoading(true);
+    AppStatus.set('loading');
 
-    await apiNext.put(`/users/${user?.id}`, values).then(({ data }) => {
+    const onEnd = ({ err, status = 'none' }: OnEndHandle) => {
+      AppStatus.set(status);
+      setIsLoading(false);
+      if (err) errorToast(err);
+    }
+
+    await apiNext.put(`/users/${user?.id}`, values).then(async ({ data }) => {
       if (data?.error) {
-        errorToast(data?.error);
-        setIsLoading(false);
+        onEnd({ err: data?.error })
         return;
       }
 
       if (data?.message) {
-        successToast(data?.message);
-
-        const user = data?.user;
-
-        signIn({
-          token: String(user?.token),
-          name: String(user?.name),
-          phone: String(user?.phone),
-          bio: String(user?.bio),
-        });
-        setIsLoading(false);
+        setTimeout(async () => {
+          await Session.loadProfile(data?.user?.token, false).then(() => onEnd({ status: 'done' }));
+        }, 2000)
 
         return;
       }
-    }).catch(() => {
-      errorToast('Unexpected error, contact support.');
-      setIsLoading(false);
-    });
+    }).catch(() => onEnd({ err: 'Unexpected error, contact support.' }));
   }
 
   return (
-    <Page styles={MyStylesAccount} title='Account'>
+    <Page styles={MyStylesAccount} title='Account' isLoading={!user}>
       <View style={`page-welcome`}>
         <View style={`side-menu`}>
           <View style={`infos`}>
-            <Avatar size='xl' name={user?.name} src={user?.avatar} />
+            <Avatar size='xl' name={user?.username} src={user?.avatar} />
             <Text style={`username`} text={user?.username} />
             <Text style={`email`} text={user?.email} />
-
-            {user?.accountType === 'google' && (
-              <Text style={`edit-disable`} text='Your account is linked to the Google provider, please create an account on our website to edit your information.' />
-            )}
           </View>
 
           <Button style={`option active`} onPress={() => null}>

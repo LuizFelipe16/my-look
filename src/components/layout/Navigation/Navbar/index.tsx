@@ -76,7 +76,10 @@ const HeaderNavigation = myStyles.mutate.create((theme, props: TProps) => ([
       theme.transition.apply(0.2),
       theme.font.size(1.1),
       theme.font.weight.md,
-      theme.effect.hover.inOwn([theme.compare.prop(props.hasImage, theme.margin.top.size(0.4), theme.textColor.primary)]),
+      theme.effect.hover.inOwn([
+        theme.margin.top.size(0.3),
+        theme.compare.prop(props.hasImage, '', theme.textColor.primary)
+      ]),
       theme.compare.prop(props.hasImage, theme.textColor.white, theme.textColor.black)
     ])
   ]),

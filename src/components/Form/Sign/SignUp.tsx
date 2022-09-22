@@ -1,20 +1,15 @@
 import { Stack } from '@chakra-ui/react';
-import { MouseEventHandler, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { apiNext } from 'services';
 import { useToast, useUser } from 'hooks';
 import { appVariables } from '_app';
-import { Sign } from '.';
+import { Sign, ISignUpProps } from '.';
 import { Input } from '../Input';
 import { Checkbox } from '../Input/Checkbox';
-import { validation } from '_lib/global';
+import { validation, FormSubmit, ClickElement, useForm } from '_lib/global';
+import { useAppStatus } from 'context';
+import { OnEndHandle } from 'types';
 
-interface ISignUpProps {
-  onClickAlreadyHaveAccount: MouseEventHandler<HTMLParagraphElement>;
-}
-
-type CreateUserFormData = {
+type SignUpFormData = {
   username: string;
   email: string;
   password: string;
@@ -22,7 +17,7 @@ type CreateUserFormData = {
   isAcceptTerms: string;
 }
 
-const createUserFormSchema = validation.createForm(is => ({
+const schema = validation.createForm(is => ({
   username: is.string().required("Username is required").min(3, 'Minimum of 3 characters'),
   email: is.string().email("Invalid e-mail").required("E-mail is required"),
   password: is.string().required("Password is required").min(6, 'Minimum of 6 characters'),
@@ -32,39 +27,34 @@ const createUserFormSchema = validation.createForm(is => ({
 
 export const SignUp = ({ onClickAlreadyHaveAccount }: ISignUpProps) => {
   const { errorToast, successToast } = useToast();
-  const { onFailSignup, signIn } = useUser();
-  const [isLoading, setIsLoading] = useState(false);
+  const { onFailSignup, signIn, isLoading, setIsLoading } = useUser();
+  const { AppStatus } = useAppStatus();
+  const { register, reset, errors, handleSubmit } = useForm<SignUpFormData>({ schema });
 
-  const {
-    register,
-    reset,
-    formState,
-    handleSubmit
-  } = useForm<CreateUserFormData>({
-    resolver: yupResolver(createUserFormSchema)
-  });
-
-  const errors = formState.errors;
-
-  const handleRegisterNewUser: SubmitHandler<CreateUserFormData> = async (values) => {
+  const handleRegisterNewUser: FormSubmit<SignUpFormData> = async (values) => {
     setIsLoading(true);
+    AppStatus.set('loading');
+
+    const onEnd = ({ err, succ, status = 'none' }: OnEndHandle) => {
+      AppStatus.set(status);
+      setIsLoading(false);
+      if (err) errorToast(err);
+      if (succ) { successToast(succ); reset(); };
+    }
 
     await apiNext.post('/users/signup', values).then(({ data }) => {
       if (data?.error) {
-        errorToast(data?.error);
-        setIsLoading(false);
+        onEnd({ err: data?.error });
         return;
       }
     
       if (data?.message) {
-        successToast(data?.message);
-        reset();
+        onEnd({ succ: data?.message, status: 'done' });
         signIn({ token: data?.token, isFirstSignin: true, bio: '', name: '', phone: '' });
-        setIsLoading(false);
         return;
       }
     }).catch(() => {
-      setIsLoading(false);
+      onEnd({});
       onFailSignup();
     });
   }

@@ -1,15 +1,17 @@
 import { myStylesMethods as myStyles } from "./myStyles";
 
+type StylesProp = string | Array<string>
+
 export type ThemeCompare = {
-  prop: (ifProp: boolean | undefined, styles: string, elseStyles?: string) => string;
+  prop: (ifProp: boolean | undefined, styles: StylesProp, elseStyles?: StylesProp) => string;
   theme: {
-    ifDark: (actualAppTheme: 'dark' | 'light', styles: string, elseStyles?: string) => string;
-    ifLight: (actualAppTheme: 'dark' | 'light', styles: string, elseStyles?: string) => string;
+    ifDark: (actualAppTheme: 'dark' | 'light', styles: StylesProp, elseStyles?: StylesProp) => string;
+    ifLight: (actualAppTheme: 'dark' | 'light', styles: StylesProp, elseStyles?: StylesProp) => string;
   }
 };
 
 export const compare: ThemeCompare = {
-  prop: (ifProp: boolean | undefined, styles: string, elseStyles?: string) => {
+  prop: (ifProp: boolean | undefined, styles: StylesProp, elseStyles?: StylesProp) => {
     if (ifProp) {
       return `${myStyles.transformer(styles)}`
     } else {
@@ -17,7 +19,7 @@ export const compare: ThemeCompare = {
     }
   },
   theme: {
-    ifDark: (actualAppTheme: 'dark' | 'light', styles: string, elseStyles?: string) => {
+    ifDark: (actualAppTheme: 'dark' | 'light', styles: StylesProp, elseStyles?: StylesProp) => {
       if (actualAppTheme === 'dark') {
         return `${myStyles.transformer(styles)}`
       } else if (!!elseStyles && actualAppTheme ==='light') {
@@ -25,7 +27,7 @@ export const compare: ThemeCompare = {
       }
       return ``
     },
-    ifLight: (actualAppTheme: 'dark' | 'light', styles: string, elseStyles?: string) => {
+    ifLight: (actualAppTheme: 'dark' | 'light', styles: StylesProp, elseStyles?: StylesProp) => {
       if (actualAppTheme === 'light') {
         return `${myStyles.transformer(styles)}`
       } else if (!!elseStyles && actualAppTheme ==='dark') {

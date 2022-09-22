@@ -1,12 +1,11 @@
-import { isArray } from "../../global";
 
 export type TMyStylesMethods = {
   create: (styleName: string, styles: any, childrenStyles?: any) => CreateStyles;
   child: (element: string, styles: any, isClass?: boolean, childrenStyles?: any) => CreateChildStyles;
   childClass: (element: string, styles: any, childrenStyles?: any) => CreateChildStyles;
-  transformer: (styles: any) => CreateStyles,
+  transformer: (styles: any) => any,
   global: {
-    insert: (styles: any) => `* { ${any} }`;
+    insert: (styles: any) => string;
   };
   childTag: (tag: string, styles: any) => any;
   tag: (tag: string, styles: any) => any;
@@ -17,43 +16,85 @@ export type TMyStylesMethods = {
 }
 
 type StylesProps = string;
-type CreateStyles = `.${string} { ${StylesProps} }`
-type CreateChildStyles = `> .${string} { ${any} ${any} }` | `> ${string} { ${any} ${any} }`
+type CreateStyles = string;
+type CreateChildStyles = string;
 
 const stylesTranformer = (styles: any) => {
-  const transformer = !isArray(styles) 
-    ? styles 
-    // : `${styles?.map((s: any) => `${s}`)}`?.replace(/,/g, "\n")
-    : `${styles?.map((s: any) => `${s}`)}`?.split(",").join(" ").split('undefined')
+  const newStyles = styles as Array<string> | string
 
-  const newStyles = !isArray(styles) ? transformer : `${`${`${transformer}`.split('false')}`.split('true')}`
-  
-  return newStyles
+  if (Array.isArray(newStyles)) {
+    let transformedStyles = ``
+    
+    newStyles.map(s => {
+      transformedStyles = transformedStyles + ` ${s}`
+    })
+
+    const ff = String(transformedStyles).replace(/undefined/g, "").replace(/false/g, "").replace(/true/g, "")
+    return ff
+  } else {
+    const tt = String(newStyles).replace(/undefined/g, "").replace(/false/g, "").replace(/true/g, "")
+    return tt
+  }
 };
 
 const addStyle = (styleName: string, styles: any, childrenStyles?: any ): CreateStyles => {
-  return `.${styleName} { ${stylesTranformer(styles)} ${stylesTranformer(childrenStyles)} }` 
+  return `
+    .${styleName} { 
+      ${stylesTranformer(styles)} 
+      ${stylesTranformer(childrenStyles)} 
+    }
+  ` 
 }
 
 const createChildStyle = (element: string, styles: StylesProps, isClass?: boolean, childrenStyles?: StylesProps): CreateChildStyles => {
-  if (isClass) return `> .${element} { ${stylesTranformer(styles)} ${stylesTranformer(childrenStyles)} }`
-  return `> ${element} { ${stylesTranformer(styles)} ${stylesTranformer(childrenStyles)} }`
+  if (isClass) {
+    return `
+      > .${element} { 
+        ${stylesTranformer(styles)} 
+        ${stylesTranformer(childrenStyles)} 
+      }
+    `
+  }
+  
+  return `
+    > ${element} { 
+      ${stylesTranformer(styles)} 
+      ${stylesTranformer(childrenStyles)} 
+    }
+  `
 }
 
 const createChildClassStyle = (element: string, styles: StylesProps, childrenStyles?: StylesProps): CreateChildStyles => {
-  return `> .${element} { ${stylesTranformer(styles)} ${stylesTranformer(childrenStyles)} }`
+  return `
+    > .${element} { 
+      ${stylesTranformer(styles)} 
+      ${stylesTranformer(childrenStyles)} 
+    }
+  `
 }
 
-const insertInGlobal = (styles: StylesProps): `* { ${any} }` => {
-  return `* { ${stylesTranformer(styles)} }`
+const insertInGlobal = (styles: StylesProps): string => {
+  return `
+    * { 
+      ${stylesTranformer(styles)} 
+    }
+  `
 }
 
 const createTagStyle = (tag: string, styles: StylesProps) => {
-  return `${tag} { ${stylesTranformer(styles)} }` 
+  return `
+    ${tag} { 
+      ${stylesTranformer(styles)} 
+    }
+  ` 
 }
 
 const createChildTagStyle = (tag: string, styles: StylesProps) => {
-  return `> ${tag} { ${stylesTranformer(styles)} }` 
+  return `
+    > ${tag} { 
+      ${stylesTranformer(styles)} 
+    }
+  ` 
 }
 
 const createWebkitStyle = (webkit: string, styles: StylesProps) => {

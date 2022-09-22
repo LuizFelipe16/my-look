@@ -21,6 +21,14 @@ interface ISignProps {
   onSubmitSigninGoogle?: any
 }
 
+export interface ISignInProps {
+  onClickNotHaveAccount: ClickElement<HTMLParagraphElement>;
+}
+
+export interface ISignUpProps {
+  onClickAlreadyHaveAccount: ClickElement<HTMLParagraphElement>;
+}
+
 export const Sign = (
   {
     title,

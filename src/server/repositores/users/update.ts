@@ -3,13 +3,7 @@ import { query as q } from 'faunadb';
 import { fauna } from "services";
 import { cryptography } from "_lib/global";
 import { usersRepository } from ".";
-
-interface UserRequest {
-  data: {
-    username: string;
-    email: string;
-  }
-}
+import { TFaunaUser } from "server/types";
 
 type UserUpdateRequest = {
   id: any;
@@ -21,7 +15,7 @@ type UserUpdateRequest = {
   password?: any;
 };
 
-const messageSuccess = 'Account successfully updated! Sign in again.';
+const messageSuccess = 'Account successfully updated!';
 const messageError = 'This email already belongs to another account.';
 
 async function update({ id, email, password, username, bio, name, phone }: UserUpdateRequest, res: NextApiResponse) {
@@ -34,7 +28,7 @@ async function update({ id, email, password, username, bio, name, phone }: UserU
     // password: cryptography.encryptValue(password)
   };
 
-  await fauna.query<UserRequest>(
+  await fauna.query<TFaunaUser>(
     q.Get(
       q.Match(q.Index(usersRepository.config.filterBy.email), email)
     )

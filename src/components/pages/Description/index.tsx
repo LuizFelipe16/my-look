@@ -113,7 +113,7 @@ const DescriptionStyles = myStyles.style(theme => ([
         theme.responsiveness.platforms({}, {
           comommStyle: [theme.h.size(23), theme.w.size(23)], incluide: ['m', 't']
         }),
-      ], theme.myStyles.childClass('super-woman-illustration', [theme.w.fill(), theme.h.fill(), theme.effect.filter.objectCover]))
+      ], theme.myStyles.childClass('super-woman-illustration', [theme.w.fill(), theme.h.fill(), theme.effect.filter.objectCover()]))
     ])
   ]),
 ]));

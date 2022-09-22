@@ -6,13 +6,25 @@ export default async function handler(req: NextApiRequest, response: NextApiResp
     const {
       username,
       email,
-      password
+      password,
+      avatar,
+      provider
     } = req.body;
 
-    await repositories.users.signup({
-      username,
-      email,
-      password
-    }, response);
+    if (provider === 'google') {
+      await repositories.users.signupGoogle({
+        username,
+        email,
+        password,
+        avatar,
+        provider
+      }, response);
+    } else {
+      await repositories.users.signup({
+        username,
+        email,
+        password
+      }, response);
+    }
   }
 };

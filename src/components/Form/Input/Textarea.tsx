@@ -32,6 +32,7 @@ const TextareaBase: ForwardRefRenderFunction<HTMLTextAreaElement, ITextareaProps
           id={is}
           name={is}
           focusBorderColor="gray.400"
+          fontFamily={`'Poppins', sans-serif`}
           variant="filled"
           borderRadius={4}
           p="5"

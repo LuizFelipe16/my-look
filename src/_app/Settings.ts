@@ -11,6 +11,9 @@ export const Settings: AppSettings<FetchEndpoints> = {
   CreatedAt: '31 Julho, 2022',
   Creator: 'Luiz Felipe Siqueira Felizatti',
   Developers: [{ name: 'Luiz Felipe Siqueira Felizatti' }],
+  DevelopmentMode: {
+    isDev: !!process.env.IS_DEV
+  },
   Application: {
     IsWeb: true,
     IsMobile: false,

@@ -1,5 +1,5 @@
 import { myStyles } from '_lib/web';
-import { Page } from 'components';
+import { AppStatus, Page } from 'components';
 import { 
   ShopStyles, Shop, 
   Welcome, WelcomeStyles, 
@@ -16,6 +16,7 @@ export default function App() {
       <Description />
       <Reviews />
       <AppStore />
+      <AppStatus />
     </Page>
   );
 }

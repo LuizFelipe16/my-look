@@ -3,18 +3,7 @@ import { query as q } from 'faunadb';
 import { fauna } from 'services';
 import { cryptography } from '_lib/global';
 import { usersRepository } from '.';
-
-interface User {
-  data: {
-    email: string;
-    username: string;
-    password: string;
-  };
-  ts: number;
-  ref: {
-    id: string;
-  };
-}
+import { TFaunaUser } from '../../types'
 
 type SignupRequest = {
   username: string;
@@ -38,7 +27,7 @@ async function signup({ email, password, username }: SignupRequest, res: NextApi
       { data }
     )
   ).then(async () => {
-    await fauna.query<User>(
+    await fauna.query<TFaunaUser>(
       q.Get(
         q.Match(q.Index(usersRepository.config.filterBy.email), email)
       )

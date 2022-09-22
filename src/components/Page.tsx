@@ -2,7 +2,7 @@ import { TitlePage, View } from "_lib/web";
 import { ReactComponent } from "_lib/global";
 import { Navigation } from 'components';
 import { Loading } from "./Loading";
-import { useLoadingPage } from "hooks";
+import { useLoadingPage, useUser } from "hooks";
 import { Footer } from "./layout/Footer";
 import { TNavigationProps } from "./layout/Navigation";
 
@@ -13,14 +13,16 @@ type TPage = {
   showNavigation?: boolean;
   showFooter?: boolean;
   navProps?: TNavigationProps;
+  isLoading?: boolean;
 };
 
-export const Page = ({ styles, title, children, showNavigation = true, showFooter = true, navProps }: TPage) => {
+export const Page = ({ styles, title, children, showNavigation = true, showFooter = true, navProps, isLoading = false }: TPage) => {
+  const { isSessionLoading } = useUser();
   const { _loading, unmount } = useLoadingPage();
 
   const PageStyles = styles;
 
-  if (_loading) return <Loading unmount={unmount} />;
+  if (_loading || isLoading || isSessionLoading) return <Loading unmount={unmount} />;
 
   return (
     <PageStyles>

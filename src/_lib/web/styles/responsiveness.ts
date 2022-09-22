@@ -27,16 +27,44 @@ export type ThemeResponsiveness = {
 };
 
 export const responsiveness: ThemeResponsiveness = {
-  media: (styles: any, min: number, max: number) => `@media (min-width: ${min}px) and (max-width: ${max}px) { ${myStylesMethods.transformer(styles)} }`,
-  phone: (styles: string | Array<string>) => `@media (min-width: 100px) and (max-width: 480px) { ${myStylesMethods.transformer(styles)} }`,
-  notWeb: (styles: string | Array<string>) => `@media (min-width: 100px) and (max-width: 1100px) { ${myStylesMethods.transformer(styles)} }`,
-  multiple: ({ phone, tablet, large }: Multiple) => {
+  media: (styles: any, min: number, max: number) => {
     return `
-      @media (min-width: 100px) and (max-width: 480px) { ${myStylesMethods.transformer(phone)} }
-      @media (min-width: 481px) and (max-width: 720px) { ${myStylesMethods.transformer(tablet)} }
-      @media (min-width: 721px) and (max-width: 1099px) { ${myStylesMethods.transformer(large)} }
+      @media (min-width: ${min}px) and (max-width: ${max}px) { 
+        ${myStylesMethods.transformer(styles)} 
+      }
     `
   },
+  
+  phone: (styles: string | Array<string>) => {
+    return `
+      @media (min-width: 100px) and (max-width: 480px) { 
+        ${myStylesMethods.transformer(styles)} 
+      }
+    `
+  },
+  
+  notWeb: (styles: string | Array<string>) => {
+    return `
+      @media (min-width: 100px) and (max-width: 1100px) { 
+        ${myStylesMethods.transformer(styles)} 
+      }
+    `
+  },
+ 
+  multiple: ({ phone, tablet, large }: Multiple) => {
+    return `
+      @media (min-width: 100px) and (max-width: 480px) { 
+        ${myStylesMethods.transformer(phone)} 
+      }
+      @media (min-width: 481px) and (max-width: 720px) { 
+        ${myStylesMethods.transformer(tablet)} 
+      }
+      @media (min-width: 721px) and (max-width: 1099px) { 
+        ${myStylesMethods.transformer(large)} 
+      }
+    `
+  },
+  
   platforms: (devices?: Platforms, extra?: SS) => {
     const comommStyle = extra?.comommStyle;
     const incluide = extra?.incluide;
@@ -55,31 +83,65 @@ export const responsiveness: ThemeResponsiveness = {
           ${myStylesMethods.transformer(incluide.includes('t') && comommStyle)} 
           ${myStylesMethods.transformer(tablet)}
         }
-        @media (min-width: 769px) and (max-width: 992px) { 
-          ${myStylesMethods.transformer(incluide.includes('l') && comommStyle)} 
-          ${myStylesMethods.transformer(laptop)}
+        ${laptop || incluide.includes('l') && comommStyle
+          ? `
+            @media (min-width: 769px) and (max-width: 992px) { 
+              ${myStylesMethods.transformer(incluide.includes('l') && comommStyle)} 
+              ${myStylesMethods.transformer(laptop)}
+            } 
+          ` 
+          : ``
         }
-        @media (min-width: 993px) and (max-width: 1200px) { 
-          ${myStylesMethods.transformer(incluide.includes('l2x') && comommStyle)} 
-          ${myStylesMethods.transformer(large)}
+        ${large || incluide.includes('l2x') && comommStyle 
+          ? `
+            @media (min-width: 993px) and (max-width: 1200px) { 
+              ${myStylesMethods.transformer(incluide.includes('l2x') && comommStyle)} 
+              ${myStylesMethods.transformer(large)}
+            } 
+          ` 
+          : ``
         }
       `
     }
 
     if (comommStyle && !!incluide) {
       return `
-        @media (min-width: 100px) and (max-width: 540px) { ${myStylesMethods.transformer(incluide.includes('m') ? comommStyle : mobile)} }
-        @media (min-width: 541px) and (max-width: 768px) { ${myStylesMethods.transformer(incluide.includes('t') ? comommStyle : tablet)} }
-        @media (min-width: 769px) and (max-width: 992px) { ${myStylesMethods.transformer(incluide.includes('l') ? comommStyle : laptop)} }
-        @media (min-width: 993px) and (max-width: 1200px) { ${myStylesMethods.transformer(incluide.includes('l2x') ? comommStyle : large)} }
+        @media (min-width: 100px) and (max-width: 540px) { 
+          ${myStylesMethods.transformer(incluide.includes('m') ? comommStyle : mobile)} 
+        }
+        @media (min-width: 541px) and (max-width: 768px) { 
+          ${myStylesMethods.transformer(incluide.includes('t') ? comommStyle : tablet)} 
+        }
+        @media (min-width: 769px) and (max-width: 992px) { 
+          ${myStylesMethods.transformer(incluide.includes('l') ? comommStyle : laptop)} 
+        }
+        @media (min-width: 993px) and (max-width: 1200px) { 
+          ${myStylesMethods.transformer(incluide.includes('l2x') ? comommStyle : large)} 
+        }
       `
     }
 
     return `
-      @media (min-width: 100px) and (max-width: 540px) { ${myStylesMethods.transformer(mobile)} }
-      @media (min-width: 541px) and (max-width: 768px) { ${myStylesMethods.transformer(tablet)} }
-      @media (min-width: 769px) and (max-width: 992px) { ${myStylesMethods.transformer(laptop)} }
-      @media (min-width: 993px) and (max-width: 1200px) { ${myStylesMethods.transformer(large)} }
+      ${!!mobile && `
+        @media (min-width: 100px) and (max-width: 540px) { 
+          ${myStylesMethods.transformer(mobile)} 
+        }
+      `}
+      ${!!tablet && `
+        @media (min-width: 541px) and (max-width: 768px) { 
+          ${myStylesMethods.transformer(tablet)} 
+        }
+      `}
+      ${!!laptop && `
+        @media (min-width: 769px) and (max-width: 992px) { 
+          ${myStylesMethods.transformer(laptop)} 
+        }
+      `}
+      ${!!large && `
+        @media (min-width: 993px) and (max-width: 1200px) { 
+          ${myStylesMethods.transformer(large)} 
+        }
+      `}
     `
   }
 };

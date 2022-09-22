@@ -19,6 +19,9 @@ export type AppSettings<APIs extends Fetch> = {
     IsMadeForLearning?: boolean;
     GitRepository?: string;
   };
+  DevelopmentMode?: {
+    isDev?: boolean;
+  };
   Fetch: APIs;
   SocialINFO?: {
     FacebookURL?: string;

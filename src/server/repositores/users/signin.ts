@@ -3,21 +3,7 @@ import { query as q } from 'faunadb';
 import { fauna } from 'services';
 import { cryptography } from '_lib/global';
 import { usersRepository } from '.';
-
-interface User {
-  data: {
-    email: string;
-    username: string;
-    password: string;
-    name: string;
-    phone: string;
-    bio: string;
-  };
-  ts: number;
-  ref: {
-    id: string;
-  };
-}
+import { TFaunaUser } from '../../types'
 
 type SinginRequest = {
   email: string;
@@ -28,7 +14,7 @@ const messageSuccess = 'Sign in successfully! Wait a moment.';
 const messageError = 'Incorrect email/password.';
 
 async function signin({ email, password }: SinginRequest, res: NextApiResponse) {
-  await fauna.query<User>(
+  await fauna.query<TFaunaUser>(
     q.Get(
       q.Match(q.Index(usersRepository.config.filterBy.email), email)
     )
