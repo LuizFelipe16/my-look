@@ -1,29 +1,22 @@
 import { View, myStyles, Text, ImgZoom, Divider, Button } from '_lib/web';
+import { looks } from 'data/looks';
+import { TLook } from 'types';
+import { formatPrice } from 'utils';
+import { useShoppingCart } from 'context';
 
 const imgHeigth = 25
 const imgHeigtUnity = 'rem'
 
-type TLook = {
-  banner: string
-  name: string
-  price: string
-}
-
-const looks: TLook[] = [
-  { banner: 'look1.jpeg', name: 'Social Look', price: '$138,96' },
-  { banner: 'look2.jpg', name: 'Fast Look', price: '$85,24' },
-  { banner: 'look3.jpg', name: 'Older Look', price: '$116,70' },
-  { banner: 'look4.jpeg', name: 'Minimal Look', price: '$76,70' },
-];
-
 function Shop() {
+  const { CartProducts } = useShoppingCart();
+
   const renderCard = (l: TLook) => (
-    <View style={'card-look'}> 
+    <View key={l.id} style={'card-look'}> 
       <ImgZoom src={l.banner} h={imgHeigth} hUnity={imgHeigtUnity} seconds={0.2} style={'img-look'} description='Look One' />
       <Text style={`description`} text={l.name} />
       <View style={'tags'}>
-        <Text text={l.price} />
-        <Button text='Buy Now!' onPress={() => null} />
+        <Text text={formatPrice(l.price)} />
+        <Button text='Buy Now!' onPress={() => CartProducts.looks.add(l.id)} />
       </View>
     </View>
   );
@@ -140,18 +133,18 @@ const ShopStyles = myStyles.style(theme => ([
             theme.padding.left.lg,
             theme.padding.bottom.xl,
             theme.padding.top.lg,
-            theme.bg.blackTransparent
+            theme.bg.white
           ], [
             theme.myStyles.child('p', [theme.font.apply('md', 1.5, theme.font.typography.title, theme.colors.black)]),
             theme.myStyles.child('button', [
               theme.h.fill(),
               theme.padding.vertical.sm,
               theme.padding.horizontal.sm,
-              theme.w.size(55, '%'),
+              theme.w.size(45, '%'),
               theme.border.rounded.inPositions(2, 'top', 'left'),
               theme.border.rounded.inPositions(2, 'bottom', 'left'),
               theme.bg.primary,
-              theme.font.apply('rg', 1, theme.font.typography.title, theme.colors.background),
+              theme.font.apply('rg', 0.9, theme.font.typography.title, theme.colors.background),
               theme.transition.apply(0.2),
               theme.effect.hover.inOwn([theme.effect.filter.glow(0.8)])
             ]),

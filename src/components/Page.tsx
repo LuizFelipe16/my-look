@@ -8,6 +8,7 @@ import { TNavigationProps } from "./layout/Navigation";
 
 type TPage = {
   styles: any;
+  stylesProps?: any;
   title: string;
   children: ReactComponent;
   showNavigation?: boolean;
@@ -16,7 +17,7 @@ type TPage = {
   isLoading?: boolean;
 };
 
-export const Page = ({ styles, title, children, showNavigation = true, showFooter = true, navProps, isLoading = false }: TPage) => {
+export const Page = ({ styles, stylesProps, title, children, showNavigation = true, showFooter = true, navProps, isLoading = false }: TPage) => {
   const { isSessionLoading } = useUser();
   const { _loading, unmount } = useLoadingPage();
 
@@ -25,7 +26,7 @@ export const Page = ({ styles, title, children, showNavigation = true, showFoote
   if (_loading || isLoading || isSessionLoading) return <Loading unmount={unmount} />;
 
   return (
-    <PageStyles>
+    <PageStyles theme={stylesProps}>
       <View style={`page`}>
         <TitlePage t={title} />
         {showNavigation && <Navigation {...navProps} />}

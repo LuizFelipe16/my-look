@@ -22,7 +22,8 @@ export const appVariables: AppVariables<AppTypography, AppTexts, AppCookies> = {
     expire: '1d',
     username: `mylook.username`,
     token: `mylook.token`,
-    user: `mylook.user`
+    user: `mylook.user`,
+    cart: `@mylook.shop.cart`
   },
   
   texts: {

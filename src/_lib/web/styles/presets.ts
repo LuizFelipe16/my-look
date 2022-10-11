@@ -5,7 +5,7 @@ export type ThemePresets = {
   size: (multiplier: number) => string;
   flex: () => `flex: 1;`;
   displayFlex: `display: flex;`;
-  debugger: (color: 'blue' | 'red' | 'yellow' | 'green' | 'purple', weight?: number) => string;
+  debugger: (color?: 'blue' | 'red' | 'yellow' | 'green' | 'purple', weight?: number) => string;
   fullView: string;
   fillView: string;
   shadow: {
@@ -22,9 +22,9 @@ export const presets: ThemePresets = {
   size: styleSize,
   hide: () => `display: none !important;`,
 
-  debugger: (color: 'blue' | 'red' | 'yellow' | 'green' | 'purple', weight?: number) => {
+  debugger: (color?: 'blue' | 'red' | 'yellow' | 'green' | 'purple', weight?: number) => {
     const w = !weight ? 2 : weight
-    const c = color
+    const c = color || 'red'
     const hex = c === 'blue' ? '#00D' : c === 'red' ? '#F00' : c === 'green' ? '#0F0' : c === 'purple' ? '#9400D3' : '#FF0'
     return `border: ${w}px solid ${hex};`
   },

@@ -16,4 +16,5 @@ export type AppCookies = {
   username: string;
   token: string;
   user: string;
+  cart: string;
 };

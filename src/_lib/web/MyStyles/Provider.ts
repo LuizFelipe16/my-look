@@ -36,6 +36,20 @@ export const myStyles = {
         ${({ theme: props }) => myStylesPresets.myStyles.transformer(createStyles(myStylesPresets, props))}
       `
     },
+    createPage: (createStyles: (theme: ThemeStyle, props: any) => any, componentType: ComponentTypeStyle, isPage?: boolean) => {
+      return styled[componentType]`
+        ${({ theme: props }) => `
+            ${isPage ? `
+            .page {
+              width: 100vw;
+              min-height: 100vh;
+              ${myStylesPresets.column.centerStart}
+              ${myStylesPresets.myStyles.transformer(createStyles(myStylesPresets, props))}
+            }
+          ` : `${myStylesPresets.myStyles.transformer(createStyles(myStylesPresets, props))}`}
+        `}
+      `
+    },
   },
   global: {
     create: (createStyles: (theme: ThemeStyle) => any): { MyStylesGlobal: GlobalStyleComponent<any, any> } => {

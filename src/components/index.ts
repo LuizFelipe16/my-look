@@ -11,3 +11,11 @@ export * from './Form/Input/Textarea';
 export * from './Form/Sign';
 export * from './Form/Sign/SignIn';
 export * from './Form/Sign/SignUp';
+export * from './Form/Lock/Signin';
+
+export * from './ShopLookItem';
+export * from './CartProductItem';
+
+export * from './Modals';
+
+export * from './pages/Account';

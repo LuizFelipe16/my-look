@@ -1,5 +1,5 @@
 import { theme } from '_app';
-import { View, myStyles, Button, Divider, Img, Text, Spinner } from '_lib/web';
+import { View, myStyles, Button, Divider, Img, Text, Link } from '_lib/web';
 
 function Welcome() {
   return (
@@ -12,7 +12,9 @@ function Welcome() {
           reprehenderit ipsa. Ut nisi possimus quaerat dolor?
           Ex dolores dolor deserunt itaque officiis non minus? Nesciunt amet ex a facilis rem!
         `}/>
-        <Button style={`about`} onPress={() => null}>Start Shopping</Button>
+        <Link href={'/shop'}>
+          <Button style={`about`} onPress={() => null}>Start Shopping</Button>
+        </Link>
       </View>
 
       <View style={`images`}>

@@ -1,4 +1,4 @@
-import { useToast, useUser } from "hooks";
+import { useProfile } from "hooks";
 import { Link, myStyles, Text, View, Button } from "_lib/web";
 import { AvatarMenu } from "../AvatarMenu";
 import { ItemNav } from "./ItemNav";
@@ -13,7 +13,7 @@ interface NavbarProps extends TProps {
 }
 
 export const Navbar = ({ showLogin, showOnlyLogo, hasImage = false }: NavbarProps) => {
-  const { user } = useUser();
+  const { user, Session } = useProfile();
 
   if (showOnlyLogo) {
     return (
@@ -42,7 +42,7 @@ export const Navbar = ({ showLogin, showOnlyLogo, hasImage = false }: NavbarProp
         ) : <View />}
       </HeaderNavigation>
 
-      {user.username && <AvatarMenu username={user.username} src={user.avatar} />}
+      {Session.isActivated() && <AvatarMenu hasImage={hasImage} username={user?.username} src={user?.avatar} />}
     </>
   );
 }

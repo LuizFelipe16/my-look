@@ -18,8 +18,8 @@ export const Loading = ({ unmount, isUnmount = true}: LoadingProps) => {
   return (
     <Flex bg={theme.colors.background} w='100vw' h='100vh' justify='center' align='center'>
       <TitlePage t='Loading' />
-      <Flex bg={theme.colors.primary} p='4' justify='center' align='center' borderRadius={9999}>
-        <Spinner thickness='4px' speed="0.95s" size={'xl'} color={theme.colors.background} />
+      <Flex bg={theme.colors.background} p='4' justify='center' align='center' borderRadius={9999}>
+        <Spinner thickness='4px' speed="0.95s" size={'xl'} color={theme.colors.primary} />
       </Flex>
     </Flex>
   );

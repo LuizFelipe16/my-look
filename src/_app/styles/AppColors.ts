@@ -34,12 +34,15 @@ export const appColors = {
   transparent: '#FFF0',
   gray: '#212121',
   grayLight: '#606163',
-
+  
   blackTransparent: '#0001',
   googleBlue: '#4885ed',
   blackOverlap: '#0007',
-
+  
   backgroundDark: '#dbe5fa',
+
+  grayVeryLight: '#eee',
+  primaryDark: '#ff4000',
 };
 
 const colorsArray: Color[] = [
@@ -65,6 +68,8 @@ const colorsArray: Color[] = [
   { name: 'googleBlue', value: appColors.googleBlue },
   { name: 'blackOverlap', value: appColors.blackOverlap },
   { name: 'backgroundDark', value: appColors.backgroundDark },
+  { name: 'grayVeryLight', value: appColors.grayVeryLight },
+  { name: 'primaryDark', value: appColors.primaryDark },
 ];
 
 export function getStyleColorProperty(property: Property) {
@@ -99,6 +104,8 @@ export function getStyleColorProperty(property: Property) {
     googleBlue: stylesArray[19].googleBlue,
     blackOverlap: stylesArray[20].blackOverlap,
     backgroundDark: stylesArray[21].backgroundDark,
+    grayVeryLight: stylesArray[22].grayVeryLight,
+    primaryDark: stylesArray[23].primaryDark,
   };
 
   return styles;

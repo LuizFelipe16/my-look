@@ -10,7 +10,7 @@ export default function Welcome() {
     <Page styles={MyStyles} title='Welcome!' showFooter={false} showNavigation={false}>
       <View style={`page-welcome`}>
         <View style={`overlap`}>
-          <Text data-aos="fade-down" text={`Hello ${user.username}`} />
+          <Text data-aos="fade-down" text={`Hello ${user?.username}`} />
           <Text data-aos="fade-down" type='h1' text='Welcome to My'><strong>Look!</strong></Text>
           <Text>
             We are happy to have you with us, we suggest you start by looking <br /> 

@@ -8,6 +8,7 @@ import { apiNext } from 'services'
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { onMount, ReactChildren, SetState, SetStateBoolean } from "_lib/global";
 import { useAppStatus } from "./AppStatusContext";
+import { OnEndHandle } from "types";
 
 type TokenPayload = {
   username: string;
@@ -52,8 +53,8 @@ type User = {
 }
 
 type UserContextData = {
-  user: User;
-  setUser: SetState<User>;
+  user: User | null;
+  setUser: SetState<User | null>;
 
   isAccountConfirm: boolean;
   setIsAccountConfirm: SetStateBoolean;
@@ -73,7 +74,9 @@ type UserContextData = {
 
   Session: {
     loadProfile: (token: string, activeLoading?: boolean) => Promise<User | {}>;
+    updateProfile: (data: any, onEnd: (props: OnEndHandle) => void) => Promise<any>;
     reset: () => void;
+    isActivated: () => boolean;
   }
 }
 
@@ -92,7 +95,7 @@ export function UserProvider({ children }: UserProviderProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [isSessionLoading, setIsSessionLoading] = useState(false);
 
-  const [user, setUser] = useState<User>({} as User);
+  const [user, setUser] = useState<User | null>({} as User);
 
   const [isAccountConfirm, setIsAccountConfirm] = useState(false); // NOTE edit data user
 
@@ -148,7 +151,7 @@ export function UserProvider({ children }: UserProviderProps) {
         accountType: 'mylook'
       }
 
-      setUser(resetUser);
+      setUser(null);
     
       destroyCookie(undefined, appVariables.cookies.username);
       destroyCookie(undefined, appVariables.cookies.token);
@@ -164,6 +167,32 @@ export function UserProvider({ children }: UserProviderProps) {
         path: '/'
       });
       setIsLoading(false);
+    },
+    isActivated: () => {
+      if (!user) {
+        return false
+      } else {
+        const is = Object.keys(user as User).length > 0 ? true : false
+        return is
+      }
+    },
+    updateProfile: async (data: any, onEnd: (props: OnEndHandle) => void) => {
+      const result = await apiNext.put(`/users/${user?.id}`, data).then(async ({ data }) => {
+        if (data?.error) {
+          onEnd({ err: data?.error })
+          return;
+        }
+  
+        if (data?.message) {
+          setTimeout(async () => {
+            await Session.loadProfile(data?.user?.token, false).then(() => onEnd({ status: 'done' }));
+          }, 2000)
+  
+          return;
+        }
+      }).catch(() => onEnd({ err: 'Unexpected error, contact support.' }));
+
+      return result
     }
   }
 
