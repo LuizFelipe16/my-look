@@ -49,7 +49,7 @@ export const AdminSignIn = () => {
 
       if (data?.message) {
         onEnd({ status: 'done', succ: data?.message,  });
-        signIn({ token: data?.token, bio: data?.bio, name: data?.name, phone: data?.phone });
+        // signIn({ token: data?.token, bio: data?.bio, name: data?.name, phone: data?.phone });
         return;
       }
     }).catch(onCatch);
