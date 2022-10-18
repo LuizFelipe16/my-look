@@ -50,7 +50,7 @@ export const SignUp = ({ onClickAlreadyHaveAccount }: ISignUpProps) => {
     
       if (data?.message) {
         onEnd({ succ: data?.message, status: 'done' });
-        signIn({ token: data?.token, isFirstSignin: true, bio: '', name: '', phone: '' });
+        signIn({ token: data?.token, isFirstSignin: true, bio: '', name: '', phone: '', username: '', additional_information: '', avatar: '', cep: '', city: '', email: '', complement: '', state: '', street: '', id: '', accountType: 'mylook' });
         return;
       }
     }).catch(() => {
