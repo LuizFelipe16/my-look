@@ -17,7 +17,7 @@ function ShopLookItem({ look }: LookItemProps) {
   return (
     <>
       <View style={'item'} key={look.id}>
-        <ImgZoom src={look?.banner} h={14} rounded={3} seconds={0.2} description={look.description} onPress={ModalManager.open} />
+          <ImgZoom src={look?.banner} h={14} rounded={3} seconds={0.2} description={look.description} onPress={ModalManager.open} />
           <Text style='description' text={look?.description} />
           <Text style='price' text={formatPrice(look?.price)} />
     

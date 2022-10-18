@@ -5,6 +5,7 @@ import { update } from "./update";
 import { confirmAccount } from "./confirmAccount";
 import { loadProfile } from "./loadProfile";
 import { generateToken } from "./generateToken";
+import { updateCredentials } from "./updateCredentials";
 
 const usersCollection = 'users';
 
@@ -15,6 +16,7 @@ const usersRepository = {
   signin: signin,
   confirmAccount: confirmAccount,
   loadProfile: loadProfile,
+  updateCredentials: updateCredentials,
   config: {
     name: usersCollection,
     filterBy: {

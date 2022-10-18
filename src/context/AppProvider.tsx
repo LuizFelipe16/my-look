@@ -1,5 +1,6 @@
 import { ReactChildren } from "_lib/global";
 import { AppStatusProvider } from "./AppStatusContext";
+import { AppModalsProvider } from "./ModalsProvider";
 import { ProductsProvider } from "./Products";
 import { ShoppingCartProvider } from "./ShoppingCart";
 import { ThemeProvider } from "./Theme";
@@ -14,11 +15,13 @@ function AppProvider({ children }: AppProviderProps) {
     <AppStatusProvider>
       <ThemeProvider>
         <UserProvider>
-          <ProductsProvider>
-            <ShoppingCartProvider>
-              {children}
-            </ShoppingCartProvider>
-          </ProductsProvider>
+          <AppModalsProvider>
+            <ProductsProvider>
+              <ShoppingCartProvider>
+                  {children}
+              </ShoppingCartProvider>
+            </ProductsProvider>
+          </AppModalsProvider>
         </UserProvider>
       </ThemeProvider>
     </AppStatusProvider>

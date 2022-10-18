@@ -3,7 +3,7 @@ import { appVariables, Settings } from '_app';
 
 type GenerateToken = {
   email: string;
-  username: string;
+  username?: string;
   id: string;
   avatar?: string;
 };
@@ -11,7 +11,7 @@ type GenerateToken = {
 function generateToken({ email, username, id, avatar }: GenerateToken) {
   const token = sign(
     {
-      username: username,
+      username: username || '',
       email: email,
       id: id,
       avatar,

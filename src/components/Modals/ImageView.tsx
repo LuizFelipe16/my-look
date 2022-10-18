@@ -1,3 +1,4 @@
+import { theme } from '_app';
 import { myStyles } from '_lib/web';
 import { ModalPrimitive } from './Primitive';
 
@@ -9,7 +10,14 @@ type TModalImage = {
 
 const ModalImageView = ({ isOpen, onClose, src }: TModalImage) => {
   return (
-    <ModalPrimitive isOpen={isOpen} onClose={onClose} noPaddingBody hasCloseButton>
+    <ModalPrimitive 
+      isOpen={isOpen} 
+      onClose={onClose} 
+      colorCloseButton={theme.colors.background} 
+      bgContent={theme.colors.transparent} 
+      noPaddingBody 
+      hasCloseButton
+    >
       <ImageView src={src} />
     </ModalPrimitive>
   );

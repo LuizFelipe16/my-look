@@ -9,7 +9,7 @@ import {
   ModalProps
 } from '@chakra-ui/react';
 import { theme } from '_app';
-import { ReactComponent, TColor } from '_lib/global';
+import { ReactComponent } from '_lib/global';
 
 interface PModalProps extends ModalProps {
   renderFooter?: () => ReactComponent;
@@ -18,31 +18,50 @@ interface PModalProps extends ModalProps {
   renderHeader?: () => ReactComponent;
   hasCloseButton?: boolean;
   noPaddingBody?: boolean;
-  colorCloseButton?: TColor;
+  colorCloseButton?: string;
+  alignHeader?: 'center' | 'start' | 'left' | 'end' | 'right';
+  bgContent?: string;
 };
 
-const ModalPrimitive = ({ children, renderFooter, title, renderHeader, hasCloseButton = false, isCentered, noPaddingBody = false, ...rest }: PModalProps) => {
-  const pStylesBody = noPaddingBody && { padding: 0 }
+const ModalPrimitive = (
+  { 
+    children, 
+    renderFooter, 
+    title, 
+    renderHeader, 
+    hasCloseButton = false, 
+    colorCloseButton = theme.colors.black,
+    isCentered, 
+    noPaddingBody = false,
+    alignHeader = 'start',
+    bgContent = theme.colors.white,
+    ...rest 
+  }: PModalProps
+) => {
+
+  const pStylesBody = noPaddingBody ? { padding: 0 } : {}
   
   return (
     <Modal isCentered {...rest}>
       <ModalOverlay />
-      <ModalContent bg={theme.colors.transparent}>
-        {!!title || !!renderHeader && (
-          <ModalHeader>
-          {!!title ? title : !!renderHeader && renderHeader()}
-        </ModalHeader>
-        )}
-        {hasCloseButton && <ModalCloseButton size='lg' color={theme.colors.background} />}
+      <ModalContent bg={bgContent}>
+        {title || renderHeader ? (
+          <ModalHeader textAlign={alignHeader}>
+            {!!title ? title : !!renderHeader && renderHeader()}
+          </ModalHeader>
+        ) : null}
+        
+        {hasCloseButton ? <ModalCloseButton size='lg' color={colorCloseButton} /> : null}
+        
         <ModalBody style={{ ...pStylesBody }}>
           {children}
         </ModalBody>
   
-        {!!renderFooter && (
+        {renderFooter ? (
           <ModalFooter>
             {renderFooter()}
           </ModalFooter>
-        )}
+        ) : null}
       </ModalContent>
     </Modal>
   );

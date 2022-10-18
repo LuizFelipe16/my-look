@@ -13,20 +13,21 @@ type UserUpdateRequest = {
   phone: string;
   bio: string;
   password?: any;
+  decode: any;
+  token: any;
 };
 
 const messageSuccess = 'Account successfully updated!';
 const messageError = 'This email already belongs to another account.';
 
-async function update({ id, email, password, username, bio, name, phone }: UserUpdateRequest, res: NextApiResponse) {
+async function update({ id, email, decode, token, ...rest }: UserUpdateRequest, res: NextApiResponse) {
   const data = {
     email,
-    username,
-    name,
-    phone,
-    bio,
+    ...rest,
     // password: cryptography.encryptValue(password)
   };
+
+  delete data.password
 
   await fauna.query<TFaunaUser>(
     q.Get(

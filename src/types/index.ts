@@ -7,3 +7,6 @@ export type OnEndHandle = {
 };
 
 export * from './Look';
+
+export * as APIClientTypes from './client';
+export * as TypesManager from './utils';

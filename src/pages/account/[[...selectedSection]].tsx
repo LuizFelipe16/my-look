@@ -1,9 +1,9 @@
 import { AiOutlineSetting } from 'react-icons/ai';
 import { BiHomeAlt, BiLockAlt, BiLogOutCircle } from 'react-icons/bi';
 import { View, myStyles, Text, Avatar, Button } from '_lib/web';
-import { EditInformations, EditLocation, EditSecurity } from 'components';
+import { EditInformations, EditLocation, EditSecurity, ModalWarnGoogleAccount } from 'components';
 import { Page } from 'components';
-import { useUser } from 'hooks';
+import { useModal, useUser, useRouter } from 'hooks';
 import { withSSRAuth } from 'functions';
 import { useState } from 'react';
 
@@ -11,47 +11,62 @@ type SectionType = 'informations' | 'location' | 'security';
 
 export default function Account() {
   const { user, signOut, isLoading } = useUser();
+  const { ModalManager } = useModal();
+  const router = useRouter()
 
-  const [section, setSection] = useState<SectionType>('informations');
+  const { selectedSection } = router.query as any
+
+  const [section, setSection] = useState<SectionType>(() => {
+    return !selectedSection ? 'informations' : selectedSection[0]
+  });
+
+  const textSecurityGoogle  = 'Unfortunately you cannot change your email address or password as your account is associated with Google. If you want to continue create a MyLook account.';
   
   return (
-    <Page styles={MyStylesAccount} title='Account' isLoading={!user}>
-      <View style={`page-welcome`}>
-        <View style={`side-menu`}>
-          <View style={`infos`}>
-            <Avatar size='xl' name={user?.username} src={user?.avatar} />
-            <Text style={`username`} text={user?.username} />
-            <Text style={`email`} text={user?.email} />
+    <>
+      <Page styles={MyStylesAccount} title='Account' isLoading={!user}>
+        <View style={`page-welcome`}>
+          <View style={`side-menu`}>
+            <View style={`infos`}>
+              <Avatar size='xl' name={user?.username} src={user?.avatar} />
+              <Text style={`username`} text={user?.username} />
+              <Text style={`email`} text={user?.email} />
+            </View>
+
+            <Button style={`option ${section === 'informations' && 'active'}`} onPress={() => setSection('informations')}>
+              <AiOutlineSetting size={20} />
+              Account
+            </Button>
+
+            <Button style={`option ${section === 'location' && 'active'}`} onPress={() => setSection('location')}>
+              <BiHomeAlt size={20} />
+              Location
+            </Button>
+
+            <Button 
+              style={`option ${section === 'security' && 'active'} ${user?.accountType === 'google' && 'deactivate'}`} 
+              onPress={user?.accountType === 'google' ? ModalManager.open : () => setSection('security')}
+            >
+              <BiLockAlt size={20} />
+              Security
+            </Button>
+
+            <Button style={`option`} onPress={signOut}>
+              <BiLogOutCircle size={20} />
+              Logout
+            </Button>
           </View>
-
-          <Button style={`option active`} onPress={() => setSection('informations')}>
-            <AiOutlineSetting size={20} />
-            Account
-          </Button>
-
-          <Button style={`option ${user?.accountType === 'google' && 'deactivate'}`} onPress={user?.accountType === 'google' ? () => null : () => setSection('security')}>
-            <BiLockAlt size={20} />
-            Security
-          </Button>
-
-          <Button style={`option deactivate`} onPress={() => setSection('location')}>
-            <BiHomeAlt size={20} />
-            Location
-          </Button>
-
-          <Button style={`option`} onPress={signOut}>
-            <BiLogOutCircle size={20} />
-            Logout
-          </Button>
+            
+          <View style={`content-menu`}>
+            {section === 'informations' && <EditInformations isDisableInputs={isLoading} />}
+            {section === 'location' && <EditLocation isDisableInputs={isLoading} />}
+            {section === 'security' && <EditSecurity isDisableInputs={isLoading} />}
+          </View>
         </View>
-          
-        <View style={`content-menu`}>
-          {section === 'informations' && <EditInformations isDisableInputs={isLoading} />}
-          {section === 'location' && <EditLocation isDisableInputs={isLoading} />}
-          {section === 'security' && <EditSecurity isDisableInputs={isLoading} />}
-        </View>
-      </View>
-    </Page>
+      </Page>
+
+      <ModalWarnGoogleAccount isOpen={ModalManager.is} onClose={ModalManager.close} text={textSecurityGoogle} />
+    </>
   );
 }
 
@@ -110,10 +125,9 @@ export const MyStylesAccount = myStyles.create((theme) => ([
   theme.myStyles.create('page-welcome', [
     theme.w.size(100, '%'),
     theme.h.auto(),
-    theme.h.min(85, 'vh'),
+    theme.h.min(100, 'vh'),
     theme.row.centerBetween,
-    theme.margin.top.size(5),
-    theme.margin.bottom.size(2),
+    theme.margin.bottom.size(4),
 
     theme.responsiveness.platforms({}, {
       comommStyle: [theme.column.centerCenter], incluide: ['m', 't', 'l']
@@ -123,12 +137,20 @@ export const MyStylesAccount = myStyles.create((theme) => ([
       theme.w.size(30, '%'),
       theme.w.min(25, 'vw'),
       theme.h.size(100, '%'),
-      theme.border.in.right(2, theme.colors.primary),
       theme.column.centerStart,
+      theme.bg.blackTransparent,
+      theme.padding.top.size(5),
+      theme.border.rounded.inPositions(2, 'top', 'right'),
+      theme.border.rounded.inPositions(2, 'bottom', 'right'),
 
       theme.responsiveness.platforms({}, {
-        comommStyle: [theme.border.in.right(0, theme.colors.primary), theme.w.size(100, '%')], incluide: ['m', 't', 'l']
-      })
+        comommStyle: [
+          theme.border.in.right(0, theme.colors.primary), 
+          theme.w.size(100, '%'),
+          theme.border.rounded.inPositions(0, 'top', 'right'),
+          theme.border.rounded.inPositions(0, 'bottom', 'right'),
+        ], incluide: ['m', 't', 'l']
+      }),
     ], [InfosStyles, OptionStyles]),
 
     theme.myStyles.childClass('content-menu', [
@@ -137,6 +159,7 @@ export const MyStylesAccount = myStyles.create((theme) => ([
       theme.column.startStart,
       theme.padding.horizontal.size(3),
       theme.gapEls.full.size(1),
+      theme.margin.top.size(5),
 
       theme.responsiveness.platforms({}, {
         comommStyle: [theme.column.centerStart], incluide: ['m', 't', 'l']

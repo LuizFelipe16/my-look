@@ -23,14 +23,12 @@ async function loadProfile({ email }: LoadProfileRequest) {
     });
 
     const user = {
+      ...resp.data,
       id: resp.ref.id,
       username: resp.data.username,
       email: resp.data.email,
-      name: resp.data.name,
-      phone: resp.data.phone,
-      bio: resp.data.bio,
       token,
-      avatar: '',
+      password: '',
       accountType: !resp.data.provider ? 'mylook' : resp.data.provider
     }
 

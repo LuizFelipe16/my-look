@@ -2,7 +2,6 @@ import { Button as CButton, Stack } from '@chakra-ui/react';
 import { myStyles, Text } from '_lib/web';
 import { Input } from 'components';
 import { theme } from '_app';
-import { apiNext } from 'services';
 import { useAppStatus } from 'context';
 import { OnEndHandle } from 'types';
 import { validation, FormSubmit, useForm, onUpdate } from '_lib/global';
@@ -29,16 +28,15 @@ function EditSecurity({ isDisableInputs }: EditSecurityProps) {
   const { AppStatus } = useAppStatus();
   const { errorToast } = useToast();
 
-  const { register, errors, onSubmit } = useForm<EditFormData>({ schema, initialState: user as Object });
+  const { register, errors, onSubmit, setValue } = useForm<EditFormData>({ schema, initialState: user as Object });
 
   onUpdate(() => {
     if (user) {
-      // setValue('cep', user?.bio)
-      // setValue('street', user?.name)
-      // setValue('city', user?.username)
-      // setValue('complement', user?.phone)
+      setValue('email', user?.email);
+      setValue('password', '');
+      setValue('password_confirmation', '');
     }
-  }, [user])
+  }, [user]);
 
   const handleUpdateUser: FormSubmit<EditFormData> = async (values) => {
     setIsLoading(true);
@@ -50,20 +48,9 @@ function EditSecurity({ isDisableInputs }: EditSecurityProps) {
       if (err) errorToast(err);
     }
 
-    await apiNext.put(`/users/${user?.id}`, values).then(async ({ data }) => {
-      if (data?.error) {
-        onEnd({ err: data?.error })
-        return;
-      }
+    const newData = { email: values.email, password: values.password }
 
-      if (data?.message) {
-        setTimeout(async () => {
-          await Session.loadProfile(data?.user?.token, false).then(() => onEnd({ status: 'done' }));
-        }, 2000)
-
-        return;
-      }
-    }).catch(() => onEnd({ err: 'Unexpected error, contact support.' }));
+    await Session.updateCredentials(newData, onEnd);
   }
 
   return (
@@ -76,18 +63,20 @@ function EditSecurity({ isDisableInputs }: EditSecurityProps) {
           <Input
             type="email"
             is="email"
+            label='E-mail address'
             placeholder="E-mail"
             error={errors.email}
             isDisabled={isDisableInputs}
             {...register('email')}
           />
         </Stack>
-          
+        
         <Stack direction={["column", "row", "row"]} w="100%" spacing={["4", "2", "2"]} justify="space-between">
           <Input
             type="password"
             is="password"
-            placeholder="Password"
+            label='Password'
+            placeholder="Digit your password or your new password"
             error={errors.password}
             isDisabled={isDisableInputs}
             {...register('password')}
@@ -95,7 +84,8 @@ function EditSecurity({ isDisableInputs }: EditSecurityProps) {
           <Input
             type="password"
             is="password_confirmation"
-            placeholder="Password confirm"
+            label='Password confirm'
+            placeholder="Confirm password"
             error={errors.password_confirmation}
             isDisabled={isDisableInputs}
             {...register('password_confirmation')}
@@ -125,9 +115,7 @@ function EditSecurity({ isDisableInputs }: EditSecurityProps) {
 }
 
 const EditSecurityStyles = myStyles.style(theme => ([
-  theme.myStyles.create('edit-security', [
-    
-  ]),
+  theme.myStyles.create('edit-security', []),
 ]));
 
 export { EditSecurity, EditSecurityStyles };

@@ -4,11 +4,16 @@ import { decode } from 'jsonwebtoken';
 import { setCookie, destroyCookie, parseCookies } from 'nookies';
 import { useToast } from "hooks";
 import { appVariables } from "_app";
-import { apiNext } from 'services'
+import { APIClient, apiNext } from 'services'
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { onMount, ReactChildren, SetState, SetStateBoolean } from "_lib/global";
 import { useAppStatus } from "./AppStatusContext";
-import { OnEndHandle } from "types";
+import { OnEndHandle, TypesManager } from "types";
+
+type TCredentials = {
+  email: string;
+  password: string;
+}
 
 type TokenPayload = {
   username: string;
@@ -20,13 +25,8 @@ type TokenPayload = {
   iat: number;
 }
 
-interface SignInData {
-  token: string;
+interface SignInData extends User {
   isFirstSignin?: boolean;
-
-  phone: string;
-  name: string;
-  bio: string;
 }
 
 interface SignInDataWithGoogle {
@@ -37,7 +37,7 @@ interface SignInDataWithGoogle {
   id: string;
 }
 
-type User = {
+type User = TypesManager.TUser.Location & {
   username: string;
   token: string;
   avatar: string;
@@ -75,6 +75,8 @@ type UserContextData = {
   Session: {
     loadProfile: (token: string, activeLoading?: boolean) => Promise<User | {}>;
     updateProfile: (data: any, onEnd: (props: OnEndHandle) => void) => Promise<any>;
+    updateCredentials: (data: TCredentials, onEnd: (props: OnEndHandle) => void) => Promise<any>;
+    confirmProfile: (data: TCredentials) => Promise<boolean>;
     reset: () => void;
     isActivated: () => boolean;
   }
@@ -87,7 +89,7 @@ interface UserProviderProps {
 export const UserContext = createContext({} as UserContextData);
 
 export function UserProvider({ children }: UserProviderProps) {
-  const { errorToast, successToast } = useToast();
+  const { errorToast } = useToast();
   const { AppStatus } = useAppStatus();
 
   const token = parseCookies(null)[appVariables.cookies.token];
@@ -138,19 +140,6 @@ export function UserProvider({ children }: UserProviderProps) {
       return result
     },
     reset: () => {
-      const resetUser: User = {
-        username: '', 
-        token: '', 
-        avatar: '', 
-        email: '', 
-        id: '', 
-        phone: '',
-        bio: '',
-        name: '',
-        decode: {} as TokenPayload,
-        accountType: 'mylook'
-      }
-
       setUser(null);
     
       destroyCookie(undefined, appVariables.cookies.username);
@@ -177,7 +166,7 @@ export function UserProvider({ children }: UserProviderProps) {
       }
     },
     updateProfile: async (data: any, onEnd: (props: OnEndHandle) => void) => {
-      const result = await apiNext.put(`/users/${user?.id}`, data).then(async ({ data }) => {
+      const result = await APIClient.User.update(data).then(async ({ data }) => {
         if (data?.error) {
           onEnd({ err: data?.error })
           return;
@@ -193,7 +182,30 @@ export function UserProvider({ children }: UserProviderProps) {
       }).catch(() => onEnd({ err: 'Unexpected error, contact support.' }));
 
       return result
-    }
+    },
+    confirmProfile: async ({ password, email }: TCredentials): Promise<boolean> => {
+      const result = await APIClient.User.confirmAccount({ email, password });
+
+      return result?.data?.isAccountConfirm || false
+    },
+    updateCredentials: async (data: TCredentials, onEnd: (props: OnEndHandle) => void) => {
+      const result = await APIClient.User.updateCredentials({ ...data, id: user?.id }).then(async ({ data }) => {
+        if (data?.error) {
+          onEnd({ err: data?.error })
+          return;
+        }
+  
+        if (data?.message) {
+          setTimeout(async () => {
+            await Session.loadProfile(data?.user?.token, false).then(() => onEnd({ status: 'done' }));
+          }, 2000);
+  
+          return;
+        }
+      }).catch(() => onEnd({ err: 'Unexpected error, contact support.' }));
+
+      return result
+    },
   }
 
   function signOut() {
@@ -209,7 +221,7 @@ export function UserProvider({ children }: UserProviderProps) {
     return;
   }
 
-  function signIn({ token, isFirstSignin = false, name, phone, bio }: SignInData) {
+  function signIn({ token, isFirstSignin = false, ...rest }: SignInData) {
     setIsLoading(true);
 
     const decodeToken = decode(token) as TokenPayload;
@@ -217,20 +229,19 @@ export function UserProvider({ children }: UserProviderProps) {
     const { username, email, id, avatar } = decodeToken;
 
     const user: User = {
+      ...rest,
       username,
       token,
       avatar,
       email,
       id,
       decode: decodeToken,
-      bio,
-      phone,
-      name,
       accountType: 'mylook'
     };
 
     Session.set(user);
     Router.push(!isFirstSignin ? '/' : '/welcome');
+    
     return;
   }
 
@@ -246,6 +257,11 @@ export function UserProvider({ children }: UserProviderProps) {
       bio: "",
       phone: "",
       name: "",
+      cep: "",
+      street: "",
+      city: "",
+      complement: "",
+      additional_information: "",
       accountType: "google",
       provider: 'google'
     };

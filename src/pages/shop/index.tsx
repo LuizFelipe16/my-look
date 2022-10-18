@@ -29,6 +29,7 @@ export default function Shop() {
 
   const renderFilter = (filter: TLookType) => (
     <Button 
+      key={filter}
       style={`filter ${Products.looks.selectedFilter === filter && 'selected'}`} 
       text={filter === 'none' ? 'All Looks' : filter} 
       onPress={() => handleFilterLooks(filter)} 
@@ -124,7 +125,7 @@ const MyStyles = myStyles.mutate.createPage((theme, props) => ([
       theme.h.fill(), 
       theme.gapEls.full.size(1), 
       theme.flex.breakLine,
-      theme.row.centerBetween,
+      theme.row.centerStart,
     ], [
       ShopLookItemStyles,
 

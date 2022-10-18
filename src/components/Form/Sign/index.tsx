@@ -99,7 +99,6 @@ export const Sign = (
           type="submit"
           fontSize="sm"
           fontFamily={`'Poppins', sans-serif`}
-          isLoading={isLoading}
           w="100%"
           size="md"
           bgColor={theme.colors.primary}

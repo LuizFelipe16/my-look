@@ -32,9 +32,8 @@ async function signin({ email, password }: SinginRequest, res: NextApiResponse) 
     });
 
     const newUser = {
-      name: resp.data.name,
-      phone: resp.data.phone,
-      bio: resp.data.bio,
+      ...resp.data,
+      password: '',
       token,
     }
 

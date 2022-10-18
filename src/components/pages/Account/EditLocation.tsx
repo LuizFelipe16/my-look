@@ -17,6 +17,7 @@ type EditFormData = {
   city: string;
   complement: string;
   additional_information: string;
+  state: string;
 }
 
 const schema = validation.createForm(is => ({
@@ -24,6 +25,7 @@ const schema = validation.createForm(is => ({
   street: is.string().required("Street is required").min(3, 'Minimum of 3 characters'),
   city: is.string().required("City is required").min(3, 'Minimum of 3 characters'),
   complement: is.string().required("Complement is required").min(3, 'Minimum of 3 characters'),
+  state: is.string().required("state is required").min(2, 'Minimum of 2 characters'),
   additional_information: is.string().required("Additional Informations is required").min(5, 'Minimum of 5 characters'),
 }));
 
@@ -32,14 +34,16 @@ function EditLocation({ isDisableInputs }: EditLocationProps) {
   const { AppStatus } = useAppStatus();
   const { errorToast } = useToast();
 
-  const { register, errors, onSubmit } = useForm<EditFormData>({ schema, initialState: user as Object });
+  const { register, errors, onSubmit, setValue } = useForm<EditFormData>({ schema, initialState: user as Object });
 
   onUpdate(() => {
     if (user) {
-      // setValue('cep', user?.bio)
-      // setValue('street', user?.name)
-      // setValue('city', user?.username)
-      // setValue('complement', user?.phone)
+      setValue('cep', user?.cep)
+      setValue('street', user?.street)
+      setValue('city', user?.city)
+      setValue('complement', user?.complement)
+      setValue('additional_information', user?.additional_information)
+      setValue('state', user?.state)
     }
   }, [user])
 
@@ -53,7 +57,7 @@ function EditLocation({ isDisableInputs }: EditLocationProps) {
       if (err) errorToast(err);
     }
 
-    await Session.updateProfile(values, onEnd)
+    await Session.updateProfile(values, onEnd);
   }
 
   return (
@@ -91,9 +95,17 @@ function EditLocation({ isDisableInputs }: EditLocationProps) {
             {...register('city')}
           />
           <Input
+            is="state"
+            label='State'
+            placeholder="state"
+            error={errors.state}
+            isDisabled={isDisableInputs}
+            {...register('state')}
+          />
+          <Input
             is="complement"
             label='Complement'
-            placeholder="Complement"
+            placeholder="complement"
             error={errors.complement}
             isDisabled={isDisableInputs}
             {...register('complement')}
@@ -106,7 +118,7 @@ function EditLocation({ isDisableInputs }: EditLocationProps) {
           maxLength={250}
           minHeight={110}
           resize={'none'}
-          placeholder="Add a additional informations..."
+          placeholder="add a additional informations..."
           error={errors.additional_information}
           isDisabled={isDisableInputs}
           {...register('additional_information')}

@@ -2,7 +2,6 @@ import { Button as CButton, Stack } from '@chakra-ui/react';
 import { myStyles, Text } from '_lib/web';
 import { Input, Textarea } from 'components';
 import { theme } from '_app';
-import { apiNext } from 'services';
 import { useAppStatus } from 'context';
 import { OnEndHandle } from 'types';
 import { validation, FormSubmit, useForm, onUpdate } from '_lib/global';
@@ -55,20 +54,7 @@ function EditInformations({ isDisableInputs }: EditInformationsProps) {
       if (err) errorToast(err);
     }
 
-    await apiNext.put(`/users/${user?.id}`, values).then(async ({ data }) => {
-      if (data?.error) {
-        onEnd({ err: data?.error })
-        return;
-      }
-
-      if (data?.message) {
-        setTimeout(async () => {
-          await Session.loadProfile(data?.user?.token, false).then(() => onEnd({ status: 'done' }));
-        }, 2000)
-
-        return;
-      }
-    }).catch(() => onEnd({ err: 'Unexpected error, contact support.' }));
+    await Session.updateProfile(values, onEnd)
   }
 
   return (

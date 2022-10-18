@@ -5,6 +5,13 @@ export type TUser = {
   name: string;
   phone: string;
   bio: string;
+
+  cep: string;
+  street: string;
+  city: string;
+  complement: string;
+  additional_information: string;
+  
   provider?: 'mylook' | 'google';
 }
 

@@ -1,4 +1,4 @@
-import { useToast } from 'hooks';
+import { useToast, useUser } from 'hooks';
 import { createContext, useState, useContext } from 'react';
 import { TLook } from 'types';
 import { onMount, onUpdate, SetState } from '_lib/global';
@@ -6,6 +6,9 @@ import { looksStock } from 'data';
 import { useProducts } from './Products';
 import { appVariables } from '_app';
 import { destroyCookie, parseCookies, setCookie } from 'nookies';
+import { getUserLocation } from 'utils';
+import Router from "next/router";
+import { useAppModals } from './ModalsProvider';
 
 type ShoppingCartProviderData = {
   CartProducts: {
@@ -26,11 +29,13 @@ type ShoppingCartProviderData = {
 const ShoppingCart = createContext({} as ShoppingCartProviderData);
 
 export function ShoppingCartProvider({ children }: any) {
-  const [cart, setCart] = useState<Array<TLook>>([]);
-  
-  const [total, setTotal] = useState(0);
-  const { errorToast, successToast } = useToast();
   const { Products } = useProducts();
+  const { errorToast, successToast } = useToast();
+  const { user, Session } = useUser();
+  const { OpenModal } = useAppModals();
+
+  const [cart, setCart] = useState<Array<TLook>>([]);
+  const [total, setTotal] = useState(0);
 
   const cookies = parseCookies(null);
 
@@ -167,6 +172,22 @@ export function ShoppingCartProvider({ children }: any) {
   };
 
   const goToCheckout = () => {
+    const can = Session?.isActivated();
+
+    if (!can) {
+      OpenModal.warnAccount();
+      return;
+    }
+
+    const hasLocation = getUserLocation(user).isFillLocation;
+    
+    if (!hasLocation) {
+      Router.push('/account/location');
+      return;
+    } else {
+      OpenModal.verifyLocationData();
+    }
+    
     destroyCookie(undefined, appVariables.cookies.cart);
     setCart([]);
   }

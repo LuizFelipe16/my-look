@@ -13,7 +13,7 @@ export default function ShopCart() {
           <Text type='h1' text='Shop Cart' />
 
           <View style='informations'>
-            <Button style='checkout' onPress={goToCheckout} text='FINALIZE ORDER' />
+            {CartProducts.hasProducts ? <Button style='checkout' onPress={goToCheckout} text='FINALIZE ORDER' /> : null}
 
             <View style='total'>
               <Text style='text-total' text='TOTAL' />
