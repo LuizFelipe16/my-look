@@ -115,6 +115,7 @@ const WelcomeStyles = myStyles.style(theme => ([
     theme.h.min(100, 'vh'),
     theme.w.size(100, '%'),
     theme.h.auto(),
+    theme.bg.primary,
     theme.bgImage.path('/bg_home.png'),
     theme.row.centerBetween,
     theme.responsiveness.media([theme.column.centerCenter, theme.gapEls.full.size(1)], 100, 750),
