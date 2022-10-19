@@ -8,16 +8,17 @@ import {
 
 import { forwardRef, ForwardRefRenderFunction } from "react";
 import { FieldError } from "react-hook-form";
-import { theme } from "_app";
+import { capitalize, CapitalizeType } from "_lib/global";
 
 interface IInputProps extends CInputProps {
   is: string;
   label?: string;
   error?: FieldError;
+  labelCapitalize?: CapitalizeType;
 }
 
 const InputBase: ForwardRefRenderFunction<HTMLInputElement, IInputProps>
-  = ({ label, is, error = null, ...rest }, ref) => {
+  = ({ label, is, error = null, placeholder, labelCapitalize = 'first', ...rest }, ref) => {
     return (
       <FormControl w="100%" flexDirection={'column'} isInvalid={!!error}>
         {!!label && (
@@ -28,7 +29,7 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, IInputProps>
             color="black"
             htmlFor={is}
           >
-            {label}
+            {capitalize(label, labelCapitalize)}
           </FormLabel>
         )}
 
@@ -41,11 +42,12 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, IInputProps>
           borderRadius={4}
           p="5"
           fontSize="sm"
+          placeholder={capitalize(placeholder, 'first')}
           ref={ref}
           {...rest}
         />
 
-        {!!error && <FormErrorMessage>{error.message}</FormErrorMessage>}
+        {!!error && <FormErrorMessage>{capitalize(error.message, 'sentence')}</FormErrorMessage>}
       </FormControl>
     );
   }

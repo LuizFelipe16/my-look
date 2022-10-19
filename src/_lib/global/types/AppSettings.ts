@@ -7,20 +7,22 @@ type Fetch = {
   ApiURL: string;
 }
 
-export type AppSettings<APIs extends Fetch> = {
+export type AppSettings<APIs extends Fetch, TC> = {
   AppName: string;
   Description: string;
   CreatedAt: string;
   Creator: string;
   Developers: Developer[];
   Application: {
-    IsWeb: boolean;
-    IsMobile: boolean;
+    IsWeb: boolean | `https://${string}` | `http://${string}`;
+    IsMobile: boolean | string;
     IsMadeForLearning?: boolean;
     GitRepository?: string;
+    Language: 'en' | 'pt';
   };
   DevelopmentMode?: {
     isDev?: boolean;
+    HostPort: string;
   };
   Fetch: APIs;
   SocialINFO?: {
@@ -33,8 +35,5 @@ export type AppSettings<APIs extends Fetch> = {
     ContactEMAIL: string;
     ContactPHONE: `+55 (19) ${number}-${number}`;
   };
-  ApiCredentials?: {
-    FaunaKey?: string;
-    AuthSecretCode?: string;
-  };
+  ApiCredentials?: TC;
 };

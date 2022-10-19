@@ -1,41 +1,51 @@
-import { View, myStyles, Text, Divider, Button, Link } from '_lib/web';
+import { View, myStyles, Text, Divider, Link } from '_lib/web';
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
 import { ScrollTopButton } from '_lib/web/components/ScrollTopButton';
+import { useUser } from 'hooks';
+import { capitalize, ReactChildren } from '_lib/global';
+
+const SessionItem = ({ text, href }: any) => (
+  <Link href={href}>
+    <Text style='session-item' text={text} />
+  </Link>
+);
+
+const SessionWrapper = ({ title, children }: { title: string; children: ReactChildren }) => (
+  <View style='session'>
+    <Text type='h1' text={capitalize(title)} />
+    {children}
+  </View>
+);
 
 function Footer() {
+  const { Session } = useUser();
+
   return (
     <Wrapper>
       <View style={`wrapper-content`}>
-        <View style='session'>
-          <Text type='h1' text='SITEMAP' />
-          <Text text='Home' />
-          <Text text='Services' />
-          <Text text='Contact' />
-          <Text text='Blog' />
-        </View>
+        <SessionWrapper title='sitemap'>
+          <SessionItem href={'/'} text='Home' />
+          {Session?.isActivated() === false && <SessionItem href={'/sign'} text='Sign' />}
+          <SessionItem href={'/shop'} text='Products' />
+        </SessionWrapper>
 
         <Divider style='separator' />
 
-        <View style='session'>
-          <Text type='h1' text='PRODUCT' />
-          <Text text='Pricing' />
-          <Text text='Customers' />
-          <Text text='Feedback' />
-        </View>
+        <SessionWrapper title='product'>
+          <SessionItem href={'/shop'} text='Shop' />
+        </SessionWrapper>
 
         <Divider style='separator' />
 
-        <View style='session'>
-          <Text type='h1' text='HELP' />
-          <Text text='FAQ' />
-          <Text text='Feedback' />
-          <Text text='Terms &amp; Conditions' />
-        </View>
+        <SessionWrapper title='help'>
+          <SessionItem href={'/'} text='FAQ' />
+          <SessionItem href={'/terms'} text='Terms &amp; Conditions' />
+        </SessionWrapper>
 
         <Divider style='separator' />
 
         <View style='session-subscribe'>
-          <Text type='h2' text='NETWORKS' />
+          <Text type='h2' text={capitalize('networks')} />
           <View style='social-links'>
             <Link href='#'><FaFacebookF /></Link>
             <Link href='#'><FaInstagram /></Link>
@@ -80,7 +90,8 @@ const Wrapper = myStyles.create(theme => ([
         theme.font.apply('sb', 1.2, theme.font.typography.text, theme.colors.black),
         theme.margin.bottom.size(1),
       ]),
-      theme.myStyles.child('p', [
+
+      theme.myStyles.class('session-item', [
         theme.font.apply('rg', 1, theme.font.typography.text, theme.colors.gray),
         theme.margin.top.size(1),
         theme.transition.apply(0.2),

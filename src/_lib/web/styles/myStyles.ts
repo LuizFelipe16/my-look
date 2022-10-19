@@ -1,6 +1,7 @@
 
 export type TMyStylesMethods = {
   create: (styleName: string, styles: any, childrenStyles?: any) => CreateStyles;
+  class: (className: string, styles: any, childrenStyles?: any) => CreateStyles;
   child: (element: string, styles: any, isClass?: boolean, childrenStyles?: any) => CreateChildStyles;
   childClass: (element: string, styles: any, childrenStyles?: any) => CreateChildStyles;
   transformer: (styles: any) => any,
@@ -119,6 +120,7 @@ const inOwnClass = (className: string, styles: StylesProps) => {
 
 export const myStylesMethods: TMyStylesMethods = {
   create: addStyle,
+  class: addStyle,
   child: createChildStyle,
   childClass: createChildClassStyle,
   childTag: createChildTagStyle,
