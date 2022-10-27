@@ -26,6 +26,7 @@ export type ThemeBorder = {
     lg: BorderRadius,
     xl: BorderRadius,
     inPositions: (value: number, poseOne: Position, poseTwo: Position) => string;
+    inArea: (value: number, area: Position) => string;
   },
   hide: string;
   in: {
@@ -67,7 +68,22 @@ export const border: ThemeBorder = {
     lg: `border-radius: ${borderValues.lg};`,
     xl: `border-radius: ${borderValues.xl};`,
 
-    inPositions: (value: number, poseOne: Position, poseTwo: Position) => `border-${poseOne}-${poseTwo}-radius: ${styleSize(value)};`
+    inPositions: (value: number, poseOne: Position, poseTwo: Position) => `border-${poseOne}-${poseTwo}-radius: ${styleSize(value)};`,
+    inArea: (value: number, area: Position) => {
+      if (area === 'top' || area === 'bottom') {
+        return `
+          border-${area}-left-radius: ${styleSize(value)};
+          border-${area}-right-radius: ${styleSize(value)};
+        `
+      } else if (area === 'left' || area === 'right') {
+        return `
+          border-top-${area}-radius: ${styleSize(value)};
+          border-bottom-${area}-radius: ${styleSize(value)};
+        `
+      } else {
+        return ''
+      }
+    }
   },
 
   hide: `border: none;`,

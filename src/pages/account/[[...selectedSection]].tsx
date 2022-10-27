@@ -12,7 +12,7 @@ type SectionType = 'informations' | 'location' | 'security';
 export default function Account() {
   const { user, signOut, isLoading } = useUser();
   const { ModalManager } = useModal();
-  const router = useRouter()
+  const router = useRouter();
 
   const { selectedSection } = router.query as any
 
@@ -21,7 +21,7 @@ export default function Account() {
   });
 
   const textSecurityGoogle  = 'Unfortunately you cannot change your email address or password as your account is associated with Google. If you want to continue create a MyLook account.';
-  
+
   return (
     <>
       <Page styles={MyStylesAccount} title='Account' isLoading={!user}>
@@ -43,8 +43,8 @@ export default function Account() {
               Location
             </Button>
 
-            <Button 
-              style={`option ${section === 'security' && 'active'} ${user?.accountType === 'google' && 'deactivate'}`} 
+            <Button
+              style={`option ${section === 'security' && 'active'} ${user?.accountType === 'google' && 'deactivate'}`}
               onPress={user?.accountType === 'google' ? ModalManager.open : () => setSection('security')}
             >
               <BiLockAlt size={20} />
@@ -56,7 +56,7 @@ export default function Account() {
               Logout
             </Button>
           </View>
-            
+
           <View style={`content-menu`}>
             {section === 'informations' && <EditInformations isDisableInputs={isLoading} />}
             {section === 'location' && <EditLocation isDisableInputs={isLoading} />}
@@ -89,7 +89,7 @@ const OptionStyles = myStyles.style((theme) => ([
     }),
 
     theme.myStyles.inOwnHasClass('active', [
-      theme.bg.primary, 
+      theme.bg.primary,
       theme.textColor.background,
       theme.effect.hover.inOwn([theme.effect.filter.opacity(1), theme.effect.filter.glow(0.9)])
     ]),
@@ -145,7 +145,7 @@ export const MyStylesAccount = myStyles.create((theme) => ([
 
       theme.responsiveness.platforms({}, {
         comommStyle: [
-          theme.border.in.right(0, theme.colors.primary), 
+          theme.border.in.right(0, theme.colors.primary),
           theme.w.size(100, '%'),
           theme.border.rounded.inPositions(0, 'top', 'right'),
           theme.border.rounded.inPositions(0, 'bottom', 'right'),

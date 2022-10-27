@@ -1,5 +1,5 @@
 
-export type CapitalizeType = 'full' | 'first' | 'sentence';
+export type CapitalizeType = 'full' | 'first' | 'sentence' | 'lower';
 
 function capitalizeFirstLetter(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
@@ -24,6 +24,9 @@ function capitalize(str: string = '', type: CapitalizeType = 'full') {
     return newStr;
   } else if (type === 'sentence') {
     const newStr = capitalizeFirstLetterInSentence(str);
+    return newStr;
+  } else if (type === 'lower') {
+    const newStr = str.toLowerCase();
     return newStr;
   } else {
     return str;

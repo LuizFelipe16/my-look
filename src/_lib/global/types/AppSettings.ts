@@ -21,6 +21,7 @@ export type AppSettings<APIs extends Fetch, TC> = {
     Language: 'en' | 'pt';
   };
   DevelopmentMode?: {
+    isActivated?: boolean;
     isDev?: boolean;
     HostPort: string;
   };

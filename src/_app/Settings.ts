@@ -17,6 +17,7 @@ export const Settings: AppSettings<FetchEndpoints, AppCredentials> = {
   Creator: 'Luiz Felipe Siqueira Felizatti',
   Developers: [{ name: 'Luiz Felipe Siqueira Felizatti' }],
   DevelopmentMode: {
+    isActivated: !!process.env.IS_DEV,
     isDev: !!process.env.IS_DEV,
     HostPort: '3000'
   },

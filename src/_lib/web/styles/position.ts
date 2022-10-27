@@ -12,7 +12,7 @@ export type ThemePosition = {
   fixed: Position;
   relative: Position;
   absolute: Position;
-
+  values: (props: TValues) => string;
   top: {
     value: (value: number, unity?: UNITY_PROPERTY) => PositionValue;
     percentage: (percentage: number) => `top: ${number}%;`
@@ -31,6 +31,14 @@ export type ThemePosition = {
   };
 };
 
+type TValues = {
+  left?: null | number;
+  top?: null | number;
+  bottom?: null | number;
+  right?: null | number;
+  unity?: 'px' | 'rem' | 'em' | '%';
+}
+
 const getValuePosition = (pose: POSITION_PROPERTY, value: number, unity?: 'px' | 'rem' | 'em' | '%'): PositionValue => {
   if (value === 0) return `${pose}: 0;`
 
@@ -42,6 +50,21 @@ export const position: ThemePosition = {
   fixed: 'position: fixed;',
   relative: 'position: relative;',
   absolute: 'position: absolute;',
+
+  values: ({ left = null, top = null, right = null, bottom = null, unity = 'px' }: TValues) => {
+
+    const poseLeft = !left ? '' : getValuePosition('left', left, unity)
+    const poseRight = !right ? '' : getValuePosition('right', right, unity)
+    const poseTop = !top ? '' : getValuePosition('top', top, unity)
+    const poseBottom = !bottom ? '' : getValuePosition('bottom', bottom, unity)
+
+    return `
+      ${poseLeft}
+      ${poseRight}
+      ${poseTop}
+      ${poseBottom}
+    `
+  },
 
   top: {
     value: (value: number, unity?: UNITY_PROPERTY) => getValuePosition('top', value, unity),

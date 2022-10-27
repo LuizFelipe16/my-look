@@ -108,3 +108,8 @@ export const getHexTransparency = (opacity: number) => {
 
   return transparency
 };
+
+export const getShadeColor = (color: `#${string}` | string, opacityInPercentage: number) => {
+  const shade = color + getHexTransparency(opacityInPercentage);
+  return shade;
+}

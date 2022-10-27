@@ -15,14 +15,16 @@ interface ProductItemProps {
 const iconSize = 22;
 
 function CartProductItem({ product }: ProductItemProps) {
-  const { CartProducts } = useShoppingCart();
+  const { cart, CartProducts } = useShoppingCart();
   const { ModalManager } = useModal();
+
+  const amount = cart?.find(c => c?.id === product?.id)?.amount || 0
 
   return (
     <>
       <View style={'product'} key={product.id}>
         <ImgZoom src={product?.banner} h={8} w={16} rounded={2} seconds={0.2} description={product.description} onPress={ModalManager.open} />
-        
+
         <View style='infos w20'>
           <Text style='description' text={product?.name} />
           <Text style='price' text={formatPrice(product.price)} />
@@ -30,11 +32,11 @@ function CartProductItem({ product }: ProductItemProps) {
 
         <View style='infos center w10'>
           <View style='amount'>
-            <Button onPress={() => CartProducts.looks.incrementAmount({ productId: product.id, amount: product.amount - 1 })}>
+            <Button onPress={() => CartProducts.looks.incrementAmount({ productId: product.id, amount: amount - 1 })}>
               <AiOutlineMinusCircle color={theme.colors.primary} size={iconSize} />
             </Button>
-            <Text text={String(product.amount)} />
-            <Button onPress={() => CartProducts.looks.incrementAmount({ productId: product.id, amount: product.amount + 1 })}>
+            <Text text={String(amount)} />
+            <Button onPress={() => CartProducts.looks.incrementAmount({ productId: product.id, amount: amount + 1 })}>
               <AiOutlinePlusCircle color={theme.colors.primary} size={iconSize} />
             </Button>
           </View>
@@ -43,7 +45,7 @@ function CartProductItem({ product }: ProductItemProps) {
         <View style='infos center w10'>
           <View style='subtotal'>
             <Text style='text' text='SUBTOTAL' />
-            <Text style='value' text={formatPrice(Number((product.price * product.amount).toFixed(2)))} />
+            <Text style='value' text={formatPrice(Number((product.price * amount).toFixed(2)))} />
           </View>
         </View>
 
@@ -78,7 +80,7 @@ const CartProductItemStyles = myStyles.style((theme) => ([
       theme.myStyles.inOwnHasClass('w10', [theme.w.size(10)]),
     ], [
       theme.myStyles.childClass('description', [theme.font.apply('md', 1.3, theme.font.typography.text, theme.colors.primary)]),
-      
+
       theme.myStyles.childClass('price', [theme.font.apply('sb', 1.2, theme.font.typography.text, theme.colors.black)]),
 
       theme.myStyles.childClass('subtotal', [

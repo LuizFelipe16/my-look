@@ -19,6 +19,7 @@ import { ThemeShadow, shadow } from "./shadow";
 import { ThemeAnimation, animation } from "./animation";
 import { ThemeBgs, bgImage } from "./background";
 import { ThemeCompare, compare } from "./compareProps";
+import { ThemeElements, elements } from "./elements";
 import { TMyStylesMethods, myStylesMethods } from "./myStyles";
 
 export type ThemeStyle = {
@@ -55,6 +56,7 @@ export type ThemeStyle = {
     breakLine: string;
     display: string;
   };
+  elements: ThemeElements;
 };
 
 export const myStylesPresets: ThemeStyle = {
@@ -91,4 +93,5 @@ export const myStylesPresets: ThemeStyle = {
     breakLine: flex.flex.breakLine,
     display: flex.flex.display,
   },
+  elements
 };

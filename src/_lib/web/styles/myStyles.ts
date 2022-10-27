@@ -4,12 +4,12 @@ export type TMyStylesMethods = {
   class: (className: string, styles: any, childrenStyles?: any) => CreateStyles;
   child: (element: string, styles: any, isClass?: boolean, childrenStyles?: any) => CreateChildStyles;
   childClass: (element: string, styles: any, childrenStyles?: any) => CreateChildStyles;
+  childTag: (tag: TTag, styles: any, childrenStyles?: any) => CreateChildStyles;
   transformer: (styles: any) => any,
   global: {
     insert: (styles: any) => string;
   };
-  childTag: (tag: string, styles: any) => any;
-  tag: (tag: string, styles: any) => any;
+  tag: (tag: TTag | Array<TTag>, styles: any, childrenStyles?: any) => any;
   webkit: (tag: string, styles: any) => any;
   selectorProp: (tag: string, styles: any) => any;
   elementProp: (tag: string, styles: any) => any;
@@ -25,7 +25,7 @@ const stylesTranformer = (styles: any) => {
 
   if (Array.isArray(newStyles)) {
     let transformedStyles = ``
-    
+
     newStyles.map(s => {
       transformedStyles = transformedStyles + ` ${s}`
     })
@@ -40,74 +40,97 @@ const stylesTranformer = (styles: any) => {
 
 const addStyle = (styleName: string, styles: any, childrenStyles?: any ): CreateStyles => {
   return `
-    .${styleName} { 
-      ${stylesTranformer(styles)} 
-      ${stylesTranformer(childrenStyles)} 
+    .${styleName} {
+      ${stylesTranformer(styles)}
+      ${stylesTranformer(childrenStyles)}
     }
-  ` 
+  `
 }
 
 const createChildStyle = (element: string, styles: StylesProps, isClass?: boolean, childrenStyles?: StylesProps): CreateChildStyles => {
   if (isClass) {
     return `
-      > .${element} { 
-        ${stylesTranformer(styles)} 
-        ${stylesTranformer(childrenStyles)} 
+      > .${element} {
+        ${stylesTranformer(styles)}
+        ${stylesTranformer(childrenStyles)}
       }
     `
   }
-  
+
   return `
-    > ${element} { 
-      ${stylesTranformer(styles)} 
-      ${stylesTranformer(childrenStyles)} 
+    > ${element} {
+      ${stylesTranformer(styles)}
+      ${stylesTranformer(childrenStyles)}
     }
   `
 }
 
 const createChildClassStyle = (element: string, styles: StylesProps, childrenStyles?: StylesProps): CreateChildStyles => {
   return `
-    > .${element} { 
-      ${stylesTranformer(styles)} 
-      ${stylesTranformer(childrenStyles)} 
+    > .${element} {
+      ${stylesTranformer(styles)}
+      ${stylesTranformer(childrenStyles)}
+    }
+  `
+}
+
+type TTag = 'p' | 'strong' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h5' | 'button' | 'div' | 'footer' | 'aside' | 'hr' | 'a';
+
+const createChildTagStyle = (tag: TTag, styles: StylesProps, childrenStyles?: StylesProps): CreateChildStyles => {
+  return `
+    > ${tag} {
+      ${stylesTranformer(styles)}
+      ${stylesTranformer(childrenStyles)}
     }
   `
 }
 
 const insertInGlobal = (styles: StylesProps): string => {
   return `
-    * { 
-      ${stylesTranformer(styles)} 
+    * {
+      ${stylesTranformer(styles)}
     }
   `
 }
 
-const createTagStyle = (tag: string, styles: StylesProps) => {
-  return `
-    ${tag} { 
-      ${stylesTranformer(styles)} 
+const getArrayStyles = (keys: Array<string>, styles: StylesProps, childrenStyles?: StylesProps) => {
+  const stylesResult = keys?.map(keyStyle => `
+    ${keyStyle} {
+      ${stylesTranformer(styles)}
+      ${stylesTranformer(childrenStyles)}
     }
-  ` 
+  `)
+
+  let result = ''
+
+  stylesResult.forEach(s => { result = result + s })
+
+  return result
 }
 
-const createChildTagStyle = (tag: string, styles: StylesProps) => {
+const createTagStyle = (tag: TTag | Array<TTag>, styles: StylesProps, childrenStyles?: StylesProps) => {
+  if (Array.isArray(tag)) {
+    console.log(getArrayStyles(tag, styles, childrenStyles))
+  }
+
   return `
-    > ${tag} { 
-      ${stylesTranformer(styles)} 
+    ${tag} {
+      ${stylesTranformer(styles)}
+      ${stylesTranformer(childrenStyles)}
     }
-  ` 
+  `
 }
 
 const createWebkitStyle = (webkit: string, styles: StylesProps) => {
-  return `::-webkit-${webkit} { ${stylesTranformer(styles)} }` 
+  return `::-webkit-${webkit} { ${stylesTranformer(styles)} }`
 }
 
 const createExtraStyle = (propStyle: string, styles: StylesProps) => {
-  return `*::${propStyle} { ${stylesTranformer(styles)} }` 
+  return `*::${propStyle} { ${stylesTranformer(styles)} }`
 }
 
 const createPerPropStyle = (propName: string, styles: StylesProps) => {
-  return `[${propName}] { ${stylesTranformer(styles)} }` 
+  return `[${propName}] { ${stylesTranformer(styles)} }`
 }
 
 const inOwnClass = (className: string, styles: StylesProps) => {

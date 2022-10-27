@@ -2,19 +2,18 @@
 export type TLookType = 'fast' | 'minimal' | 'social' | 'none';
 
 export type TLook = {
-  id: number;
+  id: string;
   banner: string;
   name: string;
   description: string;
   price: number;
   type: TLookType;
-  amount: number;
-  value: number;
+  stock: number;
 };
 
 export type TStockItem = {
-  id: number;
-  productId: number;
+  id: string | number;
+  productId: TLook['id'];
   amount: number;
 }
 

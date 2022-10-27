@@ -14,6 +14,7 @@ export type ThemePresets = {
   };
   cursor: (define: CursorType) => `cursor: ${CursorType};`;
   boxBorder: `box-sizing: border-box;`;
+  bgColor: (color: string) => string;
 };
 
 type CursorType = 'pointer' | 'not-allowed';
@@ -48,5 +49,7 @@ export const presets: ThemePresets = {
     height: 100vh;
   `,
 
-  cursor: (define: CursorType) => `cursor: ${define};`
+  cursor: (define: CursorType) => `cursor: ${define};`,
+
+  bgColor: (color: string) => `background-color: ${color};`
 };

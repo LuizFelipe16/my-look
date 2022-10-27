@@ -1,3 +1,4 @@
+
 export type ThemeColors = typeof appColors;
 
 type Property = 'color' | 'background-color' | 'border-color';
@@ -13,15 +14,15 @@ export const appColors = {
 
   input: {
     background: '#1F1E25',
-    placeholder: '#555',
+    placeholder: '#edf2f7',
   },
 
   primary: '#ff4321',
   secondary: '#FF872C',
   secondaryLight: 'rgba(255, 135, 44, 0.3)',
 
-  success: '#12A454',
-  successLight: 'rgba(18, 164, 84, 0.5)',
+  success: '#12A450',
+  successLight: 'rgba(18, 164, 84, 0.2)',
 
   attention: '#E83F5B',
   attentionLight: 'rgba(232, 63, 91, 0.5)',
@@ -34,11 +35,11 @@ export const appColors = {
   transparent: '#FFF0',
   gray: '#212121',
   grayLight: '#606163',
-  
+
   blackTransparent: '#0001',
   googleBlue: '#4885ed',
   blackOverlap: '#0007',
-  
+
   backgroundDark: '#dbe5fa',
 
   grayVeryLight: '#eee',
@@ -75,7 +76,7 @@ const colorsArray: Color[] = [
 export function getStyleColorProperty(property: Property) {
   const stylesArray = colorsArray.map(c => {
     const propertyStyle = `${property}: ${c.value};`
-    
+
     return { [c.name]: propertyStyle }
   });
 

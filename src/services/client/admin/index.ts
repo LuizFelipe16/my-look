@@ -1,4 +1,5 @@
 import { apiNext } from "services";
+import { createProduct, getProducts, getProductById, updateProduct } from "./products";
 
 type VerifyRequest = {
   email: string;
@@ -11,4 +12,10 @@ async function verify(data: VerifyRequest) {
 
 export const Admin = {
   verify,
+  Products: {
+    create: createProduct,
+    update: updateProduct,
+    getAll: getProducts,
+    getById: getProductById,
+  }
 }

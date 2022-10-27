@@ -7,7 +7,7 @@ import { myStylesPresets } from '../styles/myStylesPresets';
 const appTheme: TypeAppTheme = isTheme;
 
 type ComponentTypeStyle = 'div' | 'aside' | 'article' | 'header' | 'nav' | 'img' | 'span' | 'section' | 'h1' | 'p';
- 
+
 type XComponents = 'a' | 'button';
 
 export const myStyles = {
@@ -55,6 +55,21 @@ export const myStyles = {
     create: (createStyles: (theme: ThemeStyle) => any): { MyStylesGlobal: GlobalStyleComponent<any, any> } => {
       const MyStylesGlobal = createGlobalStyle`
         ${myStylesPresets.myStyles.transformer(createStyles(myStylesPresets))}
+
+        div.my-center-row {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: center;
+        }
+
+        div.my-gap-1 {
+          gap: 1rem;
+        }
+
+        div.my-gap-0_5 {
+          gap: 0.5rem;
+        }
       `
 
       return { MyStylesGlobal }

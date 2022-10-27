@@ -1,10 +1,10 @@
 import { ReactChildren } from "_lib/global";
-import { AppStatusProvider } from "./AppStatusContext";
-import { AppModalsProvider } from "./ModalsProvider";
-import { ProductsProvider } from "./Products";
-import { ShoppingCartProvider } from "./ShoppingCart";
-import { ThemeProvider } from "./Theme";
-import { UserProvider } from "./UserContext";
+import { AppStatusProvider, useAppStatus } from "./AppStatusContext";
+import { AppModalsProvider, useAppModals } from "./ModalsProvider";
+import { ProductsProvider, useProducts } from "./Products";
+import { ShoppingCartProvider, useShoppingCart } from "./ShoppingCart";
+import { ThemeProvider, useTheme } from "./Theme";
+import { UserProvider, UserContext } from "./UserContext";
 
 interface AppProviderProps {
   children: ReactChildren;
@@ -28,4 +28,12 @@ function AppProvider({ children }: AppProviderProps) {
   );
 }
 
-export { AppProvider };
+const ProvidersManager = {
+  useAppStatus,
+  useAppModals,
+  useProducts,
+  useShoppingCart,
+  useTheme,
+}
+
+export { AppProvider, ProvidersManager };
