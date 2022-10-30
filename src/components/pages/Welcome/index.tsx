@@ -117,6 +117,7 @@ const WelcomeStyles = myStyles.style(theme => ([
     theme.h.auto(),
     theme.bg.primary,
     theme.bgImage.path('/bg_home.png'),
+    theme.bgImage.repeat('no-repeat'),
     theme.row.centerBetween,
     theme.responsiveness.media([theme.column.centerCenter, theme.gapEls.full.size(1)], 100, 750),
   ], [WelcomeContent, WelcomeImageGirl]),

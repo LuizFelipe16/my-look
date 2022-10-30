@@ -30,6 +30,7 @@ const ShopStyles = myStyles.style(theme => ([
     theme.column.centerCenter,
     theme.bg.primary,
     theme.responsiveness.media([theme.bg.backgroundDark], 100, 1200),
+    theme.margin.top.size(-5),
 
     theme.myStyles.childClass('cards', [
       theme.w.fill(),
