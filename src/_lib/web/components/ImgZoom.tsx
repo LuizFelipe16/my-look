@@ -57,16 +57,17 @@ const WrapperImgZoom2 = ({ h, w, unity = 'rem', children, seconds, scale, rounde
     theme.border.rounded.size(rounded || 0),
     
     theme.myStyles.childClass('my-card-img-preset-zoom', [
+      theme.border.rounded.size(2),
       // theme.overlap.value(-1),
       `inset: 0;`,
       theme.w.fill(),
       theme.h.fill(),
       theme.effect.filter.objectCover(),
       theme.border.rounded.size(rounded || 0),
-  
+      
       theme.transition.apply(seconds),
     ]),
-  
+    
     theme.effect.hover.inOwnChild('my-card-img-preset-zoom', [
       `transform: scale( ${!scale ? `1.1` : scale});`
     ], true)

@@ -1,6 +1,6 @@
 import { View, myStyles, Text, Button, Spinner, Link } from '_lib/web';
 import { Page, ShopLookItem, ShopLookItemStyles } from 'components';
-import { looks as data, filters } from 'data';
+import { filters } from 'data';
 import { TLookType } from 'types';
 import { theme } from '_app';
 import { useProducts, useShoppingCart } from 'context';
@@ -15,12 +15,12 @@ export default function Shop() {
 
   const handleFilterLooks = (type: TLookType) => {
     if (type === 'none') {
-      Products.setLooks(data);
+      Products.setLooks(Products.looks.data);
       Products.looks.setSelectedFilter(type);
       return;
     }
 
-    const oldData = [...data];
+    const oldData = [...Products.looks.data];
     const filteredLooks = oldData.filter(l => l.type === type);
 
     Products.looks.setSelectedFilter(type);
